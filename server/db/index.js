@@ -1,9 +1,7 @@
 const Sequelize = require('sequelize');
-const dbConfig = require('./.dbconfig');
+const config = require('./dbconfig.js');
 
-console.log('database');
-
-const db = new Sequelize(dbConfig, {
+const db = new Sequelize(config.dbURL, {
     pool: {
       max: 1,
       min: 0,
@@ -17,7 +15,7 @@ db.authenticate()
     console.log('successfully connected to database');
   })
   .catch((err) => {
-    console.log('error connecting', err);
+    console.log('error connecting to database', err);
   })
 
 module.exports = db;

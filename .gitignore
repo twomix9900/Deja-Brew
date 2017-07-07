@@ -8,6 +8,7 @@
 
 # production
 /build
+dbconfig.js
 
 # misc
 .DS_Store
