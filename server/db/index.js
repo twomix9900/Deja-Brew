@@ -10,7 +10,23 @@ const db = new Sequelize(config.dbURL, {
   }
 );
 
+const User = db.define('user', {
+  nickname: Sequelize.STRING(32),
+  email: Sequelize.STRING(64),
+  phone: Sequelize.INTEGER
+});
+
+const Friend = db.define('friend', {
+  name: Sequelize.STRING(32),
+  phone: Sequelize.INTEGER
+});
+
+User.hasMany(Friend);
+Friend.belongsTo(User);
+
 db.authenticate()
+  .then(() => User.sync())
+  .then(() => Friend.sync())
   .then(() => {
     console.log('successfully connected to database');
   })
