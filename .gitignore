@@ -8,3 +8,5 @@ logs
 .log
 
 dbconfig.js
+
+.env
