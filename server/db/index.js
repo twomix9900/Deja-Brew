@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const config = require('./dbconfig.js');
 
-const db = new Sequelize(config.dbURL, {
+const db = new Sequelize(config.dbUrl, {
     pool: {
       max: 1,
       min: 0,
