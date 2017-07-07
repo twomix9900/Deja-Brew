@@ -12,4 +12,3 @@ userRouter.get('/friends/:id', userController.GET_FRIENDENTRY);
 userRouter.put('/friends', userController.UPDATE_FRIENDENTRY);
 
 module.exports = userRouter;
-
