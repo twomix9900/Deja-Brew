@@ -1,0 +1,10 @@
+node_modules/
+bower_components/
+
+build/
+dist/
+
+logs
+.log
+
+dbconfig.js
