@@ -6,28 +6,24 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      value: '',
+      results: null
     };
   }
 
   searchDejaBrew() {
-    axios.get('/locations')
+    axios.get('/brewery/breweryLocations')
     .then(function (response) {
-      console.log(response);
+      console.log(response.data.data);
+      this.setState({
+        results: response.data.data
+      })
     })
     .catch(function (error) {
       console.log(error);
     });
   }
-
-  // handleInputChange(e) {
-  //   this.props.handleSearchInputChange(e.target.value);
-  //   this.setState({
-  //     value: e.target.value
-  //   });
-  // }
   
-
   render() {
     return (
       <div className="search-bar">
@@ -42,6 +38,7 @@ class Search extends React.Component {
           placeholder="Search by Location"
         />
         <RaisedButton onClick={this.searchDejaBrew.bind(this)} label="Search"/>
+        
       </div>
     );
   }

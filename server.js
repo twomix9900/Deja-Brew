@@ -2,9 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const path = require('path');
+const { db } = require('./server/db');
+const userRouter = require('./server/router/userRouter.js');
+const friendRouter = require('./server/router/friendRouter.js');
+const breweryRouter = require('./server/router/breweryRouter.js');
 const cors = require('cors');
-const db = require('./server/db');
-//const router = require('./server/router');
 
 const app = express();
 
@@ -15,6 +17,11 @@ app.use(bodyParser.json())
   .use(cors());
 
 app.use(express.static(path.join(__dirname,'./public')));
+
+app.use('/users', userRouter);
+app.use('/friends', friendRouter);
+app.use('/brewery', breweryRouter);
+
 
 const port = 3333;
 app.listen(port, function(err) {

@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
-// const config = require('../../config.js');
-var dotenv = require('dotenv').config()
+const dotenv = require('dotenv').config();
 
 const db = new Sequelize(process.env.DB_URL, {
     pool: {
@@ -14,12 +13,12 @@ const db = new Sequelize(process.env.DB_URL, {
 const User = db.define('user', {
   nickname: Sequelize.STRING(32),
   email: Sequelize.STRING(64),
-  phone: Sequelize.INTEGER
+  phone: Sequelize.STRING
 });
 
 const Friend = db.define('friend', {
   name: Sequelize.STRING(32),
-  phone: Sequelize.INTEGER
+  phone: Sequelize.STRING
 });
 
 User.hasMany(Friend);
@@ -35,4 +34,8 @@ db.authenticate()
     console.log('error connecting to database', err);
   })
 
-module.exports = db;
+module.exports = {
+  db: db,
+  User: User,
+  Friend: Friend
+}

@@ -3,13 +3,10 @@ const userRouter = express.Router();
 
 const userController = require('../controller/userController.js');
 
-userRouter.get('/users', userController.GET_ALLUSERS);
-userRouter.get('/users/:id', userController.GET_USERENTRY);
-userRouter.post('/users', userController.CREATE_USERENTRY);
-userRouter.put('/users/:id', userController.UPDATE_USERENTRY);
-userRouter.get('/friends', userController.GET_ALLFRIENDS);
-userRouter.get('/friends/:id', userController.GET_FRIENDENTRY);
-userRouter.put('/friends', userController.UPDATE_FRIENDENTRY);
-userRouter.get('/Brewerylocations', userController.GET_BREWERY_LOCATIONS);
+userRouter.get('/', userController.getAllUsers);
+userRouter.get('/:id', userController.getUserEntry);
+userRouter.post('/', userController.addUserEntry);
+userRouter.put('/:id', userController.updateUserEntry);
+userRouter.delete('/:id', userController.deleteUserEntry);
 
 module.exports = userRouter;
