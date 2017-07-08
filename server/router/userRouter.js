@@ -10,5 +10,6 @@ userRouter.put('/users/:id', userController.UPDATE_USERENTRY);
 userRouter.get('/friends', userController.GET_ALLFRIENDS);
 userRouter.get('/friends/:id', userController.GET_FRIENDENTRY);
 userRouter.put('/friends', userController.UPDATE_FRIENDENTRY);
+userRouter.get('/Brewerylocations', userController.GET_BREWERY_LOCATIONS);
 
 module.exports = userRouter;

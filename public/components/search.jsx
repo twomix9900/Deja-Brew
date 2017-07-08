@@ -10,16 +10,8 @@ class Search extends React.Component {
     };
   }
 
-  apiStart = 'http://api.brewerydb.com/v2/';
-
   searchDejaBrew() {
-    axios({
-      method:'GET',
-      url: '/locations',
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      }
-    })
+    axios.get('/locations')
     .then(function (response) {
       console.log(response);
     })
