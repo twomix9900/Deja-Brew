@@ -3,8 +3,9 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const path = require('path');
 
-const db = require('./server/db');
-//const router = require('./server/router');
+const { db } = require('./server/db');
+const userRouter = require('./server/router/userRouter.js');
+const friendRouter = require('./server/router/friendRouter.js');
 
 const app = express();
 
@@ -13,6 +14,9 @@ app.use(bodyParser.json())
   .use(morgan('dev'));
 
 app.use(express.static(path.join(__dirname,'./public')));
+
+app.use('/users', userRouter);
+app.use('/friends', friendRouter);
 
 const port = 3333;
 app.listen(port, function(err) {
