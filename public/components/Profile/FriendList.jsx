@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
-export default class FriendList extends Component {
+const FriendList = () => {
 
-render() {
-  return (
-    <div>Friend List
+let userId = 1; // dummy data
 
-    </div>
+let friendList = axios.get('/friends/' + userId)
+  .then((data) => {
+    console.log('data returned ', data);
+    return data;
+  })
+}
 
-    )
-  }
-} 
+export default FriendList;
