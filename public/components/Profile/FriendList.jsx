@@ -1,15 +1,40 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import FriendListEntry from './FriendListEntry.jsx';
 
-const FriendList = () => {
+export default class FriendList extends Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      friendList: [],
+    }
+   
+   let userId = 1; // dummy data
 
-let userId = 1; // dummy data
+    axios.get('/friends/' + userId)
+    .then((data) => {
+      return data.data;
+    })
+    .then((data) => {
+      console.log('cleaned up data', data);
+      this.setState({ friendList: data });
+    })
+  };
 
-let friendList = axios.get('/friends/' + userId)
-  .then((data) => {
-    console.log('data returned ', data);
-    return data;
-  })
+  render() {
+    return (
+      <table>
+        <thead>
+        </thead>
+        <tbody>
+          {this.state.friendList.map((friend, i) => (
+            <FriendListEntry
+              friend={ friend }
+              key={ i } />
+            ))}
+        </tbody>
+      </table>
+    );
+  }
 }
-
-export default FriendList;

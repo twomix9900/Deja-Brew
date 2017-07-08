@@ -35160,6 +35160,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(32);
 
 var _react2 = _interopRequireDefault(_react);
@@ -35167,6 +35169,10 @@ var _react2 = _interopRequireDefault(_react);
 var _axios = __webpack_require__(198);
 
 var _axios2 = _interopRequireDefault(_axios);
+
+var _FriendListEntry = __webpack_require__(220);
+
+var _FriendListEntry2 = _interopRequireDefault(_FriendListEntry);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35186,14 +35192,57 @@ BreweryListEntry.propTypes = {
 
 exports.default = BreweryListEntry;
 var FriendList = function FriendList() {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  var userId = 1; // dummy data
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-  var friendList = _axios2.default.get('/friends/' + userId).then(function (data) {
-    console.log('data returned ', data);
-    return data;
-  });
-};
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var FriendList = function (_Component) {
+  _inherits(FriendList, _Component);
+
+  function FriendList(props) {
+    _classCallCheck(this, FriendList);
+
+    var _this = _possibleConstructorReturn(this, (FriendList.__proto__ || Object.getPrototypeOf(FriendList)).call(this, props));
+
+    _this.state = {
+      friendList: []
+    };
+
+    var userId = 1; // dummy data
+
+    _axios2.default.get('/friends/' + userId).then(function (data) {
+      return data.data;
+    }).then(function (data) {
+      console.log('cleaned up data', data);
+      _this.setState({ friendList: data });
+    });
+    return _this;
+  }
+
+  _createClass(FriendList, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'table',
+        null,
+        _react2.default.createElement('thead', null),
+        _react2.default.createElement(
+          'tbody',
+          null,
+          this.state.friendList.map(function (friend, i) {
+            return _react2.default.createElement(_FriendListEntry2.default, {
+              friend: friend,
+              key: i });
+          })
+        )
+      );
+    }
+  }]);
+
+  return FriendList;
+}(_react.Component);
 
 exports.default = FriendList;
 
@@ -36749,6 +36798,48 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
+
+/***/ }),
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(32);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FriendListEntry = function FriendListEntry(_ref) {
+  var friend = _ref.friend;
+
+
+  return _react2.default.createElement(
+    'tr',
+    null,
+    _react2.default.createElement(
+      'td',
+      null,
+      friend.name
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      friend.phone
+    )
+  );
+};
+
+exports.default = FriendListEntry;
 
 /***/ })
 /******/ ]);
