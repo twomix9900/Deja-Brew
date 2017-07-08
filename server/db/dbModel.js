@@ -5,6 +5,7 @@ const db = require('./index.js');
 const User = db.define('user', {
   nickname: Sequelize.STRING(32),
   email: Sequelize.STRING(64),
+  image: Sequelize.STRING,
   phone: Sequelize.STRING
 });
 
