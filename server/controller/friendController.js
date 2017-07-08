@@ -7,7 +7,13 @@ const friendController = {
 
   getAllFriends: (req, res) => {
     console.log('*** get all friends ***');
-    res.sendStatus(404);
+    Friend.findAll({ where : {
+      userId: req.params.userId
+    }})
+    .then((data) => {
+      res.status(200);
+      res.json(data);
+    })
   },
 
   getFriendEntry: (req, res) => {
@@ -16,6 +22,13 @@ const friendController = {
 
   updateFriendEntry: (req, res) => {
     console.log('update friend entry');
+    Friend.findOne({ where: {
+      userId: req.params.userId,
+      id: req.params.id
+    }})
+    .then((data) => {
+      console.log('exist - so update')
+    })
   },
 
   deleteFriendEntry: (req, res) => {

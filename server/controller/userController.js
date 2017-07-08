@@ -57,7 +57,6 @@ const userController = {
   },
   
   deleteUserEntry: (req, res) => {
-    console.log('delete user entry');
     User.destroy({ where: {
       id: req.params.id
     }})
