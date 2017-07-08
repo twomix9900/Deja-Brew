@@ -34,4 +34,8 @@ db.authenticate()
     console.log('error connecting to database', err);
   })
 
-module.exports = db;
+module.exports = {
+  db: db,
+  User: User,
+  Friend: Friend
+}
