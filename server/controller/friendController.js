@@ -27,7 +27,35 @@ const friendController = {
       id: req.params.id
     }})
     .then((data) => {
-      console.log('exist - so update')
+      if (data) {
+        console.log('i exist - so update');
+        Friend.update({
+          name: req.body.name,
+          phone: req.body.phone
+        }, { where: {
+          userId: req.params.userId,
+          id: req.params.id
+        }})
+        .then(() => {
+          console.log('update successful');
+          res.sendStatus(200);
+        })
+      } else {
+        console.log('i do not exist - so create');
+        Friend.create({
+          name: req.body.name,
+          phone: req.body.phone,
+          userId: req.params.userId
+        })
+        .then(() => {
+          console.log('friend successfully created');
+          res.sendStatus(201);
+        })
+        .catch((err) => {
+          console.log('error creating friend', err);
+          res.sendStatus(400);
+        })
+      }
     })
   },
 

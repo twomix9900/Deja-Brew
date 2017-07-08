@@ -13,12 +13,12 @@ const db = new Sequelize(process.env.DB_URL, {
 const User = db.define('user', {
   nickname: Sequelize.STRING(32),
   email: Sequelize.STRING(64),
-  phone: Sequelize.INTEGER
+  phone: Sequelize.STRING
 });
 
 const Friend = db.define('friend', {
   name: Sequelize.STRING(32),
-  phone: Sequelize.INTEGER
+  phone: Sequelize.STRING
 });
 
 User.hasMany(Friend);
