@@ -1,7 +1,4 @@
-const {
-  db,
-  Friend
- } = require('../db');
+const { Friend } = require('../db/dbModel.js');
 
 const friendController = {
 
