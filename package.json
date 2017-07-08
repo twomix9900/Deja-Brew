@@ -2,12 +2,17 @@
   "name": "deja-brew",
   "version": "1.0.0",
   "description": "places to find your favorite beer or brewery",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Deja-Brew/Deja-Brew.git"
+  },
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
     "build": "webpack --config public/webpack.config.js",
-    "dev": "webpack -w --config public/webpack.config.js"
+    "dev": "webpack -w --config public/webpack.config.js",
+    "db_init": "node ./scripts/db_init.js"
   },
   "author": "Adewale Balogun, Howard Chen, Kay Kim, Jason Shao",
   "license": "ISC",
