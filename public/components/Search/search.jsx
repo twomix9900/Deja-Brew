@@ -5,19 +5,20 @@ import axios from 'axios';
 class Search extends React.Component {
   constructor(props) {
     super(props);
+    console.log('props ' ,props)
     this.state = {
-      value: '',
-      results: null
+      
     };
   }
 
   searchDejaBrew() {
+    var vm = this;
     axios.get('/brewery/breweryLocations')
     .then(function (response) {
-      console.log(response.data.data);
-      this.setState({
-        results: response.data.data
-      })
+      var searchResults = response.data.data;
+      console.log('searchResults from search.jsx', searchResults);
+      console.log('vm.props' , vm.props)
+      vm.props.handleSearch(searchResults);
     })
     .catch(function (error) {
       console.log(error);

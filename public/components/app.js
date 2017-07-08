@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Search from './search.jsx'
+import Search from './Search/search.jsx';
+import BreweryList from './Brewery/breweryList.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
@@ -9,25 +10,25 @@ class App extends Component {
     super(props);
 
     this.state = {
-      results: null,
-      breweries: []
-    }
+      searchResults: []
+    };
   }
 
-  handleBrewerySearch() {
-    this.setState = {
-
-    }
+  handleSearch(searchData) {
+    this.setState({
+      searchResults: searchData
+    });
+    console.log('searchResults ', this.state.searchResults)
   }
 
   render() {
     return (
-      <div><strong>Welcome to Deja-Brew</strong>
-      <MuiThemeProvider>
-        <Search results = {this.state.results} />
-      </MuiThemeProvider>
-      <breweryList breweries={this.state.results}/>
-
+      <div>
+        <h1>Welcome to Deja-Brew</h1>
+        <MuiThemeProvider>
+          <Search handleSearch={this.handleSearch.bind(this)}/>
+        </MuiThemeProvider>
+          <BreweryList breweries={this.state.searchResults}/>
       </div>
     );
   }
