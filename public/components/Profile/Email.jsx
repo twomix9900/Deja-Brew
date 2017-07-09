@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-const Email = () => {
+const Email = ({ email }) => {
   return (
     <div>
-      ** Email Address Here **
+      email: { email }
     </div>
   )
 }

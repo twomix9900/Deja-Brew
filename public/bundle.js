@@ -14062,11 +14062,14 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Email = function Email() {
+var Email = function Email(_ref) {
+  var email = _ref.email;
+
   return _react2.default.createElement(
     'div',
     null,
-    '** Email Address Here **'
+    'email: ',
+    email
   );
 };
 
@@ -14444,7 +14447,7 @@ var Profile = function (_Component) {
         null,
         'Welcome to Profile Page',
         _react2.default.createElement(_UserImage2.default, { handleImageClick: this.handleChangeImage }),
-        _react2.default.createElement(_Email2.default, null),
+        _react2.default.createElement(_Email2.default, { email: this.state.userInfo.email }),
         _react2.default.createElement(_NickName2.default, { handleNameClick: this.handleNameChange, nickname: this.state.userInfo.nickname }),
         _react2.default.createElement(_Phone2.default, { handlePhoneClick: this.handlePhoneChange, phone: this.state.userInfo.phone }),
         _react2.default.createElement(_FriendList2.default, null),

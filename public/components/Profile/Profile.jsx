@@ -57,7 +57,7 @@ render() {
   return (
     <div>Welcome to Profile Page
       <UserImage handleImageClick={ this.handleChangeImage } />
-      <Email />
+      <Email email={ this.state.userInfo.email } />
       <NickName handleNameClick={ this.handleNameChange } nickname={ this.state.userInfo.nickname } />
       <Phone handlePhoneClick={ this.handlePhoneChange } phone={ this.state.userInfo.phone } />
       <FriendList />
