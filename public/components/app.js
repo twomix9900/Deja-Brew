@@ -31,7 +31,7 @@ class App extends Component {
           <Search handleSearch={this.handleSearch.bind(this)}/>
         </MuiThemeProvider>
           <BreweryList breweries={this.state.searchResults}/>
-      <div><strong>Welcome to Deja-Brew</strong>
+      
       <Profile />
       
       
