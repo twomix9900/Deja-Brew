@@ -6,6 +6,7 @@ import Email from './Email.jsx';
 import NickName from './NickName.jsx';
 import Phone from './Phone.jsx';
 import FriendList from './FriendList.jsx';
+import FriendAdd from './FriendAdd.jsx'
 
 export default class Profile extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ export default class Profile extends Component {
     this.UserImage = this.handleChangeImage.bind(this);
     this.NickName = this.handleNameChange.bind(this);
     this.Phone = this.handlePhoneChange.bind(this);
+    this.FriendAdd = this.handleAddFriend.bind(this);
     this.state = {
       userInfo: {}
     }
@@ -47,14 +49,19 @@ export default class Profile extends Component {
     console.log('inside handle phone change');
   }
 
+  handleAddFriend() {
+    console.log('inside handle add friend');
+  }
+
 render() {
   return (
     <div>Welcome to Profile Page
       <UserImage handleImageClick={ this.handleChangeImage } />
-      <Email />
+      <Email email={ this.state.userInfo.email } />
       <NickName handleNameClick={ this.handleNameChange } nickname={ this.state.userInfo.nickname } />
-      <Phone handlePhoneClick={ this.handlePhoneChange } />
+      <Phone handlePhoneClick={ this.handlePhoneChange } phone={ this.state.userInfo.phone } />
       <FriendList />
+      <FriendAdd handleAddFriendClick={ this.handleAddFriend } />
     </div>
   )}
 }
