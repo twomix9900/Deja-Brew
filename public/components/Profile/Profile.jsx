@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
 import UserImage from './UserImage.jsx';
 import Email from './Email.jsx';
 import NickName from './NickName.jsx';
@@ -17,6 +19,20 @@ export default class Profile extends Component {
     this.UserImage = this.handleChangeImage.bind(this);
     this.NickName = this.handleNameChange.bind(this);
     this.Phone = this.handlePhoneChange.bind(this);
+    this.state = {
+      userInfo: {}
+    }
+
+  }
+
+  componentWillMount() {
+    let userId = 1; // dummy data
+
+    axios.get('/users/' + userId)
+    .then((data) => {
+      console.log('successfully retrieved user data', data.data[0]);
+      this.setState({ userInfo: data.data[0]});
+    })
   }
 
   handleChangeImage () {
@@ -36,7 +52,7 @@ render() {
     <div>Welcome to Profile Page
       <UserImage handleImageClick={ this.handleChangeImage } />
       <Email />
-      <NickName handleNameClick={ this.handleNameChange } />
+      <NickName handleNameClick={ this.handleNameChange } nickname={ this.state.userInfo.nickname } />
       <Phone handlePhoneClick={ this.handlePhoneChange } />
       <FriendList />
     </div>

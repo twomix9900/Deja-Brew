@@ -17,7 +17,6 @@ export default class FriendList extends Component {
       return data.data;
     })
     .then((data) => {
-      console.log('cleaned up data', data);
       this.setState({ friendList: data });
     })
   };
