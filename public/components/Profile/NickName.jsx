@@ -10,7 +10,7 @@ export default class NickName extends Component {
   render() {
     return (
       <div onClick={(e) => 
-        { handleNameClick() }
+        { this.props.handleNameClick() }
         }>nickname:{ this.props.nickname }
       </div>
     )

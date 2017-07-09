@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 
-const Phone = ({ handlePhoneClick }) => {
-  return (
-    <div onClick={(e) => 
-      { handlePhoneClick() }
-      }>** User Phone Number Here **
-    </div>
-  )
-}
+export default class Phone extends Component {
 
-export default Phone;
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div onClick={(e) => 
+        { this.props.handlePhoneClick() }
+        }>Phone Number: { this.props.phone }
+      </div>
+    )
+  }
+}

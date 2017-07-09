@@ -14131,17 +14131,39 @@ var FriendList = function (_Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'table',
+        'div',
         null,
-        _react2.default.createElement('thead', null),
+        'Friends List',
         _react2.default.createElement(
-          'tbody',
+          'table',
           null,
-          this.state.friendList.map(function (friend, i) {
-            return _react2.default.createElement(_FriendListEntry2.default, {
-              friend: friend,
-              key: i });
-          })
+          _react2.default.createElement(
+            'thead',
+            null,
+            _react2.default.createElement(
+              'tr',
+              null,
+              _react2.default.createElement(
+                'th',
+                null,
+                'Name'
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
+                'Phone Number'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'tbody',
+            null,
+            this.state.friendList.map(function (friend, i) {
+              return _react2.default.createElement(_FriendListEntry2.default, {
+                friend: friend,
+                key: i });
+            })
+          )
         )
       );
     }
@@ -14231,10 +14253,12 @@ var NickName = function (_Component) {
   _createClass(NickName, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
         'div',
         { onClick: function onClick(e) {
-            handleNameClick();
+            _this2.props.handleNameClick();
           } },
         'nickname:',
         this.props.nickname
@@ -14258,23 +14282,47 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Phone = function Phone(_ref) {
-  var handlePhoneClick = _ref.handlePhoneClick;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  return _react2.default.createElement(
-    'div',
-    { onClick: function onClick(e) {
-        handlePhoneClick();
-      } },
-    '** User Phone Number Here **'
-  );
-};
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Phone = function (_Component) {
+  _inherits(Phone, _Component);
+
+  function Phone(props) {
+    _classCallCheck(this, Phone);
+
+    return _possibleConstructorReturn(this, (Phone.__proto__ || Object.getPrototypeOf(Phone)).call(this, props));
+  }
+
+  _createClass(Phone, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        { onClick: function onClick(e) {
+            _this2.props.handlePhoneClick();
+          } },
+        'Phone Number: ',
+        this.props.phone
+      );
+    }
+  }]);
+
+  return Phone;
+}(_react.Component);
 
 exports.default = Phone;
 
@@ -14319,6 +14367,10 @@ var _FriendList = __webpack_require__(183);
 
 var _FriendList2 = _interopRequireDefault(_FriendList);
 
+var _FriendAdd = __webpack_require__(403);
+
+var _FriendAdd2 = _interopRequireDefault(_FriendAdd);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14344,6 +14396,7 @@ var Profile = function (_Component) {
     _this.UserImage = _this.handleChangeImage.bind(_this);
     _this.NickName = _this.handleNameChange.bind(_this);
     _this.Phone = _this.handlePhoneChange.bind(_this);
+    _this.FriendAdd = _this.handleAddFriend.bind(_this);
     _this.state = {
       userInfo: {}
     };
@@ -14379,6 +14432,11 @@ var Profile = function (_Component) {
       console.log('inside handle phone change');
     }
   }, {
+    key: 'handleAddFriend',
+    value: function handleAddFriend() {
+      console.log('inside handle add friend');
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -14388,8 +14446,9 @@ var Profile = function (_Component) {
         _react2.default.createElement(_UserImage2.default, { handleImageClick: this.handleChangeImage }),
         _react2.default.createElement(_Email2.default, null),
         _react2.default.createElement(_NickName2.default, { handleNameClick: this.handleNameChange, nickname: this.state.userInfo.nickname }),
-        _react2.default.createElement(_Phone2.default, { handlePhoneClick: this.handlePhoneChange }),
-        _react2.default.createElement(_FriendList2.default, null)
+        _react2.default.createElement(_Phone2.default, { handlePhoneClick: this.handlePhoneChange, phone: this.state.userInfo.phone }),
+        _react2.default.createElement(_FriendList2.default, null),
+        _react2.default.createElement(_FriendAdd2.default, { handleAddFriendClick: this.handleAddFriend })
       );
     }
   }]);
@@ -35570,6 +35629,60 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+/* 403 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var FriendAdd = function (_Component) {
+  _inherits(FriendAdd, _Component);
+
+  function FriendAdd(props) {
+    _classCallCheck(this, FriendAdd);
+
+    return _possibleConstructorReturn(this, (FriendAdd.__proto__ || Object.getPrototypeOf(FriendAdd)).call(this, props));
+  }
+
+  _createClass(FriendAdd, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'button',
+        { onClick: function onClick(e) {
+            _this2.props.handleAddFriendClick();
+          } },
+        'Add Friend'
+      );
+    }
+  }]);
+
+  return FriendAdd;
+}(_react.Component);
+
+exports.default = FriendAdd;
 
 /***/ })
 /******/ ]);

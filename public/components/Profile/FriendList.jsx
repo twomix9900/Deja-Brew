@@ -23,17 +23,23 @@ export default class FriendList extends Component {
 
   render() {
     return (
-      <table>
-        <thead>
-        </thead>
-        <tbody>
-          {this.state.friendList.map((friend, i) => (
-            <FriendListEntry
-              friend={ friend }
-              key={ i } />
-            ))}
-        </tbody>
-      </table>
+      <div>Friends List
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.friendList.map((friend, i) => (
+              <FriendListEntry
+                friend={ friend }
+                key={ i } />
+              ))}
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
