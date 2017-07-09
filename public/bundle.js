@@ -14122,7 +14122,6 @@ var FriendList = function (_Component) {
     _axios2.default.get('/friends/' + userId).then(function (data) {
       return data.data;
     }).then(function (data) {
-      console.log('cleaned up data', data);
       _this.setState({ friendList: data });
     });
     return _this;
@@ -14203,23 +14202,48 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var NickName = function NickName(_ref) {
-  var handleNameClick = _ref.handleNameClick;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  return _react2.default.createElement(
-    'div',
-    { onClick: function onClick(e) {
-        handleNameClick();
-      } },
-    '** User Nickname Here **'
-  );
-};
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NickName = function (_Component) {
+  _inherits(NickName, _Component);
+
+  function NickName(props) {
+    _classCallCheck(this, NickName);
+
+    var _this = _possibleConstructorReturn(this, (NickName.__proto__ || Object.getPrototypeOf(NickName)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(NickName, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { onClick: function onClick(e) {
+            handleNameClick();
+          } },
+        'nickname:',
+        this.props.nickname
+      );
+    }
+  }]);
+
+  return NickName;
+}(_react.Component);
 
 exports.default = NickName;
 
@@ -14271,6 +14295,10 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _axios = __webpack_require__(104);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 var _UserImage = __webpack_require__(188);
 
 var _UserImage2 = _interopRequireDefault(_UserImage);
@@ -14316,10 +14344,26 @@ var Profile = function (_Component) {
     _this.UserImage = _this.handleChangeImage.bind(_this);
     _this.NickName = _this.handleNameChange.bind(_this);
     _this.Phone = _this.handlePhoneChange.bind(_this);
+    _this.state = {
+      userInfo: {}
+    };
+
     return _this;
   }
 
   _createClass(Profile, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var _this2 = this;
+
+      var userId = 1; // dummy data
+
+      _axios2.default.get('/users/' + userId).then(function (data) {
+        console.log('successfully retrieved user data', data.data[0]);
+        _this2.setState({ userInfo: data.data[0] });
+      });
+    }
+  }, {
     key: 'handleChangeImage',
     value: function handleChangeImage() {
       console.log('inside handle change image');
@@ -14343,7 +14387,7 @@ var Profile = function (_Component) {
         'Welcome to Profile Page',
         _react2.default.createElement(_UserImage2.default, { handleImageClick: this.handleChangeImage }),
         _react2.default.createElement(_Email2.default, null),
-        _react2.default.createElement(_NickName2.default, { handleNameClick: this.handleNameChange }),
+        _react2.default.createElement(_NickName2.default, { handleNameClick: this.handleNameChange, nickname: this.state.userInfo.nickname }),
         _react2.default.createElement(_Phone2.default, { handlePhoneClick: this.handlePhoneChange }),
         _react2.default.createElement(_FriendList2.default, null)
       );
