@@ -5,13 +5,22 @@ export default class NickName extends Component {
   constructor(props) {
     super(props);
     this.state = {}
+    this.addNickname=this.handleAddNickname.bind(this);
   };
+
+  handleAddNickname () {
+    console.log('inside handle nickname')
+  }
 
   render() {
     return (
-      <div onClick={(e) => 
-        { this.props.handleNameClick() }
-        }>nickname:{ this.props.nickname }
+      <div>
+        <span>nickname:{ this.props.nickname }
+          <button onClick={(e) => 
+            { this.addNickname() }
+            }>Edit
+          </button>
+        </span>
       </div>
     )
   }
