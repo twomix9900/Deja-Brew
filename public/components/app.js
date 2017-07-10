@@ -31,13 +31,14 @@ class App extends Component {
     return (
       <div>
         <h1>Welcome to Deja-Brew</h1>
+        <Profile />
         <MuiThemeProvider>
           <Search handleSearch={this.handleSearch.bind(this)}/>
         </MuiThemeProvider>
         <MuiThemeProvider>
           <BreweryList breweries={this.state.searchResults}/>
         </MuiThemeProvider>
-      <Profile />
+
   
       </div>
     );
