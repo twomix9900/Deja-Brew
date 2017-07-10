@@ -23,6 +23,10 @@ class App extends Component {
     console.log('searchResults ', this.state.searchResults)
   }
 
+  handleBeerSearch(searchData) {
+
+  }
+
   render() {
     return (
       <div>
@@ -30,6 +34,7 @@ class App extends Component {
         <MuiThemeProvider>
           <Search handleSearch={this.handleSearch.bind(this)}/>
         </MuiThemeProvider>
+        <MuiThemeProvider>
           <BreweryList breweries={this.state.searchResults}/>
       <Profile />
       
