@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { makeMainRoutes } from './router/routes'
 
-import App from './components/app';
+const routes = makeMainRoutes();
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(routes, document.getElementById('app'));
