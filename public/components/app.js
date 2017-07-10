@@ -5,6 +5,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
+import Profile from './Profile/Profile.jsx';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +31,8 @@ class App extends Component {
           <Search handleSearch={this.handleSearch.bind(this)}/>
         </MuiThemeProvider>
           <BreweryList breweries={this.state.searchResults}/>
+      <Profile />
+      
       </div>
     );
   }

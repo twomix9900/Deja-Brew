@@ -7,6 +7,6 @@ dist/
 logs
 .log
 
-dbconfig.js
+public/bundle.js
 
 .env
