@@ -28,6 +28,10 @@ app.use('/friends', friendRouter);
 app.use('/brewery', breweryRouter);
 
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+})
+
 db.authenticate()
   .then(() => User.sync())
   .then(() => Friend.sync())
