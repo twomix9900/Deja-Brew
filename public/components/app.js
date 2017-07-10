@@ -36,8 +36,9 @@ class App extends Component {
         </MuiThemeProvider>
         <MuiThemeProvider>
           <BreweryList breweries={this.state.searchResults}/>
+        </MuiThemeProvider>
       <Profile />
-      
+  
       </div>
     );
   }
