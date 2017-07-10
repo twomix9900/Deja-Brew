@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import UserImage from './UserImage.jsx';
 import Email from './Email.jsx';
 import NickName from './NickName.jsx';
 import Phone from './Phone.jsx';
 import FriendList from './FriendList.jsx';
+import UserImageDrop from './UserImage_Dropzone.jsx';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -40,7 +40,7 @@ export default class Profile extends Component {
 render() {
   return (
     <div>Welcome to Profile Page
-      <UserImage handleImageClick={ this.UserImage } />
+      <UserImageDrop />
       <Email email={ this.state.userInfo.email } />
       <NickName nickname={ this.state.userInfo.nickname } />
       <Phone phone={ this.state.userInfo.phone } />
