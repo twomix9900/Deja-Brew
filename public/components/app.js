@@ -6,6 +6,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Profile from './Profile/Profile.jsx';
 import { Navbar, Button } from 'react-bootstrap';
+import AccessGoogle from './GoogleMaps/googlemaps.jsx';
+
+
 injectTapEventPlugin();
 
 class App extends Component {
@@ -110,6 +113,7 @@ class App extends Component {
         </MuiThemeProvider>
 
   
+        <AccessGoogle />
       </div>
     );
   }
