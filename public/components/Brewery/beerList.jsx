@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BreweryListEntry from './breweryListEntry.jsx'
+import BeerListEntry from './beerListEntry.jsx'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {
   Table,
@@ -9,26 +9,26 @@ import {
   TableRow
 } from 'material-ui/Table';
 
-const BreweryList = ({breweries}) => (
+const BeerList = ({beers}) => (
   <div>
     <Table>
       <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
         <TableRow>
+        <TableHeaderColumn>Beer Name</TableHeaderColumn>
           <TableHeaderColumn>Image</TableHeaderColumn>
           {/*<TableHeaderColumn>ID</TableHeaderColumn>*/}
-          <TableHeaderColumn>Name</TableHeaderColumn>
+          <TableHeaderColumn>Brewery Name</TableHeaderColumn>
           <TableHeaderColumn>website</TableHeaderColumn>
-          <TableHeaderColumn>City</TableHeaderColumn>
           <TableHeaderColumn>Phone</TableHeaderColumn>
           <TableHeaderColumn>Address</TableHeaderColumn>
         </TableRow>
       </TableHeader>
       <TableBody >
-        {console.log('breweries from blist ', breweries)}
-        {breweries.map((brewery, i) => 
-            <BreweryListEntry
+        {console.log('beers from blist ', beers)}
+        {beers.map((beer, i) => 
+            <BeerListEntry
               key={i}
-              brewery={brewery}
+              beer={beer}
             />
         )}
       </TableBody>
@@ -36,4 +36,4 @@ const BreweryList = ({breweries}) => (
   </div>
 );
 
-export default BreweryList
+export default BeerList

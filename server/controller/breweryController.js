@@ -18,10 +18,8 @@ const breweryController = {
   },
 
   getDejaBrew: (req, res) => {
-    console.log('getDejaBrew server: ', req.params.dejaBrew)
-    console.log('getDejaBrew server: ', req.params.currentPage)
     var currentPage = parseInt(req.params.currentPage)
-    axios.get(baseUrl + 'search?q=' + req.params.dejaBrew + '&p=' + currentPage + '&withBreweries=Y&key=' + API_KEY)
+    axios.get(baseUrl + 'search?q=' + req.params.dejaBrew + '&p=' + currentPage + '&withBreweries=Y&withLocations=Y&key=' + API_KEY)
     .then((req) => {
       res.send(req.data)
     })
