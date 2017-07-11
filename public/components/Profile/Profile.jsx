@@ -42,7 +42,7 @@ render() {
     <div>Welcome to Profile Page
       <UserImageDrop />
       <Email email={ this.state.userInfo.email } />
-      <NickName nickname={ this.state.userInfo.nickname } />
+      <NickName userId={ this.state.userInfo.id } nickname={ this.state.userInfo.nickname } />
       <Phone phone={ this.state.userInfo.phone } />
       <FriendList />
     </div>
