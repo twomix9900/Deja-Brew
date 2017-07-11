@@ -16,6 +16,7 @@ class Search extends React.Component {
     var location = this.state.locationValue;
     var beer = this.state.beerValue;
     var vm = this;
+
     if(location && !beer) {
       console.log('location, no beer set')
       axios.get('/brewery/breweryLocations/' + location)
@@ -23,26 +24,36 @@ class Search extends React.Component {
         var breweries = response.data.data;
         console.log('searchResults from search.jsx', breweries);
         console.log('vm.props' , vm.props)
-        vm.props.handleSearch(breweries);
+        vm.props.handleBreweriesByLocationSearch(breweries);
       })
       .catch(function (error) {
         console.log(error);
       });
     }
     else if (!location && beer) {
-      console.log('no location, beer set')
-      axios.get('/brewery/beerId/' + beer) //get beerId from beer name (first result)
+      console.log('no location, beer/brewery set')
+      axios.get('/brewery/dejaBrew/' + beer + '/1' )
       .then(function (response) {
-        var beerNames = response.data.data;
-        console.log('this should be beerId', beerNames[0].id);
-        axios.get('/brewery/breweries/' + beerNames[0].id) //get brewery from beerId
-        .then(function (response) {
-          var breweries = response.data.data;
-          console.log('this should be brewery(s)', breweries);
-          vm.props.handleSearch(breweries);
-        })
+        //check for # of pages
+        let dejaBrewResults = response.data.data;
+        if(response.data.numberOfPages === 1) {
+          vm.separateBeerBrewery(dejaBrewResults, beer)
+        }
+        else {
+          for (var i = 1; i < response.data.numberOfPages; i++) { 
+            var getPage = i+1;
+            axios.get('/brewery/dejaBrew/' + beer + '/' + getPage)
+            .then(function(response) {
+              for (var i = 0; i < response.data.data.length; i++) {
+                dejaBrewResults.push(response.data.data[i])
+              }
+              if(response.data.numberOfPages === response.data.currentPage) {
+                vm.separateBeerBrewery(dejaBrewResults, beer)
+              }
+            })
+          }  
+        }
       })
-      
       .catch(function (error) {
         console.log(error);
       });
@@ -53,6 +64,30 @@ class Search extends React.Component {
     else {
       console.log('no beer or location, default get')
     }
+  }
+
+  separateBeerBrewery(dejaBrewResults, beer) {
+    let vm = this;
+    let beerResults = [];
+    let breweryResults = [];
+    for (var i = 0; i < dejaBrewResults.length; i++) {
+      if(dejaBrewResults[i].type === 'brewery') {
+        //console.log(dejaBrewResults[i].name)
+        var upperBrewery = beer.charAt(0).toUpperCase() + beer.slice(1);
+        if(dejaBrewResults[i].name.includes(upperBrewery)) {
+          breweryResults.push(dejaBrewResults[i])
+        }
+      }
+      else if(dejaBrewResults[i].type === 'beer') {
+          //console.log(dejaBrewResults[i].name)
+          var upperBeer = beer.charAt(0).toUpperCase() + beer.slice(1);
+        if(dejaBrewResults[i].name.includes(upperBeer)) {
+          beerResults.push(dejaBrewResults[i])
+        }
+      }
+    }
+    vm.props.handleBreweriesByBeerNameSearch(beerResults);
+    vm.props.handleBreweriesByBreweryNameSearch(breweryResults);
   }
 
   handleChange(event) {
