@@ -44,6 +44,7 @@ export const makeMainRoutes = () => {
         <div>
           <Route path="/" render={(props) => <App auth={auth} {...props} />} />
           <Route path="/home" render={(props) => <Home auth={auth} {...props} />} />
+          {/*<Route path="/breweriesByBeerName" render={(props) => <breweriesByBeerName auth={auth} {...props} />} />*/}
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
             return <Home auth={auth} userId={localStorage.userId} {...props} />
