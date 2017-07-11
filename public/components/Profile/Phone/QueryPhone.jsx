@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 const QueryPhone = () => {
   return (
-    <div>some other stuff here
+    <div>
+      <input type='text'></input>
+      <button>Submit</button>
     </div>
   )
 }

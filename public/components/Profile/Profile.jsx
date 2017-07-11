@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import Email from './Email.jsx';
-import NickName from './NickName.jsx';
-import Phone from './Phone.jsx';
-import FriendList from './FriendList.jsx';
+import NickName from './Nickname/NickName.jsx';
+import Phone from './Phone/Phone.jsx';
+import FriendList from './Friends/FriendList.jsx';
 import UserImageDrop from './UserImage_Dropzone.jsx';
 
 export default class Profile extends Component {
