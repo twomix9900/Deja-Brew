@@ -16,7 +16,7 @@ export default class NickName extends Component {
     return (
       <div>
         <span>nickname:{ this.props.nickname }
-          <button onClick={(e) => 
+          <button onClick={() => 
             { this.addNickname() }
             }>Edit
           </button>
