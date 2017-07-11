@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import FriendListEntry from './FriendListEntry.jsx';
+import FriendAdd from './FriendAdd.jsx'
 
 export default class FriendList extends Component {
   
@@ -9,8 +10,10 @@ export default class FriendList extends Component {
     this.state = {
       friendList: [],
     }
+    this.FriendAdd=this.handleAddFriend.bind(this)
+
    
-   let userId = 1; // dummy data
+    let userId = 1; // dummy data
 
     axios.get('/friends/' + userId)
     .then((data) => {
@@ -19,7 +22,12 @@ export default class FriendList extends Component {
     .then((data) => {
       this.setState({ friendList: data });
     })
+    
   };
+
+  handleAddFriend() {
+    console.log('inside handle add friend');
+  }
 
   render() {
     return (
@@ -39,6 +47,7 @@ export default class FriendList extends Component {
               ))}
           </tbody>
         </table>
+        <FriendAdd handleAddFriendClick={ this.FriendAdd } />
       </div>
     );
   }
