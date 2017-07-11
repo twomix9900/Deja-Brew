@@ -10,3 +10,4 @@ logs
 public/bundle.js
 
 .env
+public/Auth/auth0-variables.js
