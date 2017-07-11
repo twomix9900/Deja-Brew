@@ -9,7 +9,6 @@ import {
   TableRow
 } from 'material-ui/Table';
 
-
 const BreweryList = ({breweries}) => (
   <div>
     <Table>
@@ -27,12 +26,10 @@ const BreweryList = ({breweries}) => (
       <TableBody >
         {console.log('breweries from blist ', breweries)}
         {breweries.map((brewery, i) => 
-          
             <BreweryListEntry
               key={i}
               brewery={brewery}
             />
-          
         )}
       </TableBody>
     </Table>

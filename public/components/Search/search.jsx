@@ -30,17 +30,30 @@ class Search extends React.Component {
       });
     }
     else if (!location && beer) {
-      console.log('no location, beer set')
-      axios.get('/brewery/beerId/' + beer) //get beerId from beer name (first result)
+      let beerResults = [];
+      let breweryResults = [];
+      console.log('no location, beer/brewery set')
+      axios.get('/brewery/dejaBrew/' + beer + '/1' )
       .then(function (response) {
-        var beerNames = response.data.data;
-        console.log('this should be beerId', beerNames[0].id);
-        axios.get('/brewery/breweries/' + beerNames[0].id) //get brewery from beerId
-        .then(function (response) {
-          var breweries = response.data.data;
-          console.log('this should be brewery(s)', breweries);
-          vm.props.handleSearch(breweries);
-        })
+        //check for # of pages
+        let dejaBrewResults = response.data.data;
+        for (var i = 1; i < response.data.numberOfPages; i++) { 
+          var getPage = i + 1;
+          axios.get('/brewery/dejaBrew/' + beer + '/' + getPage)
+          .then(function(response) {
+            for (var i = 0; i < response.data.data.length; i++) {
+              dejaBrewResults.push(response.data.data[i])
+            }
+            if(response.data.numberOfPages === response.data.currentPage) {
+              for (var i = 0; i < dejaBrewResults.length; i++) {
+                dejaBrewResults[i].type === 'brewery' ? breweryResults.push(dejaBrewResults[i]) : beerResults.push(dejaBrewResults[i]) 
+              }
+              console.log('breweryResults: ', breweryResults);
+              console.log('beerResults: ' , beerResults)
+            }
+          })
+        }  
+        //vm.props.handleSearch(breweries);
       })
       
       .catch(function (error) {

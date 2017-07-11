@@ -29,8 +29,8 @@ class BreweryListEntry extends React.Component {
             : "../../images/No_picture_available.jpg"}/>
           </TableRowColumn>
           <TableRowColumn>{this.props.brewery.id}</TableRowColumn>
-          <TableRowColumn>{this.props.brewery.brewery.name}</TableRowColumn>
-          <TableRowColumn><a href={this.props.brewery.brewery.website}>{this.props.brewery.brewery.website}</a></TableRowColumn>
+          <TableRowColumn>{this.props.brewery.name? this.props.brewery.name : this.props.brewery.brewery.name}</TableRowColumn>
+          <TableRowColumn><a href={this.props.brewery.website ? this.props.brewery.website : this.props.brewery.brewery.website}>{this.props.brewery.website ? this.props.brewery.website : this.props.brewery.brewery.website}</a></TableRowColumn>
           <TableRowColumn>{this.props.brewery.locality}</TableRowColumn>
           <TableRowColumn>{this.props.brewery.phone}</TableRowColumn>
           <TableRowColumn>{this.props.brewery.streetAddress}</TableRowColumn>

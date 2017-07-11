@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Search from './Search/search.jsx';
 import BreweryList from './Brewery/breweryList.jsx';
+import DejaBrewTabs from './Brewery/dejaBrewTabs.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
@@ -37,6 +38,9 @@ class App extends Component {
         </MuiThemeProvider>
         <MuiThemeProvider>
           <BreweryList breweries={this.state.searchResults}/>
+        </MuiThemeProvider>
+        <MuiThemeProvider>
+        <DejaBrewTabs/>
         </MuiThemeProvider>
 
   
