@@ -17,9 +17,9 @@ const breweryController = {
     })
   },
 
-  getBeerIdFromBeerName: (req, res) => {
-    console.log('getBeerId server: ', req.params.beerName)
-    axios.get(baseUrl + 'search?q=' + req.params.beerName + '&type=beer&key=' + API_KEY)
+  getDejaBrew: (req, res) => {
+    var currentPage = parseInt(req.params.currentPage)
+    axios.get(baseUrl + 'search?q=' + req.params.dejaBrew + '&p=' + currentPage + '&withBreweries=Y&withLocations=Y&key=' + API_KEY)
     .then((req) => {
       res.send(req.data)
     })
@@ -31,6 +31,7 @@ const breweryController = {
 
   getBreweriesFromBeerId: (req, res) => {
     console.log('getBreweriesFromBeerId server: ', req.params.beerId)
+    console.log('get url: ' , baseUrl + 'beer/' + req.params.beerId + '/breweries?key=' + API_KEY)
     axios.get(baseUrl + 'beer/' + req.params.beerId + '/breweries?key=' + API_KEY)
     .then((req) => {
       console.log(req.data)
