@@ -30,9 +30,7 @@ const userController = {
 
   addUserEntry: (req, res) => {
     User.create({
-      nickname: req.body.nickname,
-      email: req.body.email,
-      phone: req.body.phone
+      auth0Id: req.body.auth0Id
     })
     .then(() => {
       res.sendStatus(201);
