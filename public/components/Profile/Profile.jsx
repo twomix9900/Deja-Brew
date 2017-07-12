@@ -43,7 +43,7 @@ render() {
       <UserImageDrop />
       <Email email={ this.state.userInfo.email } />
       <NickName userId={ this.state.userInfo.id } nickname={ this.state.userInfo.nickname } />
-      <Phone phone={ this.state.userInfo.phone } />
+      <Phone userId={ this.state.userInfo.id } phone={ this.state.userInfo.phone } />
       <FriendList />
     </div>
   )}

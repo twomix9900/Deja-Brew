@@ -7,10 +7,7 @@ export default class NickName extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      DisplayNickname: null,
-      Nickname: ''
-    }
+    this.state = {}
     this.editNickname=this.handleEditNickname.bind(this);
     this.submitNickname=this.handleSubmitName.bind(this);
   };
@@ -31,9 +28,6 @@ export default class NickName extends Component {
       .then(() => {
         this.setState({ DisplayNickname: <DisplayNickname handleNameClick={ this.editNickname } nickname={ nameSubmission } /> });
       })
-    console.log('*** inside handleSubmitName ***');
-    console.log('Nickname', this.state.Nickname);
-    console.log('name submission', nameSubmission);
     } else {
       this.setState({ DisplayNickname: <DisplayNickname handleNameClick={ this.editNickname } nickname={ this.state.Nickname } /> });
     }
