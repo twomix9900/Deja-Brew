@@ -7,6 +7,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Profile from './Profile/Profile.jsx';
 import { Navbar, Button } from 'react-bootstrap';
 import AccessGoogle from './GoogleMaps/googlemaps.jsx';
+// import DejaBrewNavBar from './Navbar/DejaBrewNavBar.jsx'
 
 
 injectTapEventPlugin();
@@ -43,80 +44,28 @@ class App extends Component {
     console.log('BreweriesByLocationArray ', this.state.BreweriesByLocationArray)
   }
 
-  goTo(route) {
-    this.props.history.replace(`/${route}`)
-  }
-
-  login() {
-    this.props.auth.login();
-  }
-
-  logout() {
-    this.props.auth.logout();
-  }
-
-
-  render() {
-    return (
-      <div>
-        <Navbar fluid>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="#">Auth0 - React</a>
-            </Navbar.Brand>
-            <Button
-              bsStyle="primary"
-              className="btn-margin"
-              onClick={this.goTo.bind(this, 'home')}
-            >
-              Home
-            </Button>
-            {
-              !this.props.auth.isAuthenticated() && (
-                <Button
-                  bsStyle="primary"
-                  className="btn-margin"
-                  onClick={this.login.bind(this)}
-                >
-                  Log In
-                  </Button>
-              )
-            }
-            {
-              this.props.auth.isAuthenticated() && (
-                <Button
-                  bsStyle="primary"
-                  className="btn-margin"
-                  onClick={this.logout.bind(this)}
-                >
-                  Log Out
-                  </Button>
-              )
-            }
-          </Navbar.Header>
-        </Navbar>
-        <h1>Welcome to Deja-Brew</h1>
-        <Profile />
-        <MuiThemeProvider>
-          <Search 
-          handleBreweriesByBeerNameSearch={this.handleBreweriesByBeerNameSearch.bind(this)}
-          handleBreweriesByBreweryNameSearch={this.handleBreweriesByBreweryNameSearch.bind(this)}
-          handleBreweriesByLocationSearch={this.handleBreweriesByLocationSearch.bind(this)}
-           />
-        </MuiThemeProvider>
-        <MuiThemeProvider>
-        <DejaBrewTabs 
-        beers={this.state.BreweriesByBeerNameArray}
-        breweries={this.state.BreweriesByBreweryNameArray}
-        breweryLocations={this.state.BreweriesByLocationArray}
-        />
-        </MuiThemeProvider>
-
-  
-        <AccessGoogle />
-      </div>
-    );
-  }
+    render() {
+      return (
+        <div>
+          <h1>Welcome to Deja-Brew</h1>
+          <MuiThemeProvider>
+            <Search
+              handleBreweriesByBeerNameSearch={this.handleBreweriesByBeerNameSearch.bind(this)}
+              handleBreweriesByBreweryNameSearch={this.handleBreweriesByBreweryNameSearch.bind(this)}
+              handleBreweriesByLocationSearch={this.handleBreweriesByLocationSearch.bind(this)}
+            />
+          </MuiThemeProvider>
+          <MuiThemeProvider>
+            <DejaBrewTabs
+              beers={this.state.BreweriesByBeerNameArray}
+              breweries={this.state.BreweriesByBreweryNameArray}
+              breweryLocations={this.state.BreweriesByLocationArray}
+            />
+          </MuiThemeProvider>
+          <AccessGoogle />
+        </div>
+      );
+    }
 
 }
 
