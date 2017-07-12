@@ -11,13 +11,13 @@ export default class QueryPhone extends Component {
   handleValidation(areacode, prefix, SLN){
     console.log('logic to validate valid phone number (' + areacode +') ' + prefix + '-' + SLN);
     if (areacode === undefined || prefix === undefined || SLN === undefined) {
-      alert('phone number incomplete');
+      alert('phone number incomplete'); // temporary placeholder alert
     } else {
       let areaDigit = Number(areacode.substring(0, 1));
       let preDigit = Number(prefix.substring(0, 1));
       let phoneNum = areacode + prefix + SLN;
       if (areaDigit === 0 || areaDigit === 1 || preDigit === 0 || preDigit === 1 || phoneNum.length < 10 || isNaN(phoneNum)) {
-        alert('not a valid phone number'); // temporary alert
+        alert('not a valid phone number'); // temporary placeholder alert
       } else {
         this.props.handleSubmit(phoneNum);
       }
