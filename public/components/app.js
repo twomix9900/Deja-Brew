@@ -7,8 +7,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Profile from './Profile/Profile.jsx';
 import { Navbar, Button } from 'react-bootstrap';
 import AccessGoogle from './GoogleMaps/googlemaps.jsx';
-// import DejaBrewNavBar from './Navbar/DejaBrewNavBar.jsx'
-
 
 injectTapEventPlugin();
 

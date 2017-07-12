@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 
-class Search extends React.Component {
+class Search extends React.Component  {
   constructor(props) {
     super(props);
     console.log('props ' ,props)
