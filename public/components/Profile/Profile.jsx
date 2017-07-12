@@ -40,7 +40,7 @@ export default class Profile extends Component {
 render() {
   return (
     <div>
-      <h3>Welcome to Profile Page</h3>
+      <h3>Hard Hats Required, Under Construction</h3>
       <NickName userId={ this.state.userInfo.id } nickname={ this.state.userInfo.nickname } />
       <UserImageDrop />
       <Email userId={ this.state.userInfo.id } email={ this.state.userInfo.email } />
