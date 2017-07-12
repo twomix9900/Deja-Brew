@@ -18,7 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "auth0-js": "^8.8.0",
-    "aws-sdk": "^2.82.0",
+    "aws-sdk": "^2.83.0",
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
     "cors": "^2.8.3",
@@ -41,7 +41,8 @@
     "sequelize": "^4.2.1",
     "style-loader": "^0.18.2",
     "svg-inline-loader": "^0.7.1",
-    "url-loader": "^0.5.9"
+    "url-loader": "^0.5.9",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
