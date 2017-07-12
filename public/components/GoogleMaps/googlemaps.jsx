@@ -8,20 +8,24 @@ import {
 import {
     withGoogleMap,
     GoogleMap,
-    Marker
+    Marker,
+    GoogleMapLoader
 } from 'react-google-maps';
-import { GoogleMapLoader } from "react-google-maps";
+
 
 const AccessGoogleMap = withGoogleMap(props => (
     <GoogleMap
-    defaultZoom={4}
-    defaultCenter={props.center}
+    ref={props.onMapLoad}
+    defaultZoom={12}
+    defaultCenter={{lat: 34.0211, lng: -118.3965 }}
     OnClick={props.onMapClick}
     >
-     {props.markers.map((marker, index) =>
-     <Marker position={marker.position} key={index} />
-     )}
-     hiiiiiii
+     {props.markers.map((marker, index) => (
+     <Marker 
+       {...marker}
+       onRightClick={() => props.onRightClick(index)}
+     />
+    ))}
     </GoogleMap>
 ));
 
@@ -30,7 +34,7 @@ class AccessGoogle extends Component {
         super(props);
         this.state = {
             markers: [],
-            center: new google.maps.LatLng(46.471979, -90.247285),
+            center: new google.maps.LatLng(34.0211, -118.3965),
         };
         this.handleMapClick = this.handleMapClick.bind(this);
     }
@@ -41,7 +45,7 @@ class AccessGoogle extends Component {
             center: event.LatLng,
             markers: [
                 ...this.state.markers,
-                { position: event.LatLng },
+                { position: event.LatLng, map: map },
             ],
         });
     }
@@ -51,10 +55,10 @@ class AccessGoogle extends Component {
             <div>
                 <AccessGoogleMap
                 containerElement={
-                    <div style={{height: `500px`}} />
+                    <div style={{height: `500px`, width: `70%`}} />
                 }
                 mapElement={
-                    <div style={{height: `500px`}} />
+                    <div style={{height: `500px`, width: `70%`}} />
                 }
                 onMapClick={this.handleMapClick}
                 center={this.state.center}
