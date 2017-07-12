@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Button } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom'
-// import Auth from '../../auth/Auth'
 
 class DejaBrewNavBar extends React.Component {
   constructor(props) {
@@ -27,7 +25,7 @@ class DejaBrewNavBar extends React.Component {
         <Navbar fluid>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#">Deja-Brew</a>
+              <a href="#">Deja-Brew xoxo</a>
             </Navbar.Brand>
 
             {
@@ -59,13 +57,17 @@ class DejaBrewNavBar extends React.Component {
             >
               Home
             </Button>
-            <Button
-              bsStyle="primary"
-              className="btn-margin"
-              onClick={this.goTo.bind(this, 'profile')}
-            >
-              Profile
-            </Button>
+            {
+              this.props.auth.isAuthenticated() && (
+                <Button
+                  bsStyle="primary"
+                  className="btn-margin"
+                  onClick={this.goTo.bind(this, 'profile')}
+                >
+                  Profile
+                  </Button>
+              )
+            }
           </Navbar.Header>
         </Navbar>
       </div>
