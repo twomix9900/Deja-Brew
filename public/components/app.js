@@ -44,7 +44,7 @@ class App extends Component {
 
     render() {
       return (
-        <div>
+        <div className="container">
           <h1>Welcome to Deja-Brew</h1>
           <MuiThemeProvider>
             <Search
