@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import FriendListEntry from './FriendListEntry.jsx';
 import FriendAdd from './FriendAdd.jsx'
+import QueryFriendInfo from './QueryFriendInfo.jsx'
 
 export default class FriendList extends Component {
   
@@ -10,23 +11,71 @@ export default class FriendList extends Component {
     this.state = {
       friendList: [],
     }
-    this.FriendAdd=this.handleAddFriend.bind(this)
+    this.FriendAdd=this.handleAddFriend.bind(this);
+    this.FriendEdit=this.handleEditFriend.bind(this);
+    this.FriendDelete=this.handleDeleteFriend.bind(this);
+    this.handleSubmit=this.handleSubmitFriend.bind(this);
 
-   
-    let userId = 1; // dummy data
+    };
 
-    axios.get('/friends/' + userId)
+    componentWillReceiveProps(NextProps) {
+      console.log('Props Coming In', NextProps);
+    axios.get('/friends/' + NextProps.userId)
+    .then((data) => {
+      return data.data;
+    })
+    .then((data) => {
+      this.setState({ friendList: data });
+    })  
+  };
+
+  getFriendData() {
+    axios.get('/friends/' + this.props.userId)
     .then((data) => {
       return data.data;
     })
     .then((data) => {
       this.setState({ friendList: data });
     })
-    
-  };
+  }
+
+  componentWillMount() {
+    this.setState({ newFriendQuery: <FriendAdd handleAddFriendClick={ this.FriendAdd } /> })
+  }
 
   handleAddFriend() {
     console.log('inside handle add friend');
+    this.setState({ newFriendQuery: <QueryFriendInfo handleSubmit={ this.handleSubmit } /> })
+  }
+
+  handleEditFriend(id) {
+    console.log('friend',id,'to be changed');
+  }
+
+  handleDeleteFriend(id, idx) {
+    console.log('friend',id,'has been selected for termination')
+    axios.delete('/friends/' + this.props.userId + '/' + id)
+      .then(() => {
+        let friends = this.state.friendList.slice();
+        friends.splice(idx, 1);
+        this.setState({ friendList: friends})
+        console.log('ex-friend has been successfully removed')
+      })
+      .catch((err) => {
+        console.log('cannot get rid of your friend', err)
+      })
+  }
+
+  handleSubmitFriend(friendName, phone) {
+    if (friendName === undefined && phone === undefined) {
+      this.setState({ newFriendQuery: <FriendAdd handleAddFriendClick={ this.FriendAdd } /> })
+    } else {
+      axios.put('friends/' + this.props.userId, { name: friendName, phone: '+1 ' + phone })
+      .then(() => {
+        this.getFriendData();
+        this.setState({ newFriendQuery: <FriendAdd handleAddFriendClick={ this.FriendAdd } /> })
+      })
+    }
   }
 
   render() {
@@ -41,13 +90,17 @@ export default class FriendList extends Component {
           </thead>
           <tbody>
             {this.state.friendList.map((friend, i) => (
-              <FriendListEntry
+              <FriendListEntry 
+                handleEditFriendClick={ this.FriendEdit }
+                handleDeleteFriendClick={ this.FriendDelete }
                 friend={ friend }
-                key={ i } />
+                key={ i } 
+                id={ friend.id } 
+                idx={ i }/>
               ))}
           </tbody>
         </table>
-        <FriendAdd handleAddFriendClick={ this.FriendAdd } />
+        { this.state.newFriendQuery }
       </div>
     );
   }
