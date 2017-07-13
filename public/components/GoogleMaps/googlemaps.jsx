@@ -1,74 +1,116 @@
-
-//import axios from 'axios';
-//import RaisedButton from 'material-ui/RaisedButton';
 import {
     default as React,
     Component,
-} from 'react';
+} from "react";
+
+import Helmet from "react-helmet";
+
 import {
     withGoogleMap,
     GoogleMap,
     Marker,
-    GoogleMapLoader
-} from 'react-google-maps';
+} from "react-google-maps";
 
-
-const AccessGoogleMap = withGoogleMap(props => (
+const GettingStartedGoogleMap = withGoogleMap(props => (
     <GoogleMap
-    ref={props.onMapLoad}
-    defaultZoom={12}
-    defaultCenter={{lat: 34.0211, lng: -118.3965 }}
-    OnClick={props.onMapClick}
+        ref={props.onMapLoad}
+        defaultZoom={14}
+        defaultCenter={{ lat: 33.9736654, lng: -118.3918887 }}
+        onClick={props.onMapClick}
     >
-     {props.markers.map((marker, index) => (
-     <Marker 
-       {...marker}
-       onRightClick={() => props.onRightClick(index)}
-     />
-    ))}
+        {props.markers.map(marker => (
+            <Marker
+                {...marker}
+                onRightClick={() => props.onMarkerRightClick(marker)}
+            />
+        ))}
     </GoogleMap>
 ));
 
-class AccessGoogle extends Component {
+export default class AccessGoogle extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
-            markers: [],
-            center: new google.maps.LatLng(34.0211, -118.3965),
+            markers: [{
+                position: {
+                    lat: 33.9759479,
+                    lng: -118.3929176
+                },
+                key: `Home`,
+                defaultAnimation: 2,
+            }, {
+                position: {
+                    lat: 33.7705109,
+                    lng: -118.1597921
+                },
+                key: `Home 2`,
+                defaultAnimation: 2
+            }],
         };
+        this.handleMapLoad = this.handleMapLoad.bind(this);
         this.handleMapClick = this.handleMapClick.bind(this);
+        this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
+
     }
 
 
+    handleMapLoad(map) {
+        this._mapComponent = map;
+        if (map) {
+            console.log(map.getZoom());
+        }
+    }
+
+    /*
+     * This is called when you click on the map.
+     * Go and try click now.
+     */
     handleMapClick(event) {
+        const nextMarkers = [
+            ...this.state.markers,
+            {
+                position: event.latLng,
+                defaultAnimation: 2,
+                key: Date.now(), // Add a key property for: http://fb.me/react-warning-keys
+            },
+        ];
         this.setState({
-            center: event.LatLng,
-            markers: [
-                ...this.state.markers,
-                { position: event.LatLng, map: map },
-            ],
+            markers: nextMarkers,
+        });
+    }
+
+    handleMarkerRightClick(targetMarker) {
+        /*
+         * All you modify is data, and the view is driven by data.
+         * This is so called data-driven-development. (And yes, it's now in
+         * web front end and even with google maps API.)
+         */
+        const nextMarkers = this.state.markers.filter(marker => marker !== targetMarker);
+        this.setState({
+            markers: nextMarkers,
         });
     }
 
     render() {
+        console.log('inside accessgoogle')
         return (
-            <div>
-                <AccessGoogleMap
-                containerElement={
-                    <div style={{height: `500px`, width: `70%`}} />
-                }
-                mapElement={
-                    <div style={{height: `500px`, width: `70%`}} />
-                }
-                onMapClick={this.handleMapClick}
-                center={this.state.center}
-                markers={this.state.markers}
+            <div style={{ height: `2000px` }}>
+                <GettingStartedGoogleMap
+                    containerElement={
+                        <div style={{ height: `500px`, width: `70%` }} />
+                    }
+                    mapElement={
+                        <div style={{ height: `500px`, width: `70%` }} />
+                    }
+                    onMapLoad={this.handleMapLoad}
+                    onMapClick={this.handleMapClick}
+                    markers={this.state.markers}
+                    onMarkerRightClick={this.handleMarkerRightClick}
                 />
             </div>
         );
     }
 }
 
-export default AccessGoogle;
 
 
