@@ -68,6 +68,17 @@ class DejaBrewNavBar extends React.Component {
                   </Button>
               )
             }
+            {
+              this.props.auth.isAuthenticated() && (
+                <Button
+                  bsStyle="primary"
+                  className="btn-margin"
+                  onClick={this.goTo.bind(this, 'details')}
+                >
+                  Details (TESTING ONLY)
+                  </Button>
+              )
+            }
           </Navbar.Header>
         </Navbar>
       </div>
