@@ -7,6 +7,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Profile from './Profile/Profile.jsx';
 import { Navbar, Button } from 'react-bootstrap';
 import AccessGoogle from './GoogleMaps/googlemaps.jsx';
+import Details from './Details/Details.jsx';
+import Route from 'react-router';
 
 injectTapEventPlugin();
 
@@ -43,6 +45,7 @@ class App extends Component {
   }
 
     render() {
+      console.log('rendering app');
       return (
         <div className="container">
           <h1>Welcome to Deja-Brew</h1>
@@ -60,6 +63,7 @@ class App extends Component {
               breweryLocations={this.state.BreweriesByLocationArray}
             />
           </MuiThemeProvider>
+          <Details hi={'hi'} />
           <AccessGoogle />
         </div>
       );
