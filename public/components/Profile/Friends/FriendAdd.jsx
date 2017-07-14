@@ -7,7 +7,6 @@ export default class FriendAdd extends Component {
   }
 
   render() {
-    console.log('what is friend props', this.props)
     return (
       <button onClick={(e) => { this.props.handleAddFriendClick() }}>Add Friend
       </button>

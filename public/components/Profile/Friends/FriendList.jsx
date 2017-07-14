@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import FriendListEntry from './FriendListEntry.jsx';
-import FriendAdd from './FriendAdd.jsx'
-import QueryFriendInfo from './QueryFriendInfo.jsx'
+import FriendAdd from './FriendAdd.jsx';
+import QueryFriendInfo from './QueryFriendInfo.jsx';
+import EditFriendEntry from './EditFriendEntry.jsx';
 
 export default class FriendList extends Component {
   
@@ -15,11 +16,11 @@ export default class FriendList extends Component {
     this.FriendEdit=this.handleEditFriend.bind(this);
     this.FriendDelete=this.handleDeleteFriend.bind(this);
     this.handleSubmit=this.handleSubmitFriend.bind(this);
+    this.handleEditSubmit=this.handleEditSubmit.bind(this);
 
     };
 
     componentWillReceiveProps(NextProps) {
-      console.log('Props Coming In', NextProps);
     axios.get('/friends/' + NextProps.userId)
     .then((data) => {
       return data.data;
@@ -48,8 +49,11 @@ export default class FriendList extends Component {
     this.setState({ newFriendQuery: <QueryFriendInfo handleSubmit={ this.handleSubmit } /> })
   }
 
-  handleEditFriend(id) {
-    console.log('friend',id,'to be changed');
+  handleEditFriend(id, idx) {
+    let friends = this.state.friendList.slice();
+    friends[idx].edit = 1;
+    this.setState({ friendList: friends });
+    console.log('friend',id,'to be changed', friends);
   }
 
   handleDeleteFriend(id, idx) {
@@ -78,6 +82,21 @@ export default class FriendList extends Component {
     }
   }
 
+  handleEditSubmit(friendName, phone, id, idx) {
+    let friends = this.state.friendList.slice();
+    friends[idx].edit = 0;
+    if (friendName === undefined && phone === undefined) {
+      this.setState({ friendList: friends });
+    } else {
+      axios.put('friends/' + this.props.userId + '?id=' + id, { name: friendName, phone: '+1 ' + phone })
+      .then(() => {
+      friends[idx].name = friendName;
+      friends[idx].phone = '+1 ' + phone;
+      this.setState({ friendList: friends });
+      })
+    }
+  }
+
   render() {
     return (
       <div>Friends List
@@ -89,15 +108,23 @@ export default class FriendList extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.friendList.map((friend, i) => (
-              <FriendListEntry 
+            { this.state.friendList.map((friend, i) => 
+              (friend.edit === 0 || friend.edit === undefined) ? (
+                <FriendListEntry 
                 handleEditFriendClick={ this.FriendEdit }
                 handleDeleteFriendClick={ this.FriendDelete }
                 friend={ friend }
                 key={ i } 
                 id={ friend.id } 
                 idx={ i }/>
-              ))}
+              ) : (
+                <EditFriendEntry 
+                handleEditSubmit={ this.handleEditSubmit }
+                key={ i }
+                id={ friend.id }
+                idx={ i }/>
+              )
+            )}
           </tbody>
         </table>
         { this.state.newFriendQuery }
