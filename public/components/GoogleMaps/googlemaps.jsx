@@ -4,12 +4,14 @@ import {
 } from "react";
 
 import Helmet from "react-helmet";
-
+import _ from "lodash";
 import {
+    GoogleMapLoader,
     withGoogleMap,
     GoogleMap,
     Marker,
 } from "react-google-maps";
+
 
 const GettingStartedGoogleMap = withGoogleMap(props => (
     <GoogleMap
@@ -66,6 +68,7 @@ export default class AccessGoogle extends Component {
      * Go and try click now.
      */
     handleMapClick(event) {
+        console.log('regular old click');
         const nextMarkers = [
             ...this.state.markers,
             {
@@ -80,6 +83,7 @@ export default class AccessGoogle extends Component {
     }
 
     handleMarkerRightClick(targetMarker) {
+        console.log('righthandleClick');
         /*
          * All you modify is data, and the view is driven by data.
          * This is so called data-driven-development. (And yes, it's now in
@@ -92,7 +96,6 @@ export default class AccessGoogle extends Component {
     }
 
     render() {
-        console.log('inside accessgoogle')
         return (
             <div style={{ height: `2000px` }}>
                 <GettingStartedGoogleMap

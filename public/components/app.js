@@ -113,7 +113,10 @@ class App extends Component {
         </MuiThemeProvider>
 
   
-        <AccessGoogle />
+        <AccessGoogle 
+        beersMarker={this.state.BreweriesByBeerNameArray}
+        breweriesMarker={this.state.BreweriesByBreweryNameArray}
+        breweryLocationsMarker={this.state.BreweriesByLocationArray}/>
       </div>
     );
   }
