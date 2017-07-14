@@ -3,7 +3,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 const styles = {
   button: {
-    margin: 20,
+    margin: 5,
     height: 20,
     primary: true
   }
