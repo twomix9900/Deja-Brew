@@ -14,7 +14,7 @@ import { GoogleMapLoader } from "react-google-maps";
 
 const AccessGoogleMap = withGoogleMap(props => (
     <GoogleMap
-    defaultZoom={4}
+    defaultZoom={12}
     defaultCenter={props.center}
     OnClick={props.onMapClick}
     >
@@ -30,7 +30,7 @@ class AccessGoogle extends Component {
         super(props);
         this.state = {
             markers: [],
-            center: new google.maps.LatLng(46.471979, -90.247285),
+            center: new google.maps.LatLng(33.976002, -118.390891),
         };
         this.handleMapClick = this.handleMapClick.bind(this);
     }

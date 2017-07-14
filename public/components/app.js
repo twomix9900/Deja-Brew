@@ -25,21 +25,25 @@ class App extends Component {
 
   handleBreweriesByBeerNameSearch(searchData) {
     this.setState({
-      BreweriesByBeerNameArray: searchData
+      BreweriesByBeerNameArray: searchData,
+      BreweriesByLocationArray: []
     });
     console.log('BreweriesByBeerNameArray ', this.state.BreweriesByBeerNameArray)
   }
 
   handleBreweriesByBreweryNameSearch(searchData) {
     this.setState({
-      BreweriesByBreweryNameArray: searchData
+      BreweriesByBreweryNameArray: searchData,
+      BreweriesByLocationArray: []
     });
     console.log('BreweriesByBreweryNameArray ', this.state.BreweriesByBreweryNameArray)
   }
 
     handleBreweriesByLocationSearch(searchData) {
     this.setState({
-      BreweriesByLocationArray: searchData
+      BreweriesByLocationArray: searchData,
+      BreweriesByBeerNameArray: [],
+      BreweriesByBreweryNameArray: []
     });
     console.log('BreweriesByLocationArray ', this.state.BreweriesByLocationArray)
   }
@@ -47,8 +51,9 @@ class App extends Component {
     render() {
       console.log('rendering app');
       return (
-        <div className="container">
-          <h1>Welcome to Deja-Brew</h1>
+        <div className="backgroundImage">
+          <div className="container">
+          <h1 className="headerStyle">Welcome to Deja-Brew</h1>
           <MuiThemeProvider>
             <Search
               handleBreweriesByBeerNameSearch={this.handleBreweriesByBeerNameSearch.bind(this)}
@@ -56,6 +61,7 @@ class App extends Component {
               handleBreweriesByLocationSearch={this.handleBreweriesByLocationSearch.bind(this)}
             />
           </MuiThemeProvider>
+          <AccessGoogle />
           <MuiThemeProvider>
             <DejaBrewTabs
               beers={this.state.BreweriesByBeerNameArray}
@@ -64,7 +70,7 @@ class App extends Component {
             />
           </MuiThemeProvider>
           <Details hi={'hi'} />
-          <AccessGoogle />
+          </div>
         </div>
       );
     }
