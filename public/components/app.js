@@ -62,9 +62,9 @@ class App extends Component {
             />
           </MuiThemeProvider>
           <AccessGoogle 
-              beers={this.state.BreweriesByBeerNameArray}
-              breweries={this.state.BreweriesByBreweryNameArray}
-              breweryLocations={this.state.BreweriesByLocationArray}
+              beersMarker={this.state.BreweriesByBeerNameArray}
+              breweriesMarker={this.state.BreweriesByBreweryNameArray}
+              breweryLocationsMarker={this.state.BreweriesByLocationArray}
           />
           <MuiThemeProvider>
             <DejaBrewTabs

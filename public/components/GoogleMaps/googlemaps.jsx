@@ -32,6 +32,8 @@ const GettingStartedGoogleMap = withGoogleMap(props => (
 export default class AccessGoogle extends Component {
     constructor(props) {
         super(props)
+        console.log('props', this.props.beersMarker);
+       // for(let i = 0; i < this.props.breweryLocationsMarker; i++)
         this.state = {
             markers: [{
                 position: {
@@ -69,6 +71,7 @@ export default class AccessGoogle extends Component {
      */
     handleMapClick(event) {
         console.log('regular old click');
+        console.log('this.props-->',this.props);
         const nextMarkers = [
             ...this.state.markers,
             {
@@ -80,7 +83,7 @@ export default class AccessGoogle extends Component {
         this.setState({
             markers: nextMarkers,
         });
-    }
+     }
 
     handleMarkerRightClick(targetMarker) {
         console.log('righthandleClick');
@@ -97,13 +100,13 @@ export default class AccessGoogle extends Component {
 
     render() {
         return (
-            <div style={{ height: `2000px` }}>
+            <div >
                 <GettingStartedGoogleMap
                     containerElement={
-                        <div style={{ height: `500px`, width: `80%` }} />
+                        <div style={{ height: `500px`, width: `100%` }} />
                     }
                     mapElement={
-                        <div style={{ height: `500px`, width: `80%` }} />
+                        <div style={{ height: `500px`, width: `100%` }} />
                     }
                     onMapLoad={this.handleMapLoad}
                     onMapClick={this.handleMapClick}
