@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import {
+  TableRow,
+  TableRowColumn
+} from 'material-ui/Table';
+import RaisedButton from 'material-ui/RaisedButton'
 
 export default class EditFriendEntry extends Component {
 
@@ -34,15 +39,15 @@ export default class EditFriendEntry extends Component {
     let prefix;
     let SLN;
     return (
-        <tr>
-          <td>Name:
-          <input type='text' onChange={(e) => friendName = e.target.value }></input></td>
-          <td>Phone: (<input type='text' maxLength='3' size='1' onChange={(e) => areacode = e.target.value } ></input>
+        <TableRow>
+          <TableRowColumn>Name:
+          <input type='text' onChange={(e) => friendName = e.target.value }></input></TableRowColumn>
+          <TableRowColumn>Phone: (<input type='text' maxLength='3' size='1' onChange={(e) => areacode = e.target.value } ></input>
           )<input type='text' maxLength='3' size='1' onChange={(e) => prefix = e.target.value } ></input>          
-          -<input type='text' maxLength='4' size='2' onChange={(e) => SLN = e.target.value } ></input></td>
-          <td><button onClick={() => { this.validate(friendName, areacode, prefix, SLN) }}>Submit</button></td>
-          <td><button onClick={() => { this.props.handleEditSubmit(undefined, undefined, this.props.id, this.props.idx) }}>Cancel</button></td>
-        </tr>
+          -<input type='text' maxLength='4' size='2' onChange={(e) => SLN = e.target.value } ></input></TableRowColumn>
+          <TableRowColumn><RaisedButton onClick={() => { this.validate(friendName, areacode, prefix, SLN) }} label="Submit"/></TableRowColumn>
+          <TableRowColumn><RaisedButton onClick={() => { this.props.handleEditSubmit(undefined, undefined, this.props.id, this.props.idx) }} label="Cancel" /></TableRowColumn>
+        </TableRow>
     )
   }
 }
