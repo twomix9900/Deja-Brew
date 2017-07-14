@@ -1,8 +1,54 @@
-body {
-  font-family: 'Roboto', sans-serif;
+html {
+  height: 100%;
 }
 
-.beerTextBox {
-  width:300px;
-  margin-right:20px;
+#app > [data-reactroot] { height: 100% }
+
+#app {
+  height: 100%;
 }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  height: 100%;
+}
+
+#textBox {
+  height:40px;
+  width:300px;
+  display:inline-block;
+  margin-bottom:20px;
+  margin-left:30px;
+}
+
+#textBoxLocation {
+  height:40px;
+  width:250px;
+  display:inline-block;
+  margin-bottom:20px;
+  margin-left:30px;
+}
+
+.backgroundImage {
+  background-image: url("./images/pouring-beer.jpg");
+  background-size: cover;
+  height:100%;
+}
+
+.container {
+  height:100%;
+}
+
+.headerStyle {
+  color: #FFFFFF;
+}
+
+.dropDown {
+  background-color:#FFFFFF;
+  margin-left:20px;
+  /* max-height:200px */
+}
+
+ .dropDown > div > div:nth-child(2) {
+  overflow:visible !important
+} 

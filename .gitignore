@@ -4,8 +4,8 @@ bower_components/
 build/
 dist/
 
-logs
 .log
+.DS_Store
 
 public/bundle.js
 

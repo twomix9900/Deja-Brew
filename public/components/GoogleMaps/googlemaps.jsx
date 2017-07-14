@@ -100,10 +100,10 @@ export default class AccessGoogle extends Component {
             <div style={{ height: `2000px` }}>
                 <GettingStartedGoogleMap
                     containerElement={
-                        <div style={{ height: `500px`, width: `70%` }} />
+                        <div style={{ height: `500px`, width: `80%` }} />
                     }
                     mapElement={
-                        <div style={{ height: `500px`, width: `70%` }} />
+                        <div style={{ height: `500px`, width: `80%` }} />
                     }
                     onMapLoad={this.handleMapLoad}
                     onMapClick={this.handleMapClick}

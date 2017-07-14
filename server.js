@@ -11,6 +11,7 @@ const {
 const userRouter = require('./server/router/userRouter.js');
 const friendRouter = require('./server/router/friendRouter.js');
 const breweryRouter = require('./server/router/breweryRouter.js');
+const s3ImageRouter = require('./server/router/s3ImageRouter.js');
 const cors = require('cors');
 
 const app = express();
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname,'./public')));
 app.use('/users', userRouter);
 app.use('/friends', friendRouter);
 app.use('/brewery', breweryRouter);
+app.use('/images', s3ImageRouter);
 
 
 app.get('*', (req, res) => {

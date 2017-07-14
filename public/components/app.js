@@ -7,7 +7,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Profile from './Profile/Profile.jsx';
 import { Navbar, Button } from 'react-bootstrap';
 import AccessGoogle from './GoogleMaps/googlemaps.jsx';
-
+import Details from './Details/Details.jsx';
+import Route from 'react-router';
 
 injectTapEventPlugin();
 
@@ -24,102 +25,59 @@ class App extends Component {
 
   handleBreweriesByBeerNameSearch(searchData) {
     this.setState({
-      BreweriesByBeerNameArray: searchData
+      BreweriesByBeerNameArray: searchData,
+      BreweriesByLocationArray: []
     });
     console.log('BreweriesByBeerNameArray ', this.state.BreweriesByBeerNameArray)
   }
 
   handleBreweriesByBreweryNameSearch(searchData) {
     this.setState({
-      BreweriesByBreweryNameArray: searchData
+      BreweriesByBreweryNameArray: searchData,
+      BreweriesByLocationArray: []
     });
     console.log('BreweriesByBreweryNameArray ', this.state.BreweriesByBreweryNameArray)
   }
 
     handleBreweriesByLocationSearch(searchData) {
     this.setState({
-      BreweriesByLocationArray: searchData
+      BreweriesByLocationArray: searchData,
+      BreweriesByBeerNameArray: [],
+      BreweriesByBreweryNameArray: []
     });
     console.log('BreweriesByLocationArray ', this.state.BreweriesByLocationArray)
   }
 
-  goTo(route) {
-    this.props.history.replace(`/${route}`)
-  }
-
-  login() {
-    this.props.auth.login();
-  }
-
-  logout() {
-    this.props.auth.logout();
-  }
-
-
-  render() {
-    return (
-      <div>
-        <Navbar fluid>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="#">Auth0 - React</a>
-            </Navbar.Brand>
-            <Button
-              bsStyle="primary"
-              className="btn-margin"
-              onClick={this.goTo.bind(this, 'home')}
-            >
-              Home
-            </Button>
-            {
-              !this.props.auth.isAuthenticated() && (
-                <Button
-                  bsStyle="primary"
-                  className="btn-margin"
-                  onClick={this.login.bind(this)}
-                >
-                  Log In
-                  </Button>
-              )
-            }
-            {
-              this.props.auth.isAuthenticated() && (
-                <Button
-                  bsStyle="primary"
-                  className="btn-margin"
-                  onClick={this.logout.bind(this)}
-                >
-                  Log Out
-                  </Button>
-              )
-            }
-          </Navbar.Header>
-        </Navbar>
-        <h1>Welcome to Deja-Brew</h1>
-        <Profile />
-        <MuiThemeProvider>
-          <Search 
-          handleBreweriesByBeerNameSearch={this.handleBreweriesByBeerNameSearch.bind(this)}
-          handleBreweriesByBreweryNameSearch={this.handleBreweriesByBreweryNameSearch.bind(this)}
-          handleBreweriesByLocationSearch={this.handleBreweriesByLocationSearch.bind(this)}
-           />
-        </MuiThemeProvider>
-        <MuiThemeProvider>
-        <DejaBrewTabs 
-        beers={this.state.BreweriesByBeerNameArray}
-        breweries={this.state.BreweriesByBreweryNameArray}
-        breweryLocations={this.state.BreweriesByLocationArray}
-        />
-        </MuiThemeProvider>
-
-  
-        <AccessGoogle 
-        beersMarker={this.state.BreweriesByBeerNameArray}
-        breweriesMarker={this.state.BreweriesByBreweryNameArray}
-        breweryLocationsMarker={this.state.BreweriesByLocationArray}/>
-      </div>
-    );
-  }
+    render() {
+      console.log('rendering app');
+      return (
+        <div className="backgroundImage">
+          <div className="container">
+          <h1 className="headerStyle">Welcome to Deja-Brew</h1>
+          <MuiThemeProvider>
+            <Search
+              handleBreweriesByBeerNameSearch={this.handleBreweriesByBeerNameSearch.bind(this)}
+              handleBreweriesByBreweryNameSearch={this.handleBreweriesByBreweryNameSearch.bind(this)}
+              handleBreweriesByLocationSearch={this.handleBreweriesByLocationSearch.bind(this)}
+            />
+          </MuiThemeProvider>
+          <AccessGoogle 
+              beers={this.state.BreweriesByBeerNameArray}
+              breweries={this.state.BreweriesByBreweryNameArray}
+              breweryLocations={this.state.BreweriesByLocationArray}
+          />
+          <MuiThemeProvider>
+            <DejaBrewTabs
+              beers={this.state.BreweriesByBeerNameArray}
+              breweries={this.state.BreweriesByBreweryNameArray}
+              breweryLocations={this.state.BreweriesByLocationArray}
+            />
+          </MuiThemeProvider>
+          <Details hi={'hi'} />
+          </div>
+        </div>
+      );
+    }
 
 }
 

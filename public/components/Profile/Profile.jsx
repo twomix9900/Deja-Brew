@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import Email from './Email.jsx';
+import Email from './Email/Email.jsx';
 import NickName from './Nickname/NickName.jsx';
 import Phone from './Phone/Phone.jsx';
 import FriendList from './Friends/FriendList.jsx';
@@ -39,12 +39,13 @@ export default class Profile extends Component {
 
 render() {
   return (
-    <div>Welcome to Profile Page
-      <UserImageDrop />
-      <Email email={ this.state.userInfo.email } />
-      <NickName nickname={ this.state.userInfo.nickname } />
-      <Phone phone={ this.state.userInfo.phone } />
-      <FriendList />
+    <div>
+      <h3>Hard Hats Required, Under Construction</h3>
+      <NickName userId={ this.state.userInfo.id } nickname={ this.state.userInfo.nickname } />
+      <UserImageDrop userId={ this.state.userInfo.id } />
+      <Email userId={ this.state.userInfo.id } email={ this.state.userInfo.email } />
+      <Phone userId={ this.state.userInfo.id } phone={ this.state.userInfo.phone } />
+      <FriendList userId={ this.state.userInfo.id } />
     </div>
   )}
 }
