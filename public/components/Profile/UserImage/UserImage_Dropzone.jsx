@@ -13,12 +13,7 @@ export default class UserImageDrop extends Component {
   }
 
   componentWillReceiveProps(NextProps) {
-    // console.log('incoming props', NextProps);
-    // this.setState({ userId: NextProps });
-  }
-
-  componentDidMount() {
-    // console.log('component has mounted', this.props, this.state);
+    this.setState({ profileImage: NextProps.image })
   }
 
   onDropAccepted (files) {
@@ -32,33 +27,22 @@ export default class UserImageDrop extends Component {
     axios.get('/images/' + imageFile.name + '/' + imageType)
     .then((result) => {
       let signedUrl = result.data;
-      console.log('*** signedUrl ***', signedUrl)
 
       var options = {
         headers: {
           'Content-Type': imageFile.type
         }
       };
-      this.setState({ profileImage: signedUrl.substring(0,signedUrl.indexOf('?')) })
-      return axios.put(signedUrl, imageFile, options);
+      this.setState({ profileImage: signedUrl.substring(0,signedUrl.indexOf('?')) });
+      axios.put('/users/' + this.props.userId, { image: signedUrl.substring(0, signedUrl.indexOf('?')) })
+      return axios.put(signedUrl, imageFile, options)
     })
-    .then((result) => {
+    .then(() => {
       console.log('image successfully put to aws s3')
-      console.log('state of profileImage: ', this.state.profileImage);
     })
     .catch((err) => {
       console.log('error in Image', err);
     })
-  }
-
-  showImage() {
-    const { files } = this.state;
-    return (
-      <div>
-        <img src={ files[0] } style={{height: 100, width: 100}} />
-      </div>
-
-    )
   }
 
   render() {
