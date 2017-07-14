@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class QueryPhone extends Component {
+export default class EditFriendEntry extends Component {
 
   constructor(props) {
     super(props);
@@ -8,7 +8,11 @@ export default class QueryPhone extends Component {
     this.validate=this.handleValidation.bind(this);
   }
 
-  handleValidation(areacode, prefix, SLN){
+  handleValidation(friendName, areacode, prefix, SLN){
+    if (friendName === '' || friendName === undefined) {
+      alert('friend info incomplete');
+      return;
+    } 
     console.log('logic to validate valid phone number (' + areacode +') ' + prefix + '-' + SLN);
     if (areacode === undefined || prefix === undefined || SLN === undefined) {
       alert('phone number incomplete'); // temporary placeholder alert
@@ -19,25 +23,26 @@ export default class QueryPhone extends Component {
       if (areaDigit === 0 || areaDigit === 1 || preDigit === 0 || preDigit === 1 || phoneNum.length < 10 || isNaN(phoneNum)) {
         alert('not a valid phone number'); // temporary placeholder alert
       } else {
-        this.props.handleSubmit(phoneNum);
+        this.props.handleEditSubmit(friendName, phoneNum, this.props.id, this.props.idx);
       }
     }
   }
 
   render() {
+    let friendName;
     let areacode;
     let prefix;
     let SLN;
     return (
-      <div>Phone Number:
-        <span>
-          (<input type='text' maxLength='3' size='1' onChange={(e) => areacode = e.target.value } ></input>
+        <tr>
+          <td>Name:
+          <input type='text' onChange={(e) => friendName = e.target.value }></input></td>
+          <td>Phone: (<input type='text' maxLength='3' size='1' onChange={(e) => areacode = e.target.value } ></input>
           )<input type='text' maxLength='3' size='1' onChange={(e) => prefix = e.target.value } ></input>          
-          -<input type='text' maxLength='4' size='2' onChange={(e) => SLN = e.target.value } ></input>
-          <button onClick={() => { this.validate(areacode, prefix, SLN) }}>Submit</button>
-          <button onClick={() => { this.props.handleSubmit() }}>Cancel</button>
-        </span>
-      </div>
+          -<input type='text' maxLength='4' size='2' onChange={(e) => SLN = e.target.value } ></input></td>
+          <td><button onClick={() => { this.validate(friendName, areacode, prefix, SLN) }}>Submit</button></td>
+          <td><button onClick={() => { this.props.handleEditSubmit(undefined, undefined, this.props.id, this.props.idx) }}>Cancel</button></td>
+        </tr>
     )
   }
 }
