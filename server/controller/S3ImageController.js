@@ -24,7 +24,8 @@ const s3ImageController = {
       Bucket: process.env.BUCKET,
       Key: filename,
       Expires: 300,
-      ContentType: filetype
+      ContentType: filetype,
+      ACL: 'public-read'
     };
 
     s3.getSignedUrl('putObject', params, (err, url) => {

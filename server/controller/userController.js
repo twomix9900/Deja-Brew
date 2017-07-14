@@ -44,7 +44,8 @@ const userController = {
     User.update({
       nickname: req.body.nickname,
       email: req.body.email,
-      phone: req.body.phone
+      phone: req.body.phone,
+      image: req.body.image
     }, { where: {
       id: req.params.id
     }})

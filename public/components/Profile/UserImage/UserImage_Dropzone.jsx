@@ -9,15 +9,11 @@ export default class UserImageDrop extends Component {
     this.state = {
       profileImage: ''
     }
+    this.onDropAccepted=this.onDropAccepted.bind(this);
   }
 
   componentWillReceiveProps(NextProps) {
-    // console.log('incoming props', NextProps);
-    // this.setState({ userId: NextProps });
-  }
-
-  componentDidMount() {
-    // console.log('component has mounted', this.props, this.state);
+    this.setState({ profileImage: NextProps.image })
   }
 
   onDropAccepted (files) {
@@ -31,32 +27,23 @@ export default class UserImageDrop extends Component {
     axios.get('/images/' + imageFile.name + '/' + imageType)
     .then((result) => {
       let signedUrl = result.data;
-      console.log('*** signedUrl ***', signedUrl)
 
       var options = {
         headers: {
           'Content-Type': imageFile.type
         }
       };
-      return axios.put(signedUrl, imageFile, options);
+      this.setState({ profileImage: signedUrl.substring(0,signedUrl.indexOf('?')) });
+      axios.put('/users/' + this.props.userId, { image: signedUrl.substring(0, signedUrl.indexOf('?')) })
+      return axios.put(signedUrl, imageFile, options)
     })
-    .then((result) => {
-      this.setState({ profileImage: <img src={ files[0].name } style={{height:100, width: 100}} />})
+    .then(() => {
+      console.log('image successfully put to aws s3')
     })
     .catch((err) => {
       console.log('error in Image', err);
     })
   }
-
-  // showImage() {
-  //   const { files } = this.state;
-  //   return (
-  //     <div>
-  //       <img src={ files[0].name } style={{height: 100, width: 100}} />
-  //     </div>
-
-  //   )
-  // }
 
   render() {
     return (
@@ -67,7 +54,13 @@ export default class UserImageDrop extends Component {
           onDropAccepted={ this.onDropAccepted }>
           <div>Drop image (*.jpeg, *.gif, *.png) file here, or click to add file</div>
         </Dropzone>
-        { this.state.profileImage }
+          {  (this.state.profileImage)  ? (
+            <div>
+              <img src={ this.state.profileImage } style={{height: 200, width: 200}} />
+            </div>
+          ) : (
+            <div></div>
+          )}
       </div>
     )
   }
