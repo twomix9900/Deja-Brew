@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk');
 const uuid = require('uuid');
 const dotenv = require('dotenv').config();
+const { User } = require('../db/dbModel.js');
 
 const bucket = process.env.BUCKET
 
@@ -10,41 +11,81 @@ let s3 = new AWS.S3();
 
 const s3ImageController = {
 
-  getImage: (req, res) => {
-    let params = { Bucket: bucket, Key: req.params.keyName }
-    s3.getObject(params, (err, data) =>{
+  getURL: (req, res) => {
+
+    console.log('*** req.params ***', req.params);
+//    sign(req.params.filename, req.params.filetype)
+    
+    let filename = req.params.filename;
+    let filetype = 'image/' + req.params.filetype;
+    console.log('*** file info: ***', filename, filetype)  
+
+    let params = {
+      Bucket: process.env.BUCKET,
+      Key: filename,
+      Expires: 300,
+      ContentType: filetype
+    };
+
+    s3.getSignedUrl('putObject', params, (err, url) => {
       if (err) {
-        console.log(err);
-        res.sendStatus(400);
+        console.log('error updating aws', err);
       } else {
-        console.log('returning data', data);
+        console.log('url being returned', url);
         res.status(200);
-        res.send(data);
+        res.send(url);
       }
-    })
-
-
-
-
-
+    })  
   },
 
   updateImage: (req, res) => {
-    let params = { Bucket: bucket, Key: req.body.keyName, Body: req.body.imageFile, ACL: 'public-read' }
+    console.log('req info', req.body);
+    let keyName = 'image-' + uuid.v4();
+    let params = { Bucket: bucket, Key: keyName, Body: req.body.imageFile, ACL: 'public-read' }
     s3.putObject(params, (err, data) => {
       if (err) {
         console.log(err);
         res.sendStatus(404);
       } else {
-        console.log('successful upload data to ' + bucket + '/' + req.body.keyName);
-        res.sendStatus(201);
+        console.log('successful upload data to ' + bucket + '/' + keyName);
+        let imageURL = 'https://' + bucket + '.s3.amazonaws.com/' + keyName;
+        User.update({
+          image: keyName
+        }, { where: { 
+          id: req.params.id 
+        }})
+        .then(() => {
+          res.sendStatus(201);
+        })
+        .catch((err) => {
+          console.log('error creating user image file');
+          res.sendStatus(400);
+        })
       }
     });
   },
 
   deleteImage: (req, res) => {
-    console.log('under contruction');
-
+    let params = { Bucket: bucket, Key: req.params.keyName }
+    s3.deleteObject(params, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(400);
+      } else {
+        console.log('successful deleting image');
+        User.update({
+          image: ''
+        }, { where: {
+          image: req.params.keyName
+        }})
+        .then(() => {
+          res.sendStatus(200);
+        })
+        .catch((err) => {
+          res.sendStatus(400);
+        })
+      }
+    });
   }
 }
 

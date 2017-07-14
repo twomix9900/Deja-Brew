@@ -13,7 +13,6 @@ export default class Email extends Component {
   }
 
   componentWillReceiveProps(NextProps) {
-    console.log('email', NextProps.email);
     this.setState({ email: NextProps.email })
     this.setState({ DisplayEmail: <DisplayEmail handleEmailClick={ this.editEmail } email={ NextProps.email } /> });
   }
