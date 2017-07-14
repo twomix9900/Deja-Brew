@@ -42,10 +42,10 @@ render() {
     <div>
       <h3>Hard Hats Required, Under Construction</h3>
       <NickName userId={ this.state.userInfo.id } nickname={ this.state.userInfo.nickname } />
-      <UserImageDrop />
+      <UserImageDrop userId={ this.state.userInfo.id } />
       <Email userId={ this.state.userInfo.id } email={ this.state.userInfo.email } />
       <Phone userId={ this.state.userInfo.id } phone={ this.state.userInfo.phone } />
-      <FriendList />
+      <FriendList userId={ this.state.userInfo.id } />
     </div>
   )}
 }

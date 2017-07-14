@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 const DisplayNickname = ({ handleNameClick, nickname }) => {
 
-  console.log('nickname', nickname)
   return (
     <div>
       <span>Nickname: { nickname }
