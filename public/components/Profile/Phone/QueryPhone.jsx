@@ -13,7 +13,9 @@ const styles={
     marginTop: 8,
     height: 32,
     color: '#FFF'
-  }
+  },
+  invalid: false,
+  incomplete: false,
 }
 
 export default class QueryPhone extends Component {
