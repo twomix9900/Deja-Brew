@@ -56,14 +56,63 @@ export default class AccessGoogle extends Component {
         this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
 
     }
-
-
+    componentDidMount() {
+        console.log('if ur seeing this it loads');
+        google.maps.event.addDomListener(window, 'load', this.initialize());
+    }
     handleMapLoad(map) {
         this._mapComponent = map;
         if (map) {
-            console.log(map.getZoom());
+            console.log('mapZoom',map.getZoom());
         }
     }
+
+    displayMarker(map) {
+        console.log('displayMarker!!!!');
+        let bounds = new google.maps.LatLngBounds();
+        console.log(this.props.breweryLocationsMarker.length, 'length')
+        for (let i = 0; i < this.props.breweryLocationsMarker.length; i++) {
+            var latlng = new google.maps.LatLng(this.props.breweryLocationsMarker[i].latitude, this.props.breweryLocationsMarker[i].longitude);
+            var name = this.props.breweryLocationsMarker[i].name;
+            var address = this.props.breweryLocationsMarker[i].streetAddress;
+            var postalCode = this.props.breweryLocationsMarker[i].postalCode;
+            console.log('displayMarker-->', latlng.lat(), latlng.lng());
+
+            this.createMarker(latlng, map);
+
+            bounds.extend(latlng);
+        }
+        console.log('MAP-->', map.center.lat());
+        map.fitBounds(bounds);
+    }
+
+    createMarker(latlng, map) {
+        console.log('latLng', latlng.lat(), latlng.lng());
+        var marker = new google.maps.Marker({
+            map: map,
+            position: latlng,
+            //title: this.name
+        });
+        console.log('!!!!!this.map', this.map);
+    }
+
+    initialize() {
+        var mapOptions = {
+            center: new google.maps.LatLng(33.976002, -118.390891),
+            zoom: 14,
+            mapTypeId: 'roadmap'
+        };
+
+        let map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        console.log('map in init!!-->', map);
+
+        this.displayMarker(map);
+    }
+    // ComponentDidMount() {
+    //     console.log('if ur seeing this it loads');
+    //     google.maps.event.addDomListener(window, 'load', initialize);
+    // }
+
 
     /*
      * This is called when you click on the map.
@@ -71,18 +120,25 @@ export default class AccessGoogle extends Component {
      */
     handleMapClick(event) {
         console.log('regular old click');
-        console.log('this.props-->',this.props);
-        const nextMarkers = [
-            ...this.state.markers,
-            {
-                position: event.latLng,
-                defaultAnimation: 2,
-                key: Date.now(), // Add a key property for: http://fb.me/react-warning-keys
-            },
-        ];
-        this.setState({
-            markers: nextMarkers,
-        });
+        //console.log('this.props-->!',this.props.breweryLocationsMarker[0]);
+        // const nextMarkers = [];
+        // for (let i = 0; i < this.props.breweryLocationsMarker.length; i++) {
+        //     nextMarkers.push(this.props.breweryLocationsMarker[i].latitude, this.props.breweryLocationsMarker[i].longitude);
+        // }
+        //this.displayMarker();
+        this.initialize();
+        //this.props.breweryLocationsMarker[i].latitude, this.props.breweryLocationsMarker[i].longitude;
+        // const nextMarkers = [
+        //     ...this.state.markers,
+        //     {
+        //         position: event.latLng,
+        //         defaultAnimation: 2,
+        //         key: Date.now(), // Add a key property for: http://fb.me/react-warning-keys
+        //     },
+        // ];
+        // this.setState({
+        //     markers: nextMarkers,
+        // });
      }
 
     handleMarkerRightClick(targetMarker) {
@@ -100,9 +156,10 @@ export default class AccessGoogle extends Component {
 
     render() {
         return (
-            <div >
-                <GettingStartedGoogleMap
-                    containerElement={
+            <div id="map-canvas" onClick={this.handleMapClick.bind(this)}>
+                    
+                    {
+                        /*containerElement={
                         <div style={{ height: `500px`, width: `100%` }} />
                     }
                     mapElement={
@@ -111,8 +168,7 @@ export default class AccessGoogle extends Component {
                     onMapLoad={this.handleMapLoad}
                     onMapClick={this.handleMapClick}
                     markers={this.state.markers}
-                    onMarkerRightClick={this.handleMarkerRightClick}
-                />
+                    onMarkerRightClick={this.handleMarkerRightClick}*/}
             </div>
         );
     }
