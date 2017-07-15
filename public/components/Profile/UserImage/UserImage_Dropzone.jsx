@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import FormData from 'form-data';
 import axios from 'axios';
+import uuid from 'uuid';
 import RaisedButton from 'material-ui/RaisedButton'
 
 export default class UserImageDrop extends Component {
@@ -20,24 +21,30 @@ export default class UserImageDrop extends Component {
 
   onDropAccepted (files) {
     let imageFile = files[0];
+    let imageType = imageFile.type.substring(6);
+    let keyName = 'image-' + uuid.v4() + "." + imageType
+    Object.defineProperty(imageFile, 'name', { value: keyName });
+    console.log('keyName', imageFile.name);
     let options = {
       headers: {
         'Content-Type': imageFile.type
       }
     };
-    let imageType = imageFile.type.substring(6);
-    axios.get('/images/' + imageFile.name + '/' + imageType)
+    axios.get('/images/' + keyName + '/' + imageType)
     .then((result) => {
       let signedUrl = result.data;
+      console.log('signedUrl', signedUrl);
 
       var options = {
         headers: {
           'Content-Type': imageFile.type
         }
       };
-      this.setState({ profileImage: signedUrl.substring(0,signedUrl.indexOf('?')) });
       axios.put('/users/' + this.props.userId, { image: signedUrl.substring(0, signedUrl.indexOf('?')) })
-      return axios.put(signedUrl, imageFile, options)
+      axios.put(signedUrl, imageFile, options)
+      .then(() => {
+        this.setState({ profileImage: signedUrl.substring(0,signedUrl.indexOf('?')) });
+      })
     })
     .then(() => {
       console.log('image successfully written to AWS S3')
@@ -48,9 +55,12 @@ export default class UserImageDrop extends Component {
   }
   
   handleImageRemove(){
-    console.log('inside handleImageRemove')
-    axios.put('/users/' + this.props.userId, { image: '' })
+    console.log('inside handleImageRemove', this.state.profileImage);
+    let keyName = this.state.profileImage.substring(this.state.profileImage.indexOf('image'));
+    console.log('key to delete', keyName);
+    axios.delete('/images/' + keyName)
       .then(() => {
+        console.log('image successfully removed')
         this.setState({ profileImage: '' });
       })
   }

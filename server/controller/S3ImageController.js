@@ -15,6 +15,7 @@ const s3ImageController = {
   
     let filename = req.params.filename;
     let filetype = 'image/' + req.params.filetype;
+    console.log('*** req info ***', req.params);
 
     let params = {
       Bucket: process.env.BUCKET,
@@ -62,28 +63,30 @@ const s3ImageController = {
   //   });
   // },
 
-  // deleteImage: (req, res) => {
-  //   let params = { Bucket: bucket, Key: req.params.keyName }
-  //   s3.deleteObject(params, (err, data) => {
-  //     if (err) {
-  //       console.log(err);
-  //       res.sendStatus(400);
-  //     } else {
-  //       console.log('successful deleting image');
-  //       User.update({
-  //         image: ''
-  //       }, { where: {
-  //         image: req.params.keyName
-  //       }})
-  //       .then(() => {
-  //         res.sendStatus(200);
-  //       })
-  //       .catch((err) => {
-  //         res.sendStatus(400);
-  //       })
-  //     }
-  //   });
-  // }
+  deleteImage: (req, res) => {
+    console.log('req.params.key', req.params.keyName)
+    let url = 'https://' + bucket + '.s3-us-west-2.amazonaws.com/' + req.params.keyName
+    let params = { Bucket: bucket, Key: req.params.keyName }
+    s3.deleteObject(params, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(400);
+      } else {
+        console.log('successful deleting image');
+        User.update({
+          image: ''
+        }, { where: {
+          image: url
+        }})
+        .then(() => {
+          res.sendStatus(200);
+        })
+        .catch((err) => {
+          res.sendStatus(400);
+        })
+      }
+    });
+  }
 }
 
 module.exports = s3ImageController;
