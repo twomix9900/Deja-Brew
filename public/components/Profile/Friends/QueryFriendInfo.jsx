@@ -1,5 +1,18 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField'
+
+const styles = {
+  name: {
+    width: '320px'
+  },
+  pre: {
+    width: '28px'
+  },
+  SLN: {
+    width: '40px'
+  }
+}
 
 export default class QueryFriendInfo extends Component {
 
@@ -37,13 +50,12 @@ export default class QueryFriendInfo extends Component {
     return (
       <div>
         <span>
-          Name:
-          <input type='text' onChange={(e) => friendName = e.target.value }></input>
-          Phone: (<input type='text' maxLength='3' size='1' onChange={(e) => areacode = e.target.value } ></input>
-          )<input type='text' maxLength='3' size='1' onChange={(e) => prefix = e.target.value } ></input>          
-          -<input type='text' maxLength='4' size='2' onChange={(e) => SLN = e.target.value } ></input>
-          <button onClick={() => { this.validate(friendName, areacode, prefix, SLN) }}>Submit</button>
-          <button onClick={() => { this.props.handleSubmit() }}>Cancel</button>
+          <TextField floatingLabelText="name" style={ styles.name } onChange={(e) => friendName = e.target.value } />
+          (<TextField floatingLabelText="phone" maxLength='3' style={ styles.pre } onChange={(e) => areacode = e.target.value } />
+          )<TextField maxLength='3' style={ styles.pre } onChange={(e) => prefix = e.target.value } />          
+          -<TextField maxLength='4' style={ styles.SLN } onChange={(e) => SLN = e.target.value } />
+          <RaisedButton onClick={() => { this.validate(friendName, areacode, prefix, SLN) }} label="Submit" />
+          <RaisedButton onClick={() => { this.props.handleSubmit() }} label="Cancel" />
         </span>
       </div>
     )

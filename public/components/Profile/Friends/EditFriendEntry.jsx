@@ -40,9 +40,9 @@ export default class EditFriendEntry extends Component {
     let SLN;
     return (
         <TableRow>
-          <TableRowColumn>Name:
+          <TableRowColumn>
           <input type='text' onChange={(e) => friendName = e.target.value }></input></TableRowColumn>
-          <TableRowColumn>Phone: (<input type='text' maxLength='3' size='1' onChange={(e) => areacode = e.target.value } ></input>
+          <TableRowColumn>(<input type='text' maxLength='3' size='1' onChange={(e) => areacode = e.target.value } ></input>
           )<input type='text' maxLength='3' size='1' onChange={(e) => prefix = e.target.value } ></input>          
           -<input type='text' maxLength='4' size='2' onChange={(e) => SLN = e.target.value } ></input></TableRowColumn>
           <TableRowColumn><RaisedButton onClick={() => { this.validate(friendName, areacode, prefix, SLN) }} label="Submit"/></TableRowColumn>
