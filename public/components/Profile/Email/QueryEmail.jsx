@@ -18,7 +18,7 @@ const QueryEmail = ({ handleSubmit }) => {
     <div>
       <AppBar title={ <span>
         <TextField 
-          floatingLabelText="email: " floatingLabelFixed={true} 
+          floatingLabelText="email" floatingLabelFixed={true} 
           id="email" onChange={(e) => text = e.target.value } />
         </span> } 
         showMenuIconButton={false} 
@@ -33,9 +33,6 @@ const QueryEmail = ({ handleSubmit }) => {
           </div> 
         } 
       />
-      {/* <input type='text' onChange={(e) => text = e.target.value }></input>
-      <button onClick={() => { handleSubmit(text) }}>Submit</button>
-      <button onClick={() => { handleSubmit() }}>Cancel</button> */}
     </div>
   )
 }
