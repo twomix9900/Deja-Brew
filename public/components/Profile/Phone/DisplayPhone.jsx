@@ -1,4 +1,12 @@
 import React, { Component } from 'react';
+import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
+
+const styles={
+  button: {
+    height: 32
+  }
+}
 
 const DisplayPhone = ({ handlePhoneClick, phone }) => {
 
@@ -6,12 +14,13 @@ const DisplayPhone = ({ handlePhoneClick, phone }) => {
 
   return (
     <div>
-      <span>Phone Number: { formattedPhone }
-        <button onClick={() => 
-          { handlePhoneClick() }
-          }>Edit
-        </button>
-      </span>
+      <AppBar showMenuIconButton={false} title={ <span>Phone Number:{ ' ' + formattedPhone }</span> }
+        iconElementRight={ <FlatButton 
+          onClick={() => { handlePhoneClick() }}
+          style={styles.button}
+          label="Edit" 
+        /> }     
+      />
     </div>
   )
 }
