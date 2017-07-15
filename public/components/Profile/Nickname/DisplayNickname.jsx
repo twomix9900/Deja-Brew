@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
+import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
 
-const styles = {
+const styles={
   button: {
-    margin: 5,
-    height: 20,
-    primary: true
+    height: 32
   }
 }
 
@@ -13,13 +12,13 @@ const DisplayNickname = ({ handleNameClick, nickname }) => {
 
   return (
     <div>
-      <span><h3><strong>{ nickname }</strong></h3>
-        <RaisedButton 
+      <AppBar title={ <span>{ nickname }</span> } showMenuIconButton={false} 
+        iconElementRight={<FlatButton 
           onClick={() => { handleNameClick() }}
           style={styles.button}
-          label="Edit"
-          />
-      </span>
+          label="Edit" 
+        />} 
+      />
     </div>
   )
 }

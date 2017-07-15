@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import AppBar from 'material-ui/AppBar';
 import {
   Table,
   TableBody,
@@ -123,8 +124,7 @@ export default class FriendList extends Component {
 
   render() {
     return (
-      <div>Friends List
-        {/* { this.sortFriendList() } */}
+      <div><AppBar title="Friends List" showMenuIconButton={false} />
         <Table>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false} >
             <TableRow>

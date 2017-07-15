@@ -1,5 +1,4 @@
 const AWS = require('aws-sdk');
-const uuid = require('uuid');
 const dotenv = require('dotenv').config();
 const { User } = require('../db/dbModel.js');
 
@@ -12,13 +11,10 @@ let s3 = new AWS.S3();
 const s3ImageController = {
 
   getURL: (req, res) => {
-
-    console.log('*** req.params ***', req.params);
-//    sign(req.params.filename, req.params.filetype)
-    
+  
     let filename = req.params.filename;
     let filetype = 'image/' + req.params.filetype;
-    console.log('*** file info: ***', filename, filetype)  
+    console.log('*** req info ***', req.params);
 
     let params = {
       Bucket: process.env.BUCKET,
@@ -39,34 +35,9 @@ const s3ImageController = {
     })  
   },
 
-  updateImage: (req, res) => {
-    console.log('req info', req.body);
-    let keyName = 'image-' + uuid.v4();
-    let params = { Bucket: bucket, Key: keyName, Body: req.body.imageFile, ACL: 'public-read' }
-    s3.putObject(params, (err, data) => {
-      if (err) {
-        console.log(err);
-        res.sendStatus(404);
-      } else {
-        console.log('successful upload data to ' + bucket + '/' + keyName);
-        let imageURL = 'https://' + bucket + '.s3.amazonaws.com/' + keyName;
-        User.update({
-          image: keyName
-        }, { where: { 
-          id: req.params.id 
-        }})
-        .then(() => {
-          res.sendStatus(201);
-        })
-        .catch((err) => {
-          console.log('error creating user image file');
-          res.sendStatus(400);
-        })
-      }
-    });
-  },
-
   deleteImage: (req, res) => {
+    console.log('req.params.key', req.params.keyName)
+    let url = 'https://' + bucket + '.s3-us-west-2.amazonaws.com/' + req.params.keyName
     let params = { Bucket: bucket, Key: req.params.keyName }
     s3.deleteObject(params, (err, data) => {
       if (err) {
@@ -77,7 +48,7 @@ const s3ImageController = {
         User.update({
           image: ''
         }, { where: {
-          image: req.params.keyName
+          image: url
         }})
         .then(() => {
           res.sendStatus(200);
