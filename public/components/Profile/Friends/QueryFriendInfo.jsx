@@ -11,6 +11,10 @@ const styles = {
   },
   SLN: {
     width: '40px'
+  },
+  button: {
+    margin: 5,
+    height: 24
   }
 }
 
@@ -50,12 +54,12 @@ export default class QueryFriendInfo extends Component {
     return (
       <div>
         <span>
-          <TextField floatingLabelText="name" style={ styles.name } onChange={(e) => friendName = e.target.value } />
-          (<TextField floatingLabelText="phone" maxLength='3' style={ styles.pre } onChange={(e) => areacode = e.target.value } />
-          )<TextField maxLength='3' style={ styles.pre } onChange={(e) => prefix = e.target.value } />          
-          -<TextField maxLength='4' style={ styles.SLN } onChange={(e) => SLN = e.target.value } />
-          <RaisedButton onClick={() => { this.validate(friendName, areacode, prefix, SLN) }} label="Submit" />
-          <RaisedButton onClick={() => { this.props.handleSubmit() }} label="Cancel" />
+          <TextField floatingLabelText="name" floatingLabelFixed={true} style={ styles.name } onChange={(e) => friendName = e.target.value } />
+          (<TextField floatingLabelText="phone" floatingLabelFixed={true} maxLength='3' style={ styles.pre } onChange={(e) => areacode = e.target.value } />
+          )<TextField floatingLabelText=" " maxLength='3' style={ styles.pre } onChange={(e) => prefix = e.target.value } />          
+          -<TextField floatingLabelText=" " maxLength='4' style={ styles.SLN } onChange={(e) => SLN = e.target.value } />
+          <RaisedButton onClick={() => { this.validate(friendName, areacode, prefix, SLN) }} style={ styles.button } label="Submit" />
+          <RaisedButton onClick={() => { this.props.handleSubmit() }} style={ styles.button } label="Cancel" />
         </span>
       </div>
     )
