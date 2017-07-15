@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Email from './Email/Email.jsx';
 import NickName from './Nickname/NickName.jsx';
 import Phone from './Phone/Phone.jsx';
 import FriendList from './Friends/FriendList.jsx';
-import UserImageDrop from './UserImage_Dropzone.jsx';
+import UserImageDrop from './UserImage/UserImage_Dropzone.jsx';
 
 export default class Profile extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   image: 'IMAGE_URL',
-    //   nickname: 'USER NICKNAME',
-    //   email: 'USER EMAIL'
-    //   phone: 'USER PHONE'
-    // };
-    this.UserImage = this.handleChangeImage.bind(this);
     this.state = {
       userInfo: {}
     }
-
   }
 
   componentWillMount() {
@@ -33,19 +26,18 @@ export default class Profile extends Component {
     })
   }
 
-  handleChangeImage () {
-    console.log('inside handle change image');
-  }
-
 render() {
   return (
     <div>
-      <h3>Hard Hats Required, Under Construction</h3>
-      <NickName userId={ this.state.userInfo.id } nickname={ this.state.userInfo.nickname } />
-      <UserImageDrop userId={ this.state.userInfo.id } />
-      <Email userId={ this.state.userInfo.id } email={ this.state.userInfo.email } />
-      <Phone userId={ this.state.userInfo.id } phone={ this.state.userInfo.phone } />
-      <FriendList userId={ this.state.userInfo.id } />
+      <MuiThemeProvider>
+      <div>
+        <NickName userId={ this.state.userInfo.id } nickname={ this.state.userInfo.nickname } />
+        <UserImageDrop userId={ this.state.userInfo.id} image={ this.state.userInfo.image } />
+        <Email userId={ this.state.userInfo.id } email={ this.state.userInfo.email } />
+        <Phone userId={ this.state.userInfo.id } phone={ this.state.userInfo.phone } />
+        <FriendList userId={ this.state.userInfo.id } />
+      </div>
+      </MuiThemeProvider>
     </div>
   )}
 }

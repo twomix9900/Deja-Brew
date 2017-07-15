@@ -4,8 +4,8 @@ const QueryNickname = ({ handleSubmit }) => {
   let text;
 
   return (
-    <div>Nickname:
-      <input type='text' onChange={(e) => text = e.target.value }></input>
+    <div>
+      <h3><input type='text' onChange={(e) => text = e.target.value }></input></h3>
       <button onClick={() => { handleSubmit(text) }}>Submit</button>
       <button onClick={() => { handleSubmit() }}>Cancel</button>
     </div>
