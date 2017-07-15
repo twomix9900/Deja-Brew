@@ -48,7 +48,7 @@ export default class UserImageDrop extends Component {
   render() {
     return (
       <div>
-        <Dropzone
+         {/* <Dropzone
           accept='image/jpeg, image/jpg, image/gif, image/png'
           multiple={ false } 
           onDropAccepted={ this.onDropAccepted }>
@@ -60,7 +60,22 @@ export default class UserImageDrop extends Component {
             </div>
           ) : (
             <div></div>
-          )}
+          )}  */}
+        
+          {  (this.state.profileImage)  ? (
+            <div>
+              <img src={ this.state.profileImage } style={{height: 200, width: 200}} />
+            </div>
+          ) : (
+             <Dropzone
+          accept='image/jpeg, image/jpg, image/gif, image/png'
+          multiple={ false } 
+          onDropAccepted={ this.onDropAccepted }>
+          <div>Drop image (*.jpeg, *.gif, *.png) file here, or click to add file</div>
+        </Dropzone>
+   
+          )
+          }
       </div>
     )
   }
