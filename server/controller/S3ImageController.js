@@ -1,5 +1,4 @@
 const AWS = require('aws-sdk');
-const uuid = require('uuid');
 const dotenv = require('dotenv').config();
 const { User } = require('../db/dbModel.js');
 
@@ -35,33 +34,6 @@ const s3ImageController = {
       }
     })  
   },
-
-  // updateImage: (req, res) => {
-  //   console.log('req info', req.body);
-  //   let keyName = 'image-' + uuid.v4();
-  //   let params = { Bucket: bucket, Key: keyName, Body: req.body.imageFile, ACL: 'public-read' }
-  //   s3.putObject(params, (err, data) => {
-  //     if (err) {
-  //       console.log(err);
-  //       res.sendStatus(404);
-  //     } else {
-  //       console.log('successful upload data to ' + bucket + '/' + keyName);
-  //       let imageURL = 'https://' + bucket + '.s3.amazonaws.com/' + keyName;
-  //       User.update({
-  //         image: keyName
-  //       }, { where: { 
-  //         id: req.params.id 
-  //       }})
-  //       .then(() => {
-  //         res.sendStatus(201);
-  //       })
-  //       .catch((err) => {
-  //         console.log('error creating user image file');
-  //         res.sendStatus(400);
-  //       })
-  //     }
-  //   });
-  // },
 
   deleteImage: (req, res) => {
     console.log('req.params.key', req.params.keyName)
