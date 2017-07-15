@@ -48,6 +48,7 @@ export default class FriendList extends Component {
     })
     .then((data) => {
       this.setState({ friendList: data });
+      this.sortFriendList();
     })
   }
 
@@ -88,7 +89,7 @@ export default class FriendList extends Component {
     } else {
       axios.put('friends/' + this.props.userId, { name: friendName, phone: '+1 ' + phone })
       .then(() => {
-        this.getFriendData();
+        this.getFriendData()
         this.setState({ newFriendQuery: <FriendAdd handleAddFriendClick={ this.FriendAdd } /> })
       })
     }
