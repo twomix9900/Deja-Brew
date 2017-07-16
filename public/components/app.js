@@ -61,7 +61,11 @@ class App extends Component {
               handleBreweriesByLocationSearch={this.handleBreweriesByLocationSearch.bind(this)}
             />
           </MuiThemeProvider>
-          <AccessGoogle />
+          <AccessGoogle 
+              beersMarker={this.state.BreweriesByBeerNameArray}
+              breweriesMarker={this.state.BreweriesByBreweryNameArray}
+              breweryLocationsMarker={this.state.BreweriesByLocationArray}
+          />
           <MuiThemeProvider>
             <DejaBrewTabs
               beers={this.state.BreweriesByBeerNameArray}

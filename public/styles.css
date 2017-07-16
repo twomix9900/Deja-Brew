@@ -52,3 +52,6 @@ body {
  .dropDown > div > div:nth-child(2) {
   overflow:visible !important
 } 
+#map-canvas {
+  height: 80%
+}
