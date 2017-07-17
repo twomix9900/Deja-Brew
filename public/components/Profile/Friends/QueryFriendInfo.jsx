@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 
-import PhoneInvalidError from '../../Dialog/PhoneInvalidError.jsx';
-import PhoneIncompleteError from '../../Dialog/PhoneIncompleteError.jsx';
-import FriendInfoError from '../../Dialog/FriendInfoError.jsx';
-
 import DialogMsg from '../../Dialog/DialogMsg.jsx';
 
 const styles = {
