@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import AppBar from 'material-ui/AppBar';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow
+} from 'material-ui/Table';
+
 import FriendListEntry from './FriendListEntry.jsx';
 import FriendAdd from './FriendAdd.jsx';
 import QueryFriendInfo from './QueryFriendInfo.jsx';
@@ -17,6 +26,7 @@ export default class FriendList extends Component {
     this.FriendDelete=this.handleDeleteFriend.bind(this);
     this.handleSubmit=this.handleSubmitFriend.bind(this);
     this.handleEditSubmit=this.handleEditSubmit.bind(this);
+    this.sortFriendList=this.sortFriendList.bind(this);
 
     };
 
@@ -27,6 +37,7 @@ export default class FriendList extends Component {
     })
     .then((data) => {
       this.setState({ friendList: data });
+      this.sortFriendList();
     })  
   };
 
@@ -37,6 +48,7 @@ export default class FriendList extends Component {
     })
     .then((data) => {
       this.setState({ friendList: data });
+      this.sortFriendList();
     })
   }
 
@@ -53,6 +65,7 @@ export default class FriendList extends Component {
     let friends = this.state.friendList.slice();
     friends[idx].edit = 1;
     this.setState({ friendList: friends });
+    this.sortFriendList();
     console.log('friend',id,'to be changed', friends);
   }
 
@@ -76,7 +89,7 @@ export default class FriendList extends Component {
     } else {
       axios.put('friends/' + this.props.userId, { name: friendName, phone: '+1 ' + phone })
       .then(() => {
-        this.getFriendData();
+        this.getFriendData()
         this.setState({ newFriendQuery: <FriendAdd handleAddFriendClick={ this.FriendAdd } /> })
       })
     }
@@ -87,27 +100,42 @@ export default class FriendList extends Component {
     friends[idx].edit = 0;
     if (friendName === undefined && phone === undefined) {
       this.setState({ friendList: friends });
+      this.sortFriendList();
     } else {
       axios.put('friends/' + this.props.userId + '?id=' + id, { name: friendName, phone: '+1 ' + phone })
       .then(() => {
       friends[idx].name = friendName;
       friends[idx].phone = '+1 ' + phone;
       this.setState({ friendList: friends });
+      this.sortFriendList();
       })
     }
   }
 
+  sortFriendList() {
+    let sortedFriendList = this.state.friendList
+      .slice()
+      .sort((a, b) => {
+        if (a.name < b.name) return -1;
+        if (a.name > b.name) return +1;
+        return 0;
+        })
+    this.setState({ friendList: sortedFriendList })
+  }
+
   render() {
     return (
-      <div>Friends List
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Phone Number</th>
-            </tr>
-          </thead>
-          <tbody>
+      <div><AppBar title="Friends List" showMenuIconButton={false} />
+        <Table>
+          <TableHeader adjustForCheckbox={false} displaySelectAll={false} >
+            <TableRow>
+              <TableHeaderColumn>Name</TableHeaderColumn>
+              <TableHeaderColumn>Phone Number</TableHeaderColumn>
+              <TableHeaderColumn></TableHeaderColumn>
+              <TableHeaderColumn></TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             { this.state.friendList.map((friend, i) => 
               (friend.edit === 0 || friend.edit === undefined) ? (
                 <FriendListEntry 
@@ -125,8 +153,8 @@ export default class FriendList extends Component {
                 idx={ i }/>
               )
             )}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
         { this.state.newFriendQuery }
       </div>
     );

@@ -67,4 +67,8 @@ body {
 
 .text-center {
   text-align:left;
+  overflow:visible !important
+} 
+#map-canvas {
+  height: 80%
 }

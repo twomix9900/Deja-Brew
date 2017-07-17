@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 
 export default class FriendAdd extends Component {
 
@@ -8,8 +9,7 @@ export default class FriendAdd extends Component {
 
   render() {
     return (
-      <button onClick={(e) => { this.props.handleAddFriendClick() }}>Add Friend
-      </button>
+      <RaisedButton onClick={(e) => { this.props.handleAddFriendClick() }} label="Add Friend" />
     )
   }
 }
