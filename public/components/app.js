@@ -39,7 +39,7 @@ class App extends Component {
     console.log('BreweriesByBreweryNameArray ', this.state.BreweriesByBreweryNameArray)
   }
 
-    handleBreweriesByLocationSearch(searchData) {
+  handleBreweriesByLocationSearch(searchData) {
     this.setState({
       BreweriesByLocationArray: searchData,
       BreweriesByBeerNameArray: [],

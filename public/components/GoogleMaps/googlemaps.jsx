@@ -21,7 +21,6 @@ const AccessGoogleMap = withGoogleMap(props => (
      {props.markers.map((marker, index) =>
      <Marker position={marker.position} key={index} />
      )}
-     hiiiiiii
     </GoogleMap>
 ));
 
