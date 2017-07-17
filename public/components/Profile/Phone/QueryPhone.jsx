@@ -2,9 +2,7 @@ import React, { Component } from 'react';import AppBar from 'material-ui/AppBar'
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 
-import PhoneInvalidError from '../../Dialog/PhoneInvalidError.jsx';
-import PhoneIncompleteError from '../../Dialog/PhoneIncompleteError.jsx';
-
+import DialogMsg from '../../Dialog/DialogMsg.jsx'
 
 const styles={
   pre: {
@@ -25,24 +23,31 @@ export default class QueryPhone extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      invalid: false,
-      incomplete: false
+      open: false,
+      areacode: '',
+      prefix: '',
+      SLN: '',
     };
     this.validate=this.handleValidation.bind(this);
     this.handleInvalidOK=this.handleInvalidOK.bind(this);
     this.handleIncompleteOK=this.handleIncompleteOK.bind(this);
+    this.handler=this.handler.bind(this);
+    this.handleTextEntry=this.handleTextEntry.bind(this);
   }
 
   handleValidation(areacode, prefix, SLN){
-    console.log('logic to validate valid phone number (' + areacode +') ' + prefix + '-' + SLN);
-    if (areacode === undefined || prefix === undefined || SLN === undefined) {
-      this.setState({ incomplete: true });
+    let phoneNum = areacode + prefix + SLN;
+    if (areacode === undefined || prefix === undefined || SLN === undefined || phoneNum.length < 10) {
+      this.setState({ open: true });
+      this.setState({ msgTitle: 'Incomplete Phone Number'});
+      this.setState({ msgBody: 'Some fields are empty, please complete your entry'});
     } else {
       let areaDigit = Number(areacode.substring(0, 1));
       let preDigit = Number(prefix.substring(0, 1));
-      let phoneNum = areacode + prefix + SLN;
-      if (areaDigit === 0 || areaDigit === 1 || preDigit === 0 || preDigit === 1 || phoneNum.length < 10 || isNaN(phoneNum)) {
-        this.setState({ invalid: true });
+      if (areaDigit === 0 || areaDigit === 1 || preDigit === 0 || preDigit === 1 || isNaN(phoneNum)) {
+        this.setState({ open: true });
+        this.setState({ msgTitle: 'Invalid Phone Number'});
+        this.setState({ msgBody: 'Please use numbers only \n Areacodes and Prefixes cannot begin with 0 or 1'});
       } else {
         this.props.handleSubmit(phoneNum);
       }
@@ -57,21 +62,30 @@ export default class QueryPhone extends Component {
     this.setState({ incomplete: false })
   }
 
+  handler() {
+    this.setState({ open: false })
+  }
+
+  handleTextEntry(stateName, e) {
+    let stateToSet = {};
+    stateToSet[stateName] = e.target.value;
+    this.setState(stateToSet);
+  }
+
   render() {
-    let areacode;
-    let prefix;
-    let SLN;
+
     return (
       <div>
         <AppBar title={ <span>
-          (<TextField floatingLabelText="Phone Number" floatingLabelFixed={true} maxLength='3' style={ styles.pre } onChange={(e) => areacode = e.target.value } />
-          )<TextField floatingLabelText=" " maxLength='3' style={ styles.pre } onChange={(e) => prefix = e.target.value } />          
-          -<TextField floatingLabelText=" " maxLength='4' style={ styles.SLN } onChange={(e) => SLN = e.target.value } />
+          (<TextField floatingLabelText="Phone Number" floatingLabelFixed={true} maxLength='3' style={ styles.pre } 
+            onChange={(e) => this.handleTextEntry('areacode', e) } />
+          )<TextField floatingLabelText=" " maxLength='3' style={ styles.pre } onChange={(e) => this.handleTextEntry('prefix', e) } />          
+          -<TextField floatingLabelText=" " maxLength='4' style={ styles.SLN } onChange={(e) => this.handleTextEntry('SLN', e) } />
         </span> } 
         showMenuIconButton={false} 
         iconElementRight={ 
           <div>
-            <FlatButton onClick={() => { this.validate(areacode, prefix, SLN) }}
+            <FlatButton onClick={() => { this.validate(this.state.areacode, this.state.prefix, this.state.SLN) }}
               style={styles.button}
               label="Submit" /> 
             <FlatButton onClick={() => { this.props.handleSubmit() }}
@@ -79,8 +93,7 @@ export default class QueryPhone extends Component {
               label="Cancel" /> 
           </div> 
         } />
-        <PhoneInvalidError invalidOK={ this.handleInvalidOK } open={ this.state.invalid } />
-        <PhoneIncompleteError incompleteOK={ this.handleIncompleteOK } open={ this.state.incomplete } />
+        <DialogMsg handler={ this.handler } open={ this.state.open } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
       </div>
     )
   }
