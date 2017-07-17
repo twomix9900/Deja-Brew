@@ -1,13 +1,16 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import App from '../components/app';
 import Callback from '../Auth/Callback/Callback';
 import Auth from '../Auth/Auth';
-import Profile from '../components/Profile/Profile.jsx'
+import Profile from '../components/Profile/Profile.jsx';
 import history from '../Auth/history';
-import DejaBrewNavBar from '../components/Navbar/DejaBrewNavBar.jsx'
+import DejaBrewNavBar from '../components/Navbar/DejaBrewNavBar.jsx';
 import Landing from '../components/Landing/Landing.jsx';
 import Details from '../components/Details/Details.jsx';
+import store from '../stores';
+import { Provider } from 'react-redux';
 
 const auth = new Auth();
 
@@ -19,6 +22,7 @@ const handleAuthentication = (nextState, replace) => {
 
 export const makeMainRoutes = () => {
   return (
+    <Provider store={store.configure(null)}>
       <BrowserRouter history={history}>
         <div>
           <Route path='/' render={(props) => <DejaBrewNavBar auth={auth} {...props} />} />
@@ -34,5 +38,6 @@ export const makeMainRoutes = () => {
           </Switch>
         </div>
       </BrowserRouter>
+    </Provider>
   );
 }
