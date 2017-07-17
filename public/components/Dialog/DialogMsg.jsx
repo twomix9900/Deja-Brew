@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 
-export default class PhoneInvalidError extends Component {
+export default class DialogMsg extends Component {
   constructor(props) {
     super(props);
     this.state={
@@ -12,6 +12,9 @@ export default class PhoneInvalidError extends Component {
 
   componentWillReceiveProps(NextProps) {
     this.setState({ open: NextProps.open });
+    this.setState({ msgTitle: NextProps.msgTitle });
+    this.setState({ msgBody: NextProps.msgBody });
+    this.setState({ handler: NextProps.handler });
   }
 
   render() {
@@ -19,19 +22,18 @@ export default class PhoneInvalidError extends Component {
       <RaisedButton
         label="OK"
         primary={true}
-        onClick={()=> { this.props.invalidOK() }}
+        onClick={()=> { this.state.handler() }}
       />
     ];
 
     return (
       <div>
         <Dialog
-          title="Invalid Phone Number"
+          title={ this.state.msgTitle }
           actions={actions}
           modal={true}
           open={ this.state.open }
-        >Please use numbers only <br/>
-        Areacodes and Prefixes cannot begin with 0 or 1
+        >{ this.state.msgBody }
         </Dialog>
       </div>
     );
