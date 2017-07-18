@@ -12,7 +12,7 @@ const DisplayNickname = ({ handleNameClick, nickname }) => {
 
   return (
     <div>
-      <AppBar title={ <span>{ nickname }</span> } showMenuIconButton={false} 
+      <AppBar title={ <span>{ (nickname) ? (nickname) : ('your nickname') }</span> } showMenuIconButton={false} 
         iconElementRight={<FlatButton 
           onClick={() => { handleNameClick() }}
           style={styles.button}
