@@ -58,7 +58,7 @@ class BeerListEntry extends React.Component {
         <CardText
           style={styles.card}
         >
-          Website: <a href={this.props.beer.breweries[0].website}>
+          Website: <a href={this.props.beer.breweries[0].website} target="_blank">
             {this.props.beer.breweries[0].website}
           </a>
         </CardText>
@@ -71,7 +71,7 @@ class BeerListEntry extends React.Component {
         <CardText
           style={styles.card}
         >
-          {!!this.props.beer.breweries[0].locations[0] ?
+          Located At: {!!this.props.beer.breweries[0].locations[0] ?
             this.props.beer.breweries[0].locations[0].streetAddress : ''}
           <br />
           {!!this.props.beer.breweries[0].locations[0] ?
