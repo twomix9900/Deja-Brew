@@ -16,12 +16,13 @@ class Details extends React.Component {
   }
 
   render() {
-    console.log('this.props = ', this.props);
+    console.log('this.props from details = ', this.props);
     return (
+      // <div>HI</div>
       <div>
-        <h1>BEER NAME: {this.props.venue.selectedVenue.breweries[0].name}</h1>
-        BREWERY ICON: {this.props.venue.selectedVenue.breweries[0].images ? <img src={this.props.venue.selectedVenue.breweries[0].images.squareMedium} alt="boohoo" className="img-responsive" /> : null}
-        <h3>BREWERY ID: {this.props.venue.selectedVenue.breweries[0].id}</h3> 
+        <h1>BEER NAME: {this.props.venue.selectedVenue.name}</h1>
+        BREWERY ICON: {this.props.venue.selectedVenue.images ? <img src={this.props.venue.selectedVenue.images.squareMedium} alt="boohoo" className="img-responsive" /> : null}
+        <h3>BREWERY ID: {this.props.venue.selectedVenue.id}</h3> 
       </div>
     );
   }

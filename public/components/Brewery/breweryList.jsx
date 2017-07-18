@@ -21,6 +21,7 @@ class BreweryList extends React.Component {
   }
 
   render() {
+    console.log("this.props.history from brewerylist", this.props.history)
     return (
       <div>
         <div className="text-center">
@@ -28,9 +29,10 @@ class BreweryList extends React.Component {
               <BreweryListEntry
                 key={i}
                 brewery={brewery}
+                history={this.props.history}
               />
             )}
-            <Pagination items={this.props.breweries} onChangePage={this.onChangePage} />
+            <Pagination items={this.props.breweries} onChangePage={this.onChangePage } />
         </div>
         <hr />
       </div>

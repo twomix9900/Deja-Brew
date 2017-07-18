@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import actions from '../../actions';
+import { connect } from 'react-redux';
 
 const styles = {
   card: {
@@ -10,15 +12,16 @@ const styles = {
 class BreweryLocationsListEntry extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props from BreweryLocationsListEntry' ,props)
-
+    this.selectVenue = this.selectVenue.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.navigateToDetailsPage = this.navigateToDetailsPage.bind(this);
   }
   
   render() {
     return (
       <Card>
       <CardHeader
-        
+        onClick={() => { this.handleClick(event, this) }}
         title={this.props.brewery.brewery.name}
         showExpandableButton={true}
         avatar={this.props.brewery.brewery.images ? 
@@ -58,7 +61,21 @@ class BreweryLocationsListEntry extends React.Component {
   }
 }
 
-export default BreweryLocationsListEntry;
+const stateToProps = (state) => {
+  return {
+    venue: state.venue
+  }
+}
+
+const dispatchToProps = (dispatch) => {
+  return {
+    selectVenue: (venue) => {
+      dispatch(actions.selectVenue(venue));
+    }
+  }
+}
+
+export default connect(stateToProps, dispatchToProps)(BreweryLocationsListEntry);
 
 // import React, { Component } from 'react';
 // import {

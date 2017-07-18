@@ -39,7 +39,7 @@ class dejaBrewTabs extends React.Component {
         {this.props.breweries.length ? 
         <Tab label="Breweries by Brewery Name" data-route="/breweriesForBreweryName">
           <div>
-            <BreweryList breweries={this.props.breweries} />
+            <BreweryList breweries={this.props.breweries} history={this.props.history}/>
           </div>
         </Tab>
         : null}
@@ -47,7 +47,7 @@ class dejaBrewTabs extends React.Component {
         {this.props.breweryLocations.length ? 
         <Tab label="Breweries by Location" data-route="/BreweriesForBeerType">
           <div>
-            <BreweryLocationsList breweries={this.props.breweryLocations} />
+            <BreweryLocationsList breweries={this.props.breweryLocations} history={this.props.history}/>
           </div>
         </Tab>
         : null}
