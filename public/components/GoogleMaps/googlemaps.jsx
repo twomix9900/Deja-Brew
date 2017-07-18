@@ -82,7 +82,29 @@ export default class AccessGoogle extends Component {
 
             bounds.extend(latlng);
         }
-        //console.log('MAP-->', map.center.lat());
+        console.log('this.props.breweriesMarker', this.props.breweriesMarker);
+        console.log('beeers', this.props.beersMarker);
+        // for (let i = 0; i < this.props.breweriesMarker.length; i++) {
+        //     var latlng = new google.maps.LatLng(this.props.breweriesMarker[i].locations[i].latitude, this.props.breweriesMarker[i].locations[i].longitude);
+        //     var name = this.props.breweriesMarker[i].name;
+        //     var address = this.props.breweriesMarker[i].streetAddress;
+        //     var postalCode = this.props.breweriesMarker[i].postalCode;
+
+        //     this.createMarker(latlng, map);
+
+        //     bounds.extend(latlng);
+        // }
+        // for (let i = 0; i < this.props.beersMarker.length; i++) {
+        //     var latlng = new google.maps.LatLng(this.props.beersMarker[i].latitude, this.props.beersMarker[i].longitude);
+        //     var name = this.props.beersMarker[i].name;
+        //     var address = this.props.beersMarker[i].streetAddress;
+        //     var postalCode = this.props.beersMarker[i].postalCode;
+
+        //     this.createMarker(latlng, map);
+
+        //     bounds.extend(latlng);
+        // }
+        console.log('MAP-->', map.center.lat());
         map.fitBounds(bounds);
     }
 
