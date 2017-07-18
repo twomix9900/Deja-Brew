@@ -4,6 +4,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import LinearProgress from 'material-ui/LinearProgress';
 import axios from 'axios';
+import Details from '../Details/Details.jsx';
 
 const styles = {
   button: {
@@ -22,7 +23,8 @@ class Search extends React.Component {
       locationValue: '',
       beerBreweryValue: '',
       value: 10,
-      completed: 0
+      completed: 0,
+      showDetails: false
     };
   }
 
@@ -48,7 +50,8 @@ class Search extends React.Component {
     let config = {
       onDownloadProgress: (progressEvent) => {
         this.setState({
-          completed: Math.floor((progressEvent.loaded * 100) / progressEvent.total)
+          completed: Math.floor((progressEvent.loaded * 100) / progressEvent.total),
+          showDetails: true
         })
       }
     }
@@ -286,16 +289,14 @@ class Search extends React.Component {
         </DropDownMenu>
         <RaisedButton 
         style={styles.button}
-        onClick={this.searchDejaBrew.bind(this)} 
-        label="Search"
-        primary={true}
+          onClick={this.searchDejaBrew.bind(this)}
+          label="Search"
         />
-         <LinearProgress 
-         style={styles.linearBar}
-         mode="determinate" 
-         value={this.state.completed} 
-         />
-        
+        <LinearProgress
+          style={styles.linearBar}
+          mode="determinate"
+          value={this.state.completed}
+        />
       </div>
     );
   }

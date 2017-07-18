@@ -25,12 +25,13 @@ class dejaBrewTabs extends React.Component {
   // }
   
   render() {
+    console.log('whats this got access to ,', this.props);
     return (
       <Tabs>
         {this.props.beers.length ? 
         <Tab label="Breweries by Beer Name" data-route="/breweriesForBeerName">
           <div>
-            <BeerList beers={this.props.beers} />
+            <BeerList history={this.props.history} beers={this.props.beers} />
           </div>
         </Tab>
         : null}

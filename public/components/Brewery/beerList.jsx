@@ -38,6 +38,18 @@ class BeerList extends React.Component {
     );
   }
 }
+const BeerList = ({beers, history}) => (
+  <div>
+    {console.log('beers from blist ', beers)}
+    {beers.map((beer, i) => 
+        <BeerListEntry
+          history={history}
+          key={i}
+          beer={beer}
+        />
+    )}
+  </div>
+);
 
 export default BeerList
 

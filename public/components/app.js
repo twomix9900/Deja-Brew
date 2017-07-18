@@ -49,7 +49,7 @@ class App extends Component {
   }
 
     render() {
-      console.log('rendering app');
+      console.log('rendering app', this.props);
       return (
         <div className="backgroundImage">
           <div className="container">
@@ -70,12 +70,12 @@ class App extends Component {
           />
           <MuiThemeProvider>
             <DejaBrewTabs
+              history={this.props.history}
               beers={this.state.BreweriesByBeerNameArray}
               breweries={this.state.BreweriesByBreweryNameArray}
               breweryLocations={this.state.BreweriesByLocationArray}
             />
           </MuiThemeProvider>
-          <Details hi={'hi'} />
           </div>
         </div>
       );
