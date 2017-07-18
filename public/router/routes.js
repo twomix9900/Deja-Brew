@@ -7,7 +7,7 @@ import Auth from '../Auth/Auth';
 import Profile from '../components/Profile/Profile.jsx';
 import history from '../Auth/history';
 import DejaBrewNavBar from '../components/Navbar/DejaBrewNavBar.jsx';
-import Landing from '../components/Landing/Landing.jsx';
+import Landing from '../components/NavBar/Landing/Landing.jsx';
 import Details from '../components/Details/Details.jsx';
 import store from '../stores';
 import { Provider } from 'react-redux';

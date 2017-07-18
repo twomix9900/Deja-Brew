@@ -17,27 +17,36 @@ export default class Profile extends Component {
   }
 
   componentWillMount() {
-    let userId = 1; // dummy data
+    let auth0Id = localStorage.getItem('auth0Id');
 
-    axios.get('/users/' + userId)
-    .then((data) => {
-      console.log('successfully retrieved user data', data.data[0]);
-      this.setState({ userInfo: data.data[0]});
+    axios.post('/users', { auth0Id: auth0Id })
+      .then(() => {
+        axios.get('/users/' + auth0Id)
+        .then((data) => {
+          console.log('*** successfully retrieved user data ***', data.data[0]);
+          this.setState({ userInfo: data.data[0]});
+        })    
     })
+    // axios.get('/users/' + auth0Id)
+    // .then((data) => {
+    //   console.log('successfully retrieved user data', data.data[0]);
+    //   this.setState({ userInfo: data.data[0]});
+    // })
   }
 
-render() {
-  return (
-    <div>
-      <MuiThemeProvider>
+  render() {
+    return (
       <div>
-        <NickName userId={ this.state.userInfo.id } nickname={ this.state.userInfo.nickname } />
-        <UserImageDrop userId={ this.state.userInfo.id} image={ this.state.userInfo.image } />
-        <Email userId={ this.state.userInfo.id } email={ this.state.userInfo.email } />
-        <Phone userId={ this.state.userInfo.id } phone={ this.state.userInfo.phone } />
-        <FriendList userId={ this.state.userInfo.id } />
+        <MuiThemeProvider>
+        <div>
+          <NickName userId={ this.state.userInfo.id } nickname={ this.state.userInfo.nickname } />
+          <UserImageDrop userId={ this.state.userInfo.id} image={ this.state.userInfo.image } />
+          <Email userId={ this.state.userInfo.id } email={ this.state.userInfo.email } />
+          <Phone userId={ this.state.userInfo.id } phone={ this.state.userInfo.phone } />
+          <FriendList userId={ this.state.userInfo.id } />
+        </div>
+        </MuiThemeProvider>
       </div>
-      </MuiThemeProvider>
-    </div>
-  )}
+    )
+  }
 }

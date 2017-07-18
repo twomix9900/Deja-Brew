@@ -10,8 +10,12 @@ const styles={
 
 const DisplayPhone = ({ handlePhoneClick, phone }) => {
 
-  let formattedPhone = '(' + phone.substring(3, 6) + ') ' + phone.substring(6, 9) + '-' + phone.substring(9);
-
+  console.log('phone length', phone.length);
+  let formattedPhone = '';
+  (phone.length) ? 
+  (formattedPhone = '(' + phone.substring(3, 6) + ') ' + phone.substring(6, 9) + '-' + phone.substring(9) ) :
+  (formattedPhone = '' )
+  
   return (
     <div>
       <AppBar showMenuIconButton={false} title={ <span>Phone Number:{ ' ' + formattedPhone }</span> }

@@ -12,7 +12,7 @@ const userController = {
 
   getUserEntry: (req, res) => {
     User.findAll({
-      where: { id: req.params.id }
+      where: { auth0Id: req.params.id }
     })
     .then((data) => {
       if (data.length) {
@@ -31,7 +31,14 @@ const userController = {
   addUserEntry: (req, res) => {
     User.findOrCreate({ where: {
       auth0Id: req.body.auth0Id
-    }})
+    },
+      defaults: {
+        nickname: '',
+        image: '',
+        email: '',
+        phone: ''
+      } 
+    })
     .then(() => {
       res.sendStatus(201);
     })
