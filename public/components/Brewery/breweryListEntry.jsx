@@ -38,17 +38,16 @@ class BreweryListEntry extends React.Component {
       style={styles.card}
       >
         Phone: {!!this.props.brewery.locations ?
-          this.props.brewery.locations[0].phone : ''}
+          this.props.brewery.locations[0].phone : 'No phone Info'}
       </CardText>
       <CardText 
       style={styles.card}
       >
         {!!this.props.brewery.locations ? 
-          this.props.brewery.locations[0].streetAddress : ''}
+          this.props.brewery.locations[0].streetAddress : 'No Street Info'}
           <br />
         {!!this.props.brewery.locations ?
-          this.props.brewery.locations[0].locality: ''}
-          <br />
+          this.props.brewery.locations[0].locality + ', ': ''}
         {!!this.props.brewery.locations ? 
           this.props.brewery.locations[0].region : ''}
       </CardText>

@@ -12,9 +12,6 @@ class BeerListEntry extends React.Component {
   constructor(props) {
     super(props);
     console.log('props from BeerListEntry' ,props)
-    this.state = {
-      //locationValue: ''
-    };
   }
 
   render() {
@@ -39,17 +36,16 @@ class BeerListEntry extends React.Component {
         style={styles.card}
         >
           Phone: {!!this.props.beer.breweries[0].locations ?
-            this.props.beer.breweries[0].locations[0].phone : ''}
+            this.props.beer.breweries[0].locations[0].phone : 'No Phone Info'}
         </CardText>
         <CardText 
         style={styles.card}
         >
           {!!this.props.beer.breweries[0].locations[0] ? 
-            this.props.beer.breweries[0].locations[0].streetAddress : ''}
+            this.props.beer.breweries[0].locations[0].streetAddress : 'No Address Info'}
             <br />
           {!!this.props.beer.breweries[0].locations[0] ?
-            this.props.beer.breweries[0].locations[0].locality: ''}
-            <br />
+            this.props.beer.breweries[0].locations[0].locality + ', ': ''}
           {!!this.props.beer.breweries[0].locations[0] ? 
             this.props.beer.breweries[0].locations[0].region : ''}
         </CardText>

@@ -60,7 +60,9 @@ class App extends Component {
               handleBreweriesByBreweryNameSearch={this.handleBreweriesByBreweryNameSearch.bind(this)}
               handleBreweriesByLocationSearch={this.handleBreweriesByLocationSearch.bind(this)}
             />
+            
           </MuiThemeProvider>
+
           <AccessGoogle 
               beersMarker={this.state.BreweriesByBeerNameArray}
               breweriesMarker={this.state.BreweriesByBreweryNameArray}

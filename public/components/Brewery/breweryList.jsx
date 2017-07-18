@@ -2,19 +2,11 @@ import React, { Component } from 'react';
 import BreweryListEntry from './breweryListEntry.jsx'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Pagination from './pagination.jsx'
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow
-} from 'material-ui/Table';
 
 class BreweryList extends React.Component {
   constructor() {
     super();
-    // an example array of items to be paged
-    //var exampleItems = _.range(1, 151).map(i => { return { id: i, name: 'Item ' + i }; });
+
     this.state = {
         pageOfItems: []
     };
@@ -23,6 +15,7 @@ class BreweryList extends React.Component {
   }
 
   onChangePage(pageOfItems) {
+    console.log('pageOfItems: ', pageOfItems)
       // update state with new page of items
       this.setState({ pageOfItems: pageOfItems });
   }
@@ -31,7 +24,7 @@ class BreweryList extends React.Component {
     return (
       <div>
         <div className="text-center">
-            {this.props.breweries.map((brewery, i) => 
+            {this.state.pageOfItems.map((brewery, i) => 
               <BreweryListEntry
                 key={i}
                 brewery={brewery}
