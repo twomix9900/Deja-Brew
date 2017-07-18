@@ -19,14 +19,14 @@ export default class Profile extends Component {
   componentWillMount() {
     let auth0Id = localStorage.getItem('auth0Id');
 
-    axios.post('/users', { auth0Id: auth0Id })
-      .then(() => {
+    // axios.post('/users', { auth0Id: auth0Id })
+    //   .then(() => {
         axios.get('/users/' + auth0Id)
         .then((data) => {
           console.log('*** successfully retrieved user data ***', data.data[0]);
           this.setState({ userInfo: data.data[0]});
         })    
-    })
+    // })
     // axios.get('/users/' + auth0Id)
     // .then((data) => {
     //   console.log('successfully retrieved user data', data.data[0]);
