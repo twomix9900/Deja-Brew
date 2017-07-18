@@ -6,6 +6,8 @@ import LinearProgress from 'material-ui/LinearProgress';
 import axios from 'axios';
 import Details from '../Details/Details.jsx';
 
+import DialogMsg from '../Dialog/DialogMsg.jsx';
+
 const styles = {
   button: {
     margin: 20,
@@ -23,9 +25,12 @@ class Search extends React.Component {
       locationValue: '',
       beerBreweryValue: '',
       value: 10,
-      completed: 0,
-      showDetails: false
+      open: false,
+      msgTitle: 'Fill in a Field Mutha Fracker',
+      msgBody: 'Byatch! Please Fill in a Keyword or Location',
+      completed: 0
     };
+    this.handler=this.handler.bind(this);
   }
 
   autocompleteFocus() {
@@ -86,7 +91,8 @@ class Search extends React.Component {
       vm.getBeerBrewery(beerBrewery, location);
     }
     else {
-      alert('Please Fill in a Keyword or Location')
+      this.setState({ open: true });
+//      alert('Please Fill in a Keyword or Location')
     }
   }
 
@@ -259,6 +265,10 @@ class Search extends React.Component {
       value
     })
   }
+
+  handler() {
+    this.setState({ open: false });
+  }
   
   render() {
     return (
@@ -297,6 +307,15 @@ class Search extends React.Component {
           mode="determinate"
           value={this.state.completed}
         />
+<<<<<<< HEAD
+=======
+         <LinearProgress 
+         style={styles.linearBar}
+         mode="determinate" 
+         value={this.state.completed} 
+         />
+        <DialogMsg handler={ this.handler } open={ this.state.open } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
+>>>>>>> deploy
       </div>
     );
   }
