@@ -16,6 +16,20 @@ class BreweryLocationsListEntry extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.navigateToDetailsPage = this.navigateToDetailsPage.bind(this);
   }
+
+  handleClick(e, data) {
+    e.preventDefault();
+    this.selectVenue();
+    this.navigateToDetailsPage();
+  }
+
+  selectVenue() {
+    this.props.selectVenue(this.props.brewery);
+  }
+
+  navigateToDetailsPage () {
+    this.props.history.push('/details');
+  }
   
   render() {
     return (
