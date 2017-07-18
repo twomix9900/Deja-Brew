@@ -9,8 +9,7 @@ import Details from '../Details/Details.jsx';
 const styles = {
   button: {
     margin: 20,
-    height: 40,
-    primary: true
+    height: 40
   },
   linearBar: {
     height: 15
@@ -104,7 +103,7 @@ class Search extends React.Component {
     let config = {
       onDownloadProgress: (progressEvent) => {
         vm.setState({
-          completed: (Math.floor((progressEvent.loaded * 100) / progressEvent.total)) / 4
+          completed: Math.floor(progressEvent.loaded * 100 / progressEvent.total)
         })
       }
     }
@@ -158,17 +157,19 @@ class Search extends React.Component {
     let vm = this;
     let beerResults = [];
     let breweryResults = [];
+    let filteredName = true;
 
     for (var i = 0; i < dejaBrewResults.length; i++) {
       if(dejaBrewResults[i].name.includes(upperBeerBrewery)) { 
         if(restOfKeywordsArr.length) {
-          for (var j = 0; j < restOfKeywordsArr.length; j++) {
+          for (var j = 0; j < 1; j++) {
             if(dejaBrewResults[i].name.includes(restOfKeywordsArr[j])) { 
               if(dejaBrewResults[i].type === 'brewery') {
                 if(location && dejaBrewResults[i].locations) { //check for location
                   //for(var k = 0; k < dejaBrewResults[i].locations.length; k++) {
                     //console.log(dejaBrewResults[i].locations[j].locality)
                     if(dejaBrewResults[i].locations[0].locality === location) {
+                      console.log("once PLEASE")
                       breweryResults.push(dejaBrewResults[i]);
                     }
                   //}
@@ -206,6 +207,7 @@ class Search extends React.Component {
               //}
             }
             else {
+              console.log('ONCE PLEASE ' , dejaBrewResults[i])
               breweryResults.push(dejaBrewResults[i])
             }
           }

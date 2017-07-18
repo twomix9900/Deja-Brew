@@ -46,10 +46,27 @@ body {
 .dropDown {
   background-color:#FFFFFF;
   margin-left:20px;
+  height:40px !important;
+  border-radius: 5px !important;
+
   /* max-height:200px */
 }
 
  .dropDown > div > div:nth-child(2) {
+  overflow:visible !important;
+  line-height:42px !important;
+} 
+
+ .dropDown > div > button {
+  top:-3px !important;
+ }
+
+ .search-bar > button {
+   border-radius:5px !important;
+ }
+
+.text-center {
+  text-align:left;
   overflow:visible !important
 } 
 #map-canvas {

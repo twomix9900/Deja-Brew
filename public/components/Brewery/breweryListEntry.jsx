@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import {
-  TableRow,
-  TableRowColumn
-} from 'material-ui/Table';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+
+const styles = {
+  card: {
+    'paddingTop': 0
+  }
+};
 
 class BreweryListEntry extends React.Component {
   constructor(props) {
@@ -15,27 +18,44 @@ class BreweryListEntry extends React.Component {
   
   render() {
     return (
-        <TableRow>
-          <TableRowColumn>
-            <img src={this.props.brewery.images ? this.props.brewery.images.icon 
-            : "../../images/No_picture_available.jpg"}
-            />
-          </TableRowColumn>
-          <TableRowColumn>{this.props.brewery.name}</TableRowColumn>
-          <TableRowColumn>
-            <a href={this.props.brewery.website ? 
-            this.props.brewery.website 
-            : "No Website"}>
-            {this.props.brewery.website ? this.props.brewery.website 
-            : "No Website"}
-            </a>
-            </TableRowColumn>
-            {/*account for multiple locations later*/}
-            {/* <TableRowColumn>{this.props.brewery.locations[1].locality}</TableRowColumn> */}
-          <TableRowColumn>{this.props.brewery.locations[0].locality}</TableRowColumn>
-          <TableRowColumn>{this.props.brewery.locations[0].phone}</TableRowColumn>
-          <TableRowColumn>{this.props.brewery.locations[0].streetAddress}</TableRowColumn>
-        </TableRow>
+      <Card>
+      <CardHeader
+        
+        title={this.props.brewery.name}
+        showExpandableButton={true}
+        avatar={this.props.brewery.images ? 
+                this.props.brewery.images.squareMedium 
+                :"../../images/No_picture_available.jpg"}
+      />
+      <CardText 
+      style={styles.card}
+      >
+        Website: <a href={this.props.brewery.website}>
+            {this.props.brewery.website}
+        </a>
+      </CardText>
+      <CardText 
+      style={styles.card}
+      >
+        Phone: {!!this.props.brewery.locations ?
+          this.props.brewery.locations[0].phone : 'No phone Info'}
+      </CardText>
+      <CardText 
+      style={styles.card}
+      >
+        {!!this.props.brewery.locations ? 
+          this.props.brewery.locations[0].streetAddress : 'No Street Info'}
+          <br />
+        {!!this.props.brewery.locations ?
+          this.props.brewery.locations[0].locality + ', ': ''}
+        {!!this.props.brewery.locations ? 
+          this.props.brewery.locations[0].region : ''}
+      </CardText>
+      <CardText expandable={true}>
+        {this.props.brewery.description}
+      </CardText>
+    </Card>
+        
     );
   }
 }
