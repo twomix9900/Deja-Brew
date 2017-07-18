@@ -27,6 +27,7 @@ class BeerList extends React.Component {
         <div className="text-center">
             {this.state.pageOfItems.map((beer, i) => 
               <BeerListEntry
+                history={this.props.history}
                 key={i}
                 beer={beer}
               />
@@ -38,18 +39,20 @@ class BeerList extends React.Component {
     );
   }
 }
-const BeerList = ({beers, history}) => (
-  <div>
-    {console.log('beers from blist ', beers)}
-    {beers.map((beer, i) => 
-        <BeerListEntry
-          history={history}
-          key={i}
-          beer={beer}
-        />
-    )}
-  </div>
-);
+
+
+// const BeerList = ({beers, history}) => (
+//   <div>
+//     {console.log('beers from blist ', beers)}
+//     {beers.map((beer, i) => 
+//         <BeerListEntry
+//           history={history}
+//           key={i}
+//           beer={beer}
+//         />
+//     )}
+//   </div>
+// );
 
 export default BeerList
 
