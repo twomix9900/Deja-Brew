@@ -30,7 +30,7 @@ class BreweryLocationsListEntry extends React.Component {
                 :"../../images/No_picture_available.jpg"}
       />
       <CardText style={styles.hoursOfOperation}>
-      {this.props.brewery.hoursOfOperation ? Hours: <br /> {this.props.brewery.hoursOfOperation} : ''}
+      {this.props.brewery.hoursOfOperation }
       </CardText>
       <CardText style={styles.card}>
         Website: <a href={this.props.brewery.brewery.website} target="_blank">
