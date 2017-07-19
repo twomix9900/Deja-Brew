@@ -24,8 +24,8 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      locationValue: this.props.venue.searchedVenueByName || 'Search By Beer or Brewery Name',
-      beerBreweryValue: this.props.venue.searchedVenueByLocation || 'Search By Location',
+      locationValue: '',
+      beerBreweryValue: '',
       value: 10,
       open: false,
       msgTitle: 'Fill in a Field Mutha Fracker',
@@ -37,9 +37,33 @@ class Search extends React.Component {
     this.searchVenueByLocation = this.searchVenueByLocation.bind(this);
   }
 
+  componentWillUnmount() {
+    this.searchVenueByName(this.state.beerBreweryValue);
+    this.searchVenueByLocation(this.state.locationValue);
+  }
+
   componentDidMount() {
-    this.props.venue.searchedVenueByLocation ? this.searchDejaBrew() : null;
-    this.props.venue.searchedVenueByName ? this.searchDejaBrew() : null;
+    if (!!this.props.venue.searchedVenueByLocation) {
+      this.setState({ locationValue: this.props.venue.searchedVenueByLocation });
+      this.searchDejaBrew();
+    }
+
+    if (!!this.props.venue.searchedVenueByName) {
+      this.setState({ beerBreweryValue: this.props.venue.searchedVenueByName });
+      this.searchDejaBrew();
+    }
+
+    console.log('this.state.beerBreweryValue from componentdidmount = ', this.state.beerBreweryValue)
+    console.log('this.state.beerBreweryValue from componentdidmount = ', this.state.locationValue)
+
+
+
+
+    // this.props.venue.searchedVenueByLocation ? this.setState({ location: this.props.venue.searchedVenueByLocation }) : null;
+    // this.props.venue.searchedVenueByName ? this.setState({ beerBreweryValue: this.props.venue.searchedVenueByName }) : null;
+    // this.state.beerBreweryValue ? this.searchDejaBrew() : null;
+    // this.state.locationValue ? this.searchDejaBrew() : null;
+
   }
 
   searchVenueByName(data) {
@@ -48,6 +72,15 @@ class Search extends React.Component {
 
   searchVenueByLocation(data) {
     this.props.searchVenueByLocation(data);
+  }
+
+  handleChange(event) {
+    this.autocompleteFocus();
+    this.setState({locationValue: event.target.value}); 
+  }
+
+  handleBeerBreweryChange(event) {
+    this.setState({beerBreweryValue: event.target.value}) 
   }
 
   autocompleteFocus() {
@@ -63,10 +96,10 @@ class Search extends React.Component {
 
   searchDejaBrew() {
     // var location = this.wordsToUpperCase(this.state.locationValue);
-    var location = this.wordsToUpperCase(this.props.venue.searchedVenueByLocation);
+    var location = this.wordsToUpperCase(this.state.locationValue || this.props.venue.searchedVenueByLocation);
     console.log('location!: ' , location)
     // var beerBrewery = this.state.beerBreweryValue;
-    var beerBrewery = this.props.venue.searchedVenueByName;
+    var beerBrewery = this.state.beerBreweryValue || this.props.venue.searchedVenueByName;
     var radius = parseInt(this.state.value);
     console.log(radius)
     var vm = this;
@@ -273,19 +306,6 @@ class Search extends React.Component {
     }
   }
 
-  handleChange(event) {
-    // this.autocompleteFocus();
-    // this.setState({locationValue: event.target.value});
-    this.searchVenueByLocation(event.target.value); // this.props.venue.searchedVenueByName
-  }
-
-
-
-  handleBeerBreweryChange(event) {
-    // this.setState({beerBreweryValue: event.target.value})
-    this.searchVenueByName(event.target.value); // this.props.venue.searchedVenueByName
-  }
-
   handleRadiusChange(event, index, value) {
     this.setState ({
       value
@@ -305,14 +325,16 @@ class Search extends React.Component {
           id="textBox"
           type="text"
           onChange={this.handleBeerBreweryChange.bind(this)}
-          placeholder={this.state.locationValue}
+          placeholder='Search By Beer or Brewery Name'
+          value={this.state.beerBreweryValue}
         />
         <input
           className="form-control"
           id="textBoxLocation"
           type="text"
           onChange={this.handleChange.bind(this)}
-          placeholder={this.state.beerBreweryValue}
+          placeholder='Search By Location'
+          value={this.state.locationValue}
         />
         <DropDownMenu 
         className="dropDown"
@@ -346,7 +368,6 @@ class Search extends React.Component {
 }
 
 const stateToProps = (state) => {
-  console.log('STATE TO PROPS INVOKED, state = ', state)
   return {
     venue: state.venue
   }
