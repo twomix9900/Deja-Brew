@@ -2,6 +2,8 @@ import history from './history';
 import auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth0-variables';
 
+import axios from 'axios';
+
 export default class Auth {
 
   constructor() {
@@ -44,8 +46,11 @@ export default class Auth {
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('auth0Id', authResult.idTokenPayload.sub);
     localStorage.setItem('expires_at', expiresAt);
+    axios.post('/users', { auth0Id: authResult.idTokenPayload.sub })
     // navigate to the home route
-    history.replace('/home');
+     .then(() => {
+        history.replace('/home');
+     })
   }
 
   logout() {

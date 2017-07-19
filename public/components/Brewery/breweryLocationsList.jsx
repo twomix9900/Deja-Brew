@@ -28,6 +28,7 @@ class BreweryLocationsList extends React.Component {
               <BreweryLocationsListEntry
                 key={i}
                 brewery={brewery}
+                history={this.props.history}
               />
             )}
             <Pagination items={this.props.breweries} onChangePage={this.onChangePage} />

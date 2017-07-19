@@ -19,26 +19,21 @@ class BeerListEntry extends React.Component {
       //locationValue: ''
     };
     this.selectVenue = this.selectVenue.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.navigateToDetailsPage = this.navigateToDetailsPage.bind(this);
   }
 
   handleClick(e, data) {
-    console.log('e = ', e)
     e.preventDefault();
-    this.selectVenue(data);
+    this.selectVenue();
     this.navigateToDetailsPage();
   }
 
-  selectVenue(e) {
-    // console.log('selectVenue invoked in beerListEntry');
-    // e.preventDefault();
-    // console.log('selectVenue this.props.selectVenue(venue): ', this.props.selectVenue(venue));
-    // console.log('this.props = ', this.props)
-    console.log('this.props.beer from beerListEntry', this.props.beer);
-    this.props.selectVenue(this.props.beer);
+  selectVenue() {
+    this.props.selectVenue(this.props.beer.breweries[0]);
   }
 
   navigateToDetailsPage () {
-
     this.props.history.push('/details');
   }
 
