@@ -38,7 +38,6 @@ class BeerListEntry extends React.Component {
   }
 
   render() {
-    console.log(this.props, 'whats in here?')
     return (
       <Card>
         <CardHeader
