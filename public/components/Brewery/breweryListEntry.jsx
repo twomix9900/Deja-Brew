@@ -48,7 +48,7 @@ class BreweryListEntry extends React.Component {
       <CardText 
       style={styles.card}
       >
-        Website: <a href={this.props.brewery.website}>
+        Website: <a href={this.props.brewery.website} target="_blank">
             {this.props.brewery.website}
         </a>
       </CardText>

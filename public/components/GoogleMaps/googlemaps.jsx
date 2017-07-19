@@ -82,7 +82,7 @@ export default class AccessGoogle extends Component {
 
             bounds.extend(latlng);
         }
-        console.log('MAP-->', map.center.lat());
+        //console.log('MAP-->', map.center.lat());
         map.fitBounds(bounds);
     }
 
