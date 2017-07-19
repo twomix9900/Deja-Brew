@@ -5,6 +5,8 @@ import Search from '../../components/Search/search.jsx';
 import actions from '../../actions';
 import { connect, Store } from 'react-redux';
 import Paper from 'material-ui/Paper';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 class Details extends React.Component {
   constructor(props) {
