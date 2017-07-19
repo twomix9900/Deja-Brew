@@ -24,8 +24,8 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      locationValue: '',
-      beerBreweryValue: '',
+      locationValue: this.props.venue.searchedVenueByName || 'Search By Beer or Brewery Name',
+      beerBreweryValue: this.props.venue.searchedVenueByLocation || 'Search By Location',
       value: 10,
       open: false,
       msgTitle: 'Fill in a Field Mutha Fracker',
@@ -305,14 +305,14 @@ class Search extends React.Component {
           id="textBox"
           type="text"
           onChange={this.handleBeerBreweryChange.bind(this)}
-          placeholder="Search By Beer or Brewery Name"
+          placeholder={this.state.locationValue}
         />
         <input
           className="form-control"
           id="textBoxLocation"
           type="text"
           onChange={this.handleChange.bind(this)}
-          placeholder="Search by Location"
+          placeholder={this.state.beerBreweryValue}
         />
         <DropDownMenu 
         className="dropDown"
