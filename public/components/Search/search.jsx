@@ -5,8 +5,10 @@ import MenuItem from 'material-ui/MenuItem';
 import LinearProgress from 'material-ui/LinearProgress';
 import axios from 'axios';
 import Details from '../Details/Details.jsx';
-
 import DialogMsg from '../Dialog/DialogMsg.jsx';
+import actions from '../../actions';
+import { connect } from 'react-redux';
+
 
 const styles = {
   button: {
@@ -31,6 +33,21 @@ class Search extends React.Component {
       completed: 0
     };
     this.handler=this.handler.bind(this);
+    this.searchVenueByName = this.searchVenueByName.bind(this);
+    this.searchVenueByLocation = this.searchVenueByLocation.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.venue.searchedVenueByLocation ? this.searchDejaBrew() : null;
+    this.props.venue.searchedVenueByName ? this.searchDejaBrew() : null;
+  }
+
+  searchVenueByName(data) {
+    this.props.searchVenueByName(data);
+  }
+
+  searchVenueByLocation(data) {
+    this.props.searchVenueByLocation(data);
   }
 
   autocompleteFocus() {
@@ -40,14 +57,16 @@ class Search extends React.Component {
 
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
       vm.setState({locationValue: document.getElementById('textBoxLocation').value});
-       console.log(document.getElementById('textBoxLocation').value)
+      console.log(document.getElementById('textBoxLocation').value)
     })
   }
 
   searchDejaBrew() {
-    var location = this.wordsToUpperCase(this.state.locationValue);
+    // var location = this.wordsToUpperCase(this.state.locationValue);
+    var location = this.wordsToUpperCase(this.props.venue.searchedVenueByLocation);
     console.log('location!: ' , location)
-    var beerBrewery = this.state.beerBreweryValue;
+    // var beerBrewery = this.state.beerBreweryValue;
+    var beerBrewery = this.props.venue.searchedVenueByName;
     var radius = parseInt(this.state.value);
     console.log(radius)
     var vm = this;
@@ -232,6 +251,9 @@ class Search extends React.Component {
         }
       }
     }
+
+
+
     vm.props.handleBreweriesByBeerNameSearch(beerResults);
     vm.props.handleBreweriesByBreweryNameSearch(breweryResults);
   }
@@ -253,11 +275,15 @@ class Search extends React.Component {
 
   handleChange(event) {
     // this.autocompleteFocus();
-    this.setState({locationValue: event.target.value});
+    // this.setState({locationValue: event.target.value});
+    this.searchVenueByLocation(event.target.value); // this.props.venue.searchedVenueByName
   }
 
+
+
   handleBeerBreweryChange(event) {
-    this.setState({beerBreweryValue: event.target.value})
+    // this.setState({beerBreweryValue: event.target.value})
+    this.searchVenueByName(event.target.value); // this.props.venue.searchedVenueByName
   }
 
   handleRadiusChange(event, index, value) {
@@ -271,6 +297,7 @@ class Search extends React.Component {
   }
   
   render() {
+    console.log('this.props from search = ', this.props)
     return (
       <div className="search-bar">
         <input
@@ -307,15 +334,33 @@ class Search extends React.Component {
           mode="determinate"
           value={this.state.completed}
         />
-         <LinearProgress 
-         style={styles.linearBar}
-         mode="determinate" 
-         value={this.state.completed} 
-         />
+        <LinearProgress
+          style={styles.linearBar}
+          mode="determinate"
+          value={this.state.completed}
+        />
         <DialogMsg handler={ this.handler } open={ this.state.open } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
       </div>
     );
   }
 }
 
-export default Search;
+const stateToProps = (state) => {
+  console.log('STATE TO PROPS INVOKED, state = ', state)
+  return {
+    venue: state.venue
+  }
+}
+
+const dispatchToProps = (dispatch) => {
+  return {
+    searchVenueByName: (venue) => {
+      dispatch(actions.searchVenueByName(venue));
+    },
+    searchVenueByLocation: (venue) => {
+      dispatch(actions.searchVenueByLocation(venue));
+    }
+  }
+}
+
+export default connect(stateToProps, dispatchToProps)(Search);

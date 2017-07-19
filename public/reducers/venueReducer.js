@@ -1,23 +1,28 @@
 import constants from '../constants'
 
 var initialState = {
-  selectedVenue: null
+  searchedVenueByLocation: '',
+  searchedVenueByName: ''
 }
 
-export default (state = {}, action) => {
-	// let newState = Object.assign({}, state)
-
-	switch (action.type) {
+export default (state = initialState, action) => {
+  switch (action.type) {
     case constants.SELECT_VENUE:
-      // console.log('SELECT_VENUE:', JSON.stringify(action.data));
-      // newState['selectedVenue'] = action.data;
-      // return newState;
-      console.log(action.data);
       return Object.assign({}, state, {
         selectedVenue: action.data,
       });
+    
+    case constants.SEARCH_VENUE_BY_NAME:
+      return Object.assign({}, state, {
+        searchedVenueByName: action.data
+      });
 
-		default:
-			return state
-	}
+    case constants.SEARCH_VENUE_BY_LOCATION:
+      return Object.assign({}, state, {
+        searchedVenueByLocation: action.data
+      });
+
+    default:
+      return state
+  }
 }

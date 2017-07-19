@@ -25,7 +25,6 @@ class dejaBrewTabs extends React.Component {
   // }
   
   render() {
-    console.log('whats this got access to ,', this.props);
     return (
       <Tabs>
         {this.props.beers.length ? 
