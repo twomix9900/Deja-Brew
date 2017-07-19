@@ -25,7 +25,7 @@ class DejaBrewNavBar extends React.Component {
         <Navbar fluid>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#">Deja-Brew xoxo</a>
+              <a href="#">Deja-Brew</a>
             </Navbar.Brand>
 
             {
@@ -76,6 +76,28 @@ class DejaBrewNavBar extends React.Component {
                   onClick={this.goTo.bind(this, 'details')}
                 >
                   Details (TESTING ONLY)
+                  </Button>
+              )
+            }
+            {
+              this.props.auth.isAuthenticated() && (
+                <Button
+                  bsStyle="primary"
+                  className="btn-margin"
+                  onClick={this.goTo.bind(this, 'addBeer')}
+                >
+                  Add Beer
+                  </Button>
+              )
+            }
+            {
+              this.props.auth.isAuthenticated() && (
+                <Button
+                  bsStyle="primary"
+                  className="btn-margin"
+                  onClick={this.goTo.bind(this, 'addBrewery')}
+                >
+                  Add Brewery
                   </Button>
               )
             }
