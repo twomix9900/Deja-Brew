@@ -30,7 +30,7 @@ body {
 }
 
 .backgroundImage {
-  background-image: url("./images/pouring-beer.jpg");
+  background-image: url("./images/homepage4.jpg");
   background-size: cover;
   height:100%;
 }
@@ -90,12 +90,14 @@ body {
 .headerLeft {
   margin-left:50%;
   margin-top:15%;
+  z-index: 2;
 }
 
 .header {
   margin-left:auto;
   margin-right:auto;
   max-width:1000px;
+  font-size: 100px;
 
 }
 
@@ -107,4 +109,78 @@ body {
 
 .grid {
   display: grid;
+}
+
+.images-container {
+  height: 2996px;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  display: block;
+}
+
+#layer-1 {
+  top: 9.68%;
+  left: -11.68%;
+  position: absolute;
+  display: block;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+#layer-2 {
+  top: 24%;
+  left: 7%;
+  position: absolute;
+  display: block;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+#layer-3 {
+  top: 15%;
+  left: 41%;
+  position: absolute;
+  display: block;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+#layer-4 {
+  top: 26%;
+  left: 32%;
+  position: absolute;
+  display: block;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+#layer-5 {
+  top: 8.51%;
+  right: 8.59%;
+  position: absolute;
+  display: block;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  z-index: -1;
+}
+
+#layer-6 {
+  top: 23%;
+  right: 6%;
+  position: absolute;
+  display: block;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  z-index: -1;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  border: 0;
+  transition: all 0.4s linear;
 }

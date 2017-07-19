@@ -28,8 +28,8 @@ class Search extends React.Component {
       beerBreweryValue: '',
       value: 10,
       open: false,
-      msgTitle: 'Fill in a Field Mutha Fracker',
-      msgBody: 'Byatch! Please Fill in a Keyword or Location',
+      msgTitle: 'Both fields cannot be empty',
+      msgBody: 'Please fill in at least one field because the amount of data you get back will be too damn high.',
       completed: 0
     };
     this.handler=this.handler.bind(this);
@@ -327,8 +327,9 @@ class Search extends React.Component {
         <RaisedButton 
         style={styles.button}
           onClick={this.searchDejaBrew.bind(this)}
-          label="Search"
-        />
+          >
+          <span className="glyphicon glyphicon-search"/>
+        </RaisedButton>
         <LinearProgress
           style={styles.linearBar}
           mode="determinate"
