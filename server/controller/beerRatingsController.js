@@ -3,23 +3,30 @@ const { BeerRating } = require ('../db/dbModel.js');
 const beerRatingsController = {
 
   getBeerRating: (req, res) => {
-    let userId = req.params.id;
     let userBeerRatingId = req.params.beerId;
     BeerRating.findAll({
       where: { beerId: userBeerRatingId }
     })
     .then((data) => {
-      console.log('*** data received ***', data)
+      let beerRatingInfo = [];
+      for (let idx = 0; idx < data.length; idx++) {
+        beerRatingInfo.push(data[idx].dataValues);
+      }
+      console.log('*** data received ***');
+      res.json(beerRatingInfo);
     })
     .catch((err) => {
       console.log('*** error receiving data ***', err)
+      res.sendStatus(404);
     })
   },
 
   updateBeerRating: (req, res) => {
+    let userId = req.params.id;
+    let beerId = req.query.beerId;
     BeerRating.findOne({ where: {
-      userId: req.params.id,
-      beerId: req.query.beerId 
+      userId: userId,
+      beerId: beerId 
     }})
     .then((data) => {
       if (data) {
@@ -37,7 +44,7 @@ const beerRatingsController = {
         BeerRating.create({
           userId: userId,
           beerId: beerId,
-          beerRating: beerRating
+          beerRating: req.body.beerRating
         })
         .then(() => {
           console.log('beer rating entry successful');

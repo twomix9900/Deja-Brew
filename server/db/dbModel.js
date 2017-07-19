@@ -24,17 +24,15 @@ const BeerRating = db.define('beerRating',{
 const BreweryRating = db.define('breweryRating',{
   breweryId: Sequelize.STRING,
   userId: Sequelize.INTEGER,
-  userRating: Sequelize.INTEGER
+  breweryRating: Sequelize.INTEGER
 });
 
 User.hasMany(Friend);
 Friend.belongsTo(User);
 
-User.hasMany(BeerRating);
-BeerRating.hasMany(User);
+BeerRating.belongsTo(User);
 
-User.hasMany(BreweryRating);
-BreweryRating.hasMany(User);
+BreweryRating.belongsTo(User);
 
 module.exports = {
   User: User,
