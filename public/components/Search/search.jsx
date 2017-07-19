@@ -40,6 +40,7 @@ class Search extends React.Component {
   componentWillUnmount() {
     this.searchVenueByName(this.state.beerBreweryValue);
     this.searchVenueByLocation(this.state.locationValue);
+    this.setState({ showDetails: false });
   }
 
   componentDidMount() {
@@ -52,17 +53,6 @@ class Search extends React.Component {
       this.setState({ beerBreweryValue: this.props.venue.searchedVenueByName });
       this.searchDejaBrew();
     }
-
-    console.log('this.state.beerBreweryValue from componentdidmount = ', this.state.beerBreweryValue)
-    console.log('this.state.beerBreweryValue from componentdidmount = ', this.state.locationValue)
-
-
-
-
-    // this.props.venue.searchedVenueByLocation ? this.setState({ location: this.props.venue.searchedVenueByLocation }) : null;
-    // this.props.venue.searchedVenueByName ? this.setState({ beerBreweryValue: this.props.venue.searchedVenueByName }) : null;
-    // this.state.beerBreweryValue ? this.searchDejaBrew() : null;
-    // this.state.locationValue ? this.searchDejaBrew() : null;
 
   }
 
