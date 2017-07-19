@@ -4,19 +4,77 @@ class Landing extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  animateValue(id, start, duration) {
+    var end = parseInt(document.getElementById(id).textContent, 10);
+    var range = end - start;
+    var current = start;
+    var increment = end > start ? 1 : -1;
+    var obj = document.getElementById(id);
+    var startTime = new Date();
+    var offset = 1;
+    var remainderTime = 0;
+    
+    var step = function() {
+      current += increment;
+      obj.innerHTML = current;
+      
+      if (current != end) {
+        setTimeout(step, duration/range);
+      }
+      else {
+        console.log('Easing: ', duration/range);
+        console.log('Elapsed time: ', new Date() - startTime)
+        console.log('');
+      }
+    };
+  
+  setTimeout(step, duration/range);
+}
+
+  showSecondPage() {
+    if($('.headerLeftPrimary').css('display') == 'block') { 
+      $('.headerLeftPrimary').hide().removeClass('animated fadeInUp').addClass('animated fadeOutDown');
+      $('.headerLeftInfo').show().removeClass('animated fadeOutDown').addClass('animated fadeInDown');
+      this.animateValue("sortsNum", 64000, 10000);
+      this.animateValue("typesNum", 9000, 10000);
+      this.animateValue("categoriesNum", 0, 10000);
+      this.animateValue("countriesNum", 0, 10000);
+    }
+    else {
+      $('.headerLeftInfo').hide().removeClass('animated fadeInDown').addClass('animated fadeOutDown');
+      $('.headerLeftPrimary').show().removeClass('animated fadeOutDown').addClass('animated fadeInUp');
+    }
+  }
+
   render () {
     return (
       <div className="landingPage">
         <audio id="my_audio" src="../../../images/lucky.mp3" loop="loop"></audio>
         <div className="container whiteFont">
           <div className="grid">
-            <div className="headerLeft">
+            <div className="headerLeft headerLeftPrimary">
               <h1 className="header">DÉJÀ BREW</h1>
               <h2 className="subHeader">YOUR SOURCE TO FIND BEER, BREWERIES, & MORE.</h2>
               <h3 className="subHeader">
-                Déjà Brew finds breweries on the map.<br/>
-                Déjà Brew finds beer on the map.<br/>
+                Déjà Brew finds breweries on the map.<br/><br/>
+                Déjà Brew finds beer on the map.<br/><br/>
                 Déjà Brew finds them on the map so you don't have to.
+                <button type="button" className="btnCustom" onClick={this.showSecondPage.bind(this)}>
+                  <span className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                </button>
+              </h3>
+            </div>
+            <div className="headerLeft headerLeftInfo">
+              <h1 className="header">DÉJÀ BREW</h1>
+              <h3 className="subHeader blackColor">
+                <div id="sortsNum">65527</div> SORTS OF BEER<br/><br/>
+                <div id="typesNum">9134</div> TYPES OF BREWERIES<br/><br/>
+                <div id="categoriesNum">15</div> CATEGORIES OF BEER TYPES<br/><br/>
+                <div id="countriesNum">170</div>+ COUNTRIES SERVED
+                <button type="button" className="btnCustom" onClick={this.showSecondPage.bind(this)}>
+                  <span className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                </button>
               </h3>
             </div>
           </div>
