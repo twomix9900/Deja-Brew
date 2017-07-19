@@ -22,7 +22,6 @@ export default class Phone extends Component {
   }
 
   handleSubmitPhone(phoneSubmission) {
-    console.log('phone number submitted', phoneSubmission)
     if (phoneSubmission !== undefined) {
       phoneSubmission = '+1 ' + phoneSubmission;
       this.setState({ PhoneNum: phoneSubmission });

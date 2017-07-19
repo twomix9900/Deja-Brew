@@ -4,6 +4,11 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 // import FlatButton from 'material-ui/FlatButton';
 import actions from '../../actions';
 import { connect } from 'react-redux';
+import axios from 'axios';
+
+import ThumbsUp from 'material-ui/svg-icons/action/thumb-up';
+import ThumbsDown from 'material-ui/svg-icons/action/thumb-down';
+import Badge from 'material-ui/Badge';
 
 const styles = {
   card: {
@@ -17,6 +22,9 @@ class BeerListEntry extends React.Component {
     console.log('props from BeerListEntry' ,props)
     this.state = {
       //locationValue: ''
+      beerLike: 0,
+      beerDislike: 0,
+      userOpinion: 0
     };
     this.selectVenue = this.selectVenue.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -37,7 +45,28 @@ class BeerListEntry extends React.Component {
     this.props.history.push('/details');
   }
 
+  componentDidMount() {
+   this.tallyLikes() 
+  }
+
+  tallyLikes() {
+    let likeCount = 0;
+    let dislikeCount = 0;
+    console.log('*** beerId ***', this.props.beerId)
+    axios.get('/beerRatings/' + this.props.beerId)
+    .then((data) => {
+      let numberOfEntries = data.data.length;
+      for (let idx = 0; idx < numberOfEntries; idx ++) {
+        data.data[idx].beerRating === 1 && likeCount++;
+        data.data[idx].beerRating === -1 && dislikeCount++;
+      }
+      this.setState({ beerLike: likeCount, beerDislike: dislikeCount })
+    })
+  }
+
   render() {
+    console.log('states', this.state.beerLike, this.state.beerDislike );
+
     return (
       <Card>
         <CardHeader
@@ -77,6 +106,12 @@ class BeerListEntry extends React.Component {
         <CardText expandable={true}>
           {this.props.beer.breweries[0].description}
         </CardText>
+        ({ this.state.beerLike }) ? (       
+          <ThumbsUp /><Badge badgeContent={ this.state.beerLike } />
+        ) : ()
+        ({ this.state.beerDisLike }) ? (
+          <ThumbsDown /><Badge badgeContent={ this.state.beerDislike } />
+        ) : ()
       </Card>
     );
   }

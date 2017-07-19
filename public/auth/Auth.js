@@ -30,7 +30,7 @@ export default class Auth {
     this.service.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
-        history.replace('/home');
+//        history.replace('/home');
       } else if (err) {
         history.replace('/home');
         console.log(err);
@@ -41,6 +41,7 @@ export default class Auth {
 
   setSession(authResult) {
     // Set the time that the access token will expire at
+    console.log('setting session')
     let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
@@ -48,9 +49,17 @@ export default class Auth {
     localStorage.setItem('expires_at', expiresAt);
     axios.post('/users', { auth0Id: authResult.idTokenPayload.sub })
     // navigate to the home route
-     .then(() => {
+    .then(() => {
+      axios.get('/users/' + authResult.idTokenPayload.sub)
+      .then((data) => {
+        localStorage.setItem('userInfo', JSON.stringify(data.data[0]));
         history.replace('/home');
-     })
+      })
+    })
+    .catch((err) => {
+      console.log('error in setting user info', err);
+      history.replace('/home');
+    })
   }
 
   logout() {
