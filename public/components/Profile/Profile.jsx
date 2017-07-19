@@ -16,13 +16,9 @@ export default class Profile extends Component {
     }
   }
 
-  componentWillMount() {
-    let auth0Id = localStorage.getItem('auth0Id');
-    axios.get('/users/' + auth0Id)
-    .then((data) => {
-      console.log('successfully retrieved user data', data.data[0]);
-      this.setState({ userInfo: data.data[0]});
-    })
+  componentDidMount() {
+    let info = JSON.parse(localStorage.getItem('userInfo'));
+    this.setState({ userInfo: info });
   }
 
   render() {

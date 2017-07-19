@@ -3,7 +3,6 @@ import BeerListEntry from './beerListEntry.jsx'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Pagination from './pagination.jsx'
 
-
 class BeerList extends React.Component {
   constructor() {
     super();
@@ -16,7 +15,7 @@ class BeerList extends React.Component {
   }
 
   onChangePage(pageOfItems) {
-    console.log('pageOfItems: ', pageOfItems)
+//    console.log('pageOfItems: ', pageOfItems)
       // update state with new page of items
       this.setState({ pageOfItems: pageOfItems });
   }
@@ -30,6 +29,7 @@ class BeerList extends React.Component {
                 history={this.props.history}
                 key={i}
                 beer={beer}
+                beerId={beer.id}
               />
             )}
             <Pagination items={this.props.beers} onChangePage={this.onChangePage} />
