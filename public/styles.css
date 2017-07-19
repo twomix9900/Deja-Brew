@@ -88,9 +88,16 @@ body {
 }
 
 .headerLeft {
+  box-shadow:9px 5px 30px black;
   margin-left:50%;
-  margin-top:15%;
+  margin-top:20%;
   z-index: 2;
+  text-align: center;
+  height:520px;
+}
+
+.headerLeftInfo {
+  display: none;
 }
 
 .header {
@@ -98,6 +105,7 @@ body {
   margin-right:auto;
   max-width:1000px;
   font-size: 100px;
+  margin-top:70px;
 
 }
 
@@ -112,7 +120,7 @@ body {
 }
 
 .images-container {
-  height: 2996px;
+  height: inherit;
   position: absolute;
   top: 50px;
   left: 0;
@@ -122,7 +130,7 @@ body {
 }
 
 #layer-1 {
-  top: 9.68%;
+  top: 29.68%;
   left: -11.68%;
   position: absolute;
   display: block;
@@ -131,7 +139,7 @@ body {
 }
 
 #layer-2 {
-  top: 24%;
+  top: 65%;
   left: 7%;
   position: absolute;
   display: block;
@@ -140,8 +148,8 @@ body {
 }
 
 #layer-3 {
-  top: 15%;
-  left: 41%;
+  top: 62%;
+  left: 44%;
   position: absolute;
   display: block;
   backface-visibility: hidden;
@@ -149,7 +157,7 @@ body {
 }
 
 #layer-4 {
-  top: 26%;
+  top: 36%;
   left: 32%;
   position: absolute;
   display: block;
@@ -158,8 +166,8 @@ body {
 }
 
 #layer-5 {
-  top: 8.51%;
-  right: 8.59%;
+  top: 11.51%;
+  right: 7.59%;
   position: absolute;
   display: block;
   backface-visibility: hidden;
@@ -168,7 +176,7 @@ body {
 }
 
 #layer-6 {
-  top: 23%;
+  top: 75%;
   right: 6%;
   position: absolute;
   display: block;
@@ -183,4 +191,28 @@ img {
   vertical-align: middle;
   border: 0;
   transition: all 0.4s linear;
+}
+
+.btnCustom {
+  outline:none;
+  font-size:35px;
+  margin-left:247px;
+  margin-top:20px;
+  border-radius:8px;
+  display:block;
+  background-color: transparent;
+}
+
+.glyphicon-chevron-down {
+  top:5px;
+  left:2px;
+}
+
+#sortsNum, #typesNum, #categoriesNum, #countriesNum {
+  display: inline;
+  font-size:37px;
+}
+
+.blackColor {
+  color:black;
 }
