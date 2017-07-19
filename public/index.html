@@ -11,6 +11,7 @@
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5Am9Y18WIjKB8Rf4xuyjwDToJC8MKorY&libraries=places">
 </script>
+<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
 <!--Google Maps Autocomplete -->
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdlfTJ8cvntOsH5UfgQpGY9LUpyuq7rPw&libraries=places"></script> -->
@@ -23,7 +24,21 @@
 
 <script>
   window.onload = function() {
-    console.log('hey')
-    document.getElementById("my_audio").play();
-}
+    if(document.getElementById("my_audio")) {
+      document.getElementById("my_audio").play();
+      $(".navbar").hide();
+      $(document).ready(function() {
+        var movementStrength = 50;
+        var height = movementStrength / $(window).height();
+        var width = movementStrength / $(window).width();
+        $(".images-container").mousemove(function(e){
+          var pageX = e.pageX - ($(window).width() / 2);
+          var pageY = e.pageY - ($(window).height() / 2);
+          var newvalueX = width * pageX * -1 - 25;
+          var newvalueY = height * pageY * -1 - 50;
+          $('.cabbage').css("transform", "translate(" + newvalueX + "px, " + newvalueY + "px" + ")");
+        });
+      });
+    }
+  }
 </script>
