@@ -170,12 +170,14 @@ class BeerListEntry extends React.Component {
         <CardText expandable={true}>
           {this.props.beer.breweries[0].description}
         </CardText>
-        ({ this.state.beerLike }) ? (       
-          <ThumbsUp onClick={() => { this.handleUpClick() }} color={ (this.state.userOpinion === 1) ? (blue500) : ('') } />
+       
+        <ThumbsUp onClick={() => { this.handleUpClick() }} color={ (this.state.userOpinion === 1) ? (blue500) : ('') } />
+        ({ this.state.beerLike }) ? (
           <Badge badgeContent={ this.state.beerLike } />
         ) : ()
+        <ThumbsDown onClick={() => { this.handleDownClick() }} color={ (this.state.userOpinion === -1) ? (red500) : ('')} />
         ({ this.state.beerDisLike }) ? (
-          <ThumbsDown onClick={() => { this.handleDownClick() }} color={ (this.state.userOpinion === -1) ? (red500) : ('')} /><Badge badgeContent={ this.state.beerDislike } />
+            <Badge badgeContent={ this.state.beerDislike } />
         ) : ()
         <DialogMsg open={ this.state.open } handler={ this.dialogHandler } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
       </Card>
