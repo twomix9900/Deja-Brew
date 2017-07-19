@@ -10,7 +10,6 @@ const styles={
 
 const DisplayPhone = ({ handlePhoneClick, phone }) => {
 
-  console.log('phone length', phone.length);
   let formattedPhone = '';
   (phone.length) ? 
   (formattedPhone = '(' + phone.substring(3, 6) + ') ' + phone.substring(6, 9) + '-' + phone.substring(9) ) :
