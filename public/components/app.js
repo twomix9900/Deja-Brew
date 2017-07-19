@@ -76,6 +76,9 @@ class App extends Component {
               breweryLocations={this.state.BreweriesByLocationArray}
             />
           </MuiThemeProvider>
+          {/*<MuiThemeProvider>*/}
+            {/*<Details />*/}
+          {/*</MuiThemeProvider>*/}
           </div>
         </div>
       );
