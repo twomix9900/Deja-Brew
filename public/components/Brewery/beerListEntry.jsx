@@ -55,6 +55,10 @@ class BeerListEntry extends React.Component {
     this.props.history.push('/details');
   }
 
+  componentWillReceiveProps(){
+    this.tallyLikes();
+  }
+
   componentDidMount() {
     let info = JSON.parse(localStorage.getItem('userInfo'));
     this.setState({ userInfo: info });
@@ -71,8 +75,6 @@ class BeerListEntry extends React.Component {
       userId=undefined;
     } 
     let opinion = 0;
-    console.log('*** beerId ***', this.props.beerId)
-    console.log('*** userId ***', userId)
     axios.get('/beerRatings/' + this.props.beerId)
     .then((data) => {
       let numberOfEntries = data.data.length;
@@ -129,7 +131,6 @@ class BeerListEntry extends React.Component {
   }
 
   render() {
-    console.log('states', this.state.beerLike, this.state.beerDislike, this.state.userOpinion );
 
     return (
       <Card>

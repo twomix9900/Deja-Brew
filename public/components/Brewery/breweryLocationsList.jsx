@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import BreweryLocationsListEntry from './breweryLocationsListEntry.jsx'
+import BreweryLocationsListEntry from './breweryLocationsListEntry.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Pagination from './pagination.jsx'
+import Pagination from './pagination.jsx';
 
 class BreweryLocationsList extends React.Component {
   constructor() {
