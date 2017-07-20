@@ -15,20 +15,43 @@ const Friend = db.define('friend', {
   phone: Sequelize.STRING
 });
 
+<<<<<<< HEAD
 const Beer = db.define('beer', {
   uniqId: Sequelize.STRING(10)
 });
 
 const Brewery = db.define('brewery', {
   uniqId: Sequelize.STRING(10)
+=======
+const BeerRating = db.define('beerRating',{
+  beerId: Sequelize.STRING,
+  userId: Sequelize.INTEGER,
+  beerRating: Sequelize.INTEGER
+});
+
+const BreweryRating = db.define('breweryRating',{
+  breweryId: Sequelize.STRING,
+  userId: Sequelize.INTEGER,
+  breweryRating: Sequelize.INTEGER
+>>>>>>> master
 });
 
 User.hasMany(Friend);
 Friend.belongsTo(User);
 
+BeerRating.belongsTo(User);
+
+BreweryRating.belongsTo(User);
+
 module.exports = {
   User: User,
   Friend: Friend,
+<<<<<<< HEAD
   Brewery: Brewery,
   Beer: Beer
 }
+=======
+  BeerRating: BeerRating,
+  BreweryRating: BreweryRating
+}
+>>>>>>> master

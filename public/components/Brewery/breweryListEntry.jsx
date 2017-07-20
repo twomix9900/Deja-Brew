@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import actions from '../../actions';
 import { connect } from 'react-redux';
+import axios from 'axios';
+
+import ThumbsUp from 'material-ui/svg-icons/action/thumb-up';
+import ThumbsDown from 'material-ui/svg-icons/action/thumb-down';
+import Badge from 'material-ui/Badge';
+import { blue500, red500, yellow500 } from 'material-ui/styles/colors';
+
+import DialogMsg from '../Dialog/DialogMsg.jsx';
 
 const styles = {
   card: {
@@ -13,11 +21,21 @@ class BreweryListEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      locationValue: ''
+      locationValue: '',
+      breweryLike: 0,
+      breweryDislike: 0,
+      userOpinion: 0,
+      open: false,
+      msgTitle: 'Please sign in',
+      msgBody: 'Users must be signed in to vote',
+      userInfo: {}
     };
     this.selectVenue = this.selectVenue.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.navigateToDetailsPage = this.navigateToDetailsPage.bind(this);
+    this.handleUpClick = this.handleUpClick.bind(this);
+    this.handleDownClick = this.handleDownClick.bind(this);
+    this.dialogHandler = this.dialogHandler.bind(this);
   }
 
   handleClick(e, data) {
@@ -33,7 +51,82 @@ class BreweryListEntry extends React.Component {
   navigateToDetailsPage () {
     this.props.history.push('/details');
   }
+
+  componentWillReceiveProps() {
+    this.tallyLikes();
+  }
   
+  componentDidMount() {
+    let info = JSON.parse(localStorage.getItem('userInfo'));
+    this.setState({ userInfo: info });
+    this.tallyLikes(info); 
+  }
+
+  tallyLikes(info) {
+    let likeCount = 0;
+    let dislikeCount = 0;
+    let userId;
+    if (info) { 
+      userId=info.id;
+    } else {
+      userId=undefined;
+    } 
+    let opinion = 0;
+    axios.get('/breweryRatings/' + this.props.breweryId)
+    .then((data) => {
+      let numberOfEntries = data.data.length;
+      for (let idx = 0; idx < numberOfEntries; idx ++) {
+        data.data[idx].breweryRating === 1 && likeCount++;
+        data.data[idx].breweryRating === -1 && dislikeCount++;
+        if (data.data[idx].userId === userId) {
+          console.log('userInfo id', data.data[idx].userId)
+          opinion = data.data[idx].breweryRating;
+        }
+      }
+      this.setState({ breweryLike: likeCount, breweryDislike: dislikeCount, userOpinion: opinion })
+    })
+  }
+
+  handleUpClick() {
+    console.log('inside up click')
+    let userId;
+    if (this.state.userInfo) {
+      userId = this.state.userInfo.id;
+    } else {
+      userId= undefined;
+    }
+    if (userId) {
+      axios.put('/breweryRatings/' + userId + '?breweryId=' + this.props.breweryId, { breweryRating: 1 })
+        .then(() => {
+          this.tallyLikes(this.state.userInfo);
+        })
+    } else {
+      this.setState({ open: true });
+    }
+  }
+
+  handleDownClick() {
+    console.log('inside down click')
+    let userId;
+    if (this.state.userInfo) {
+      userId = this.state.userInfo.id;
+    } else {
+      userId= undefined;
+    }
+    if (userId) {
+      axios.put('/breweryRatings/' + userId + '?breweryId=' + this.props.breweryId, { breweryRating: -1 })
+        .then(() => {
+          this.tallyLikes(this.state.userInfo);
+        })
+    } else {
+      this.setState({ open: true });
+    }
+  }
+
+  dialogHandler() {
+    this.setState({ open: false })
+  }
+
   render() {
     return (
       <Card>
@@ -72,6 +165,12 @@ class BreweryListEntry extends React.Component {
       <CardText expandable={true}>
         {this.props.brewery.description}
       </CardText>
+
+      <ThumbsUp onClick={() => { this.handleUpClick() }} color={ (this.state.userOpinion === 1) ? (blue500) : ('') } />
+      <Badge badgeContent={ this.state.breweryLike } />
+      <ThumbsDown onClick={() => { this.handleDownClick() }} color={ (this.state.userOpinion === -1) ? (red500) : ('')} />
+      <Badge badgeContent={ this.state.breweryDislike } />
+      <DialogMsg open={ this.state.open } handler={ this.dialogHandler } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
     </Card>
         
     );
