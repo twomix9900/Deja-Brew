@@ -14,12 +14,6 @@ class BeerList extends React.Component {
     this.onChangePage = this.onChangePage.bind(this);
   }
 
-  componentDidMount() {
-    let info = JSON.parse(localStorage.getItem('userInfo'));
-//    console.log('info retrieved', info.id);
-    this.setState({ userId: info.id })
-  }
-
   onChangePage(pageOfItems) {
 //    console.log('pageOfItems: ', pageOfItems)
       // update state with new page of items

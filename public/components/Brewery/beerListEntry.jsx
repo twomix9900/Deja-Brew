@@ -38,6 +38,7 @@ class BeerListEntry extends React.Component {
     this.navigateToDetailsPage = this.navigateToDetailsPage.bind(this);
     this.handleUpClick=this.handleUpClick.bind(this);
     this.handleDownClick=this.handleDownClick.bind(this);
+    this.dialogHandler=this.dialogHandler.bind(this);
   }
 
   handleClick(e, data) {
@@ -63,7 +64,12 @@ class BeerListEntry extends React.Component {
   tallyLikes(info) {
     let likeCount = 0;
     let dislikeCount = 0;
-    let userId=info.id;
+    let userId;
+    if (info) { 
+      userId=info.id;
+    } else {
+      userId=undefined;
+    } 
     let opinion = 0;
     console.log('*** beerId ***', this.props.beerId)
     console.log('*** userId ***', userId)
@@ -84,28 +90,42 @@ class BeerListEntry extends React.Component {
 
   handleUpClick() {
     console.log('inside up click')
-    let userId = this.state.userInfo.id;
+    let userId;
+    if (this.state.userInfo) {
+      userId = this.state.userInfo.id;
+    } else {
+      userId= undefined;
+    }
     if (userId) {
       axios.put('/beerRatings/' + userId + '?beerId=' + this.props.beerId, { beerRating: 1 })
         .then(() => {
           this.tallyLikes(this.state.userInfo);
         })
     } else {
-      console.log('dialog box here to ask user to sign in')
+      this.setState({ open: true });
     }
   }
 
   handleDownClick() {
     console.log('inside down click')
-    let userId = this.state.userInfo.id;
+    let userId;
+    if (this.state.userInfo) {
+      userId = this.state.userInfo.id;
+    } else {
+      userId= undefined;
+    }
     if (userId) {
       axios.put('/beerRatings/' + userId + '?beerId=' + this.props.beerId, { beerRating: -1 })
         .then(() => {
           this.tallyLikes(this.state.userInfo);
         })
     } else {
-      console.log('dialog box here to ask user to sign in')
+      this.setState({ open: true });
     }
+  }
+
+  dialogHandler() {
+    this.setState({ open: false })
   }
 
   render() {
@@ -157,7 +177,7 @@ class BeerListEntry extends React.Component {
         ({ this.state.beerDisLike }) ? (
           <ThumbsDown onClick={() => { this.handleDownClick() }} color={ (this.state.userOpinion === -1) ? (red500) : ('')} /><Badge badgeContent={ this.state.beerDislike } />
         ) : ()
-
+        <DialogMsg open={ this.state.open } handler={ this.dialogHandler } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
       </Card>
     );
   }
