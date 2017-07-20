@@ -65,7 +65,7 @@ class Search extends React.Component {
   }
 
   handleChange(event) {
-    this.autocompleteFocus();
+    // this.autocompleteFocus();
     this.setState({locationValue: event.target.value}); 
   }
 
@@ -291,7 +291,6 @@ class Search extends React.Component {
       lowerWordsArr.forEach(function(word) {
         upperWordsArr.push(word.charAt(0).toUpperCase() + word.slice(1));
       })
-      console.log('UPPERCASE TWO WORDS: ' , upperWordsArr)
       return upperWordsArr;
     }
   }
@@ -307,7 +306,6 @@ class Search extends React.Component {
   }
   
   render() {
-    console.log('this.props from search = ', this.props)
     return (
       <div className="search-bar">
         <input
