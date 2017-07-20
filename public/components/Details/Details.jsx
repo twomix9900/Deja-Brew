@@ -27,11 +27,11 @@ class Details extends React.Component {
           <div>
             <Paper style={style} zDepth={5}>
               <h1>BEER NAME: {this.props.venue.selectedVenue.name}</h1>
-              BREWERY ICON: {this.props.venue.selectedVenue.brewery.images ? <img src={this.props.venue.selectedVenue.brewery.images.large} alt="boohoo" className="img-responsive" /> : null}
-              <h3>ABV: {this.props.venue.selectedVenue.abv}</h3>
-              <h3>BREWERY ID: {this.props.venue.selectedVenue.breweryId}</h3>
-              <h3>WEBSITE: {this.props.venue.selectedVenue.brewery.website}</h3>
-              <p>{this.props.venue.selectedVenue.brewery.description}</p>
+              BREWERY ICON: {this.props.venue.selectedVenue.images ? <img src={this.props.venue.selectedVenue.images.large} alt="boohoo" className="img-responsive" /> : null}
+              <h3>HOURS: {this.props.venue.selectedVenue.locations[0].hoursOfOperation}</h3>
+              <h3>BREWERY ID: {this.props.venue.selectedVenue.id}</h3>
+              <h3>WEBSITE: {this.props.venue.selectedVenue.website}</h3>
+              <p>{this.props.venue.selectedVenue.description}</p>
             </Paper>
           </div>
         </MuiThemeProvider> 
