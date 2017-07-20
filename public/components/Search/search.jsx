@@ -306,10 +306,7 @@ class Search extends React.Component {
   }
   
   render() {
-<<<<<<< HEAD
-=======
     //console.log('this.props from search = ', this.props)
->>>>>>> deja/feat
     return (
       <div className="search-bar">
         <input
