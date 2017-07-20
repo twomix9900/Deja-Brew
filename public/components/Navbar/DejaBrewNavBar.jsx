@@ -21,7 +21,7 @@ class DejaBrewNavBar extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="navbar navbar-default">
         <Navbar fluid>
           <Navbar.Header>
             <Navbar.Brand>

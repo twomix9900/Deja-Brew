@@ -15,10 +15,20 @@ const Friend = db.define('friend', {
   phone: Sequelize.STRING
 });
 
+const Beer = db.define('beer', {
+  uniqId: Sequelize.STRING(10)
+});
+
+const Brewery = db.define('brewery', {
+  uniqId: Sequelize.STRING(10)
+});
+
 User.hasMany(Friend);
 Friend.belongsTo(User);
 
 module.exports = {
   User: User,
-  Friend: Friend
+  Friend: Friend,
+  Brewery: Brewery,
+  Beer: Beer
 }
