@@ -54,10 +54,12 @@ export default class AccessGoogle extends Component {
         this.handleMapLoad = this.handleMapLoad.bind(this);
         this.handleMapClick = this.handleMapClick.bind(this);
         this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
-
+        this.displayMarker = this.displayMarker.bind(this);
+        this.createMarker = this.createMarker.bind(this);
+        this.initialize = this.initialize.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
     }
     componentDidMount() {
-        console.log('if ur seeing this it loads');
         google.maps.event.addDomListener(window, 'load', this.initialize());
     }
     handleMapLoad(map) {
@@ -70,40 +72,40 @@ export default class AccessGoogle extends Component {
     displayMarker(map) {
         console.log('displayMarker!!!!');
         let bounds = new google.maps.LatLngBounds();
-        console.log(this.props.breweryLocationsMarker.length, 'length')
+        console.log(this.props.breweryLocationsMarker.length, 'breweryLocationsMarkerlength')
         for (let i = 0; i < this.props.breweryLocationsMarker.length; i++) {
             var latlng = new google.maps.LatLng(this.props.breweryLocationsMarker[i].latitude, this.props.breweryLocationsMarker[i].longitude);
             var name = this.props.breweryLocationsMarker[i].name;
-            var address = this.props.breweryLocationsMarker[i].streetAddress;
-            var postalCode = this.props.breweryLocationsMarker[i].postalCode;
+            //var address = this.props.breweryLocationsMarker[i].streetAddress;
+            //var postalCode = this.props.breweryLocationsMarker[i].postalCode;
             console.log('displayMarker-->', latlng.lat(), latlng.lng());
+
+             this.createMarker(latlng, map);
+
+             bounds.extend(latlng);
+        }
+        console.log('this.props.breweriesMarker', this.props.breweriesMarker);
+        console.log('beeers', this.props.beersMarker);
+        for (let i = 0; i < this.props.breweriesMarker.length; i++) {
+            var latlng = new google.maps.LatLng(this.props.breweriesMarker[i].locations[i].latitude, this.props.breweriesMarker[i].locations[i].longitude);
+            var name = this.props.breweriesMarker[i].name;
+            var address = this.props.breweriesMarker[i].streetAddress;
+            var postalCode = this.props.breweriesMarker[i].postalCode;
 
             this.createMarker(latlng, map);
 
             bounds.extend(latlng);
         }
-        console.log('this.props.breweriesMarker', this.props.breweriesMarker);
-        console.log('beeers', this.props.beersMarker);
-        // for (let i = 0; i < this.props.breweriesMarker.length; i++) {
-        //     var latlng = new google.maps.LatLng(this.props.breweriesMarker[i].locations[i].latitude, this.props.breweriesMarker[i].locations[i].longitude);
-        //     var name = this.props.breweriesMarker[i].name;
-        //     var address = this.props.breweriesMarker[i].streetAddress;
-        //     var postalCode = this.props.breweriesMarker[i].postalCode;
+        for (let i = 0; i < this.props.beersMarker.length; i++) {
+            var latlng = new google.maps.LatLng(this.props.beersMarker[i].breweries[i].locations[i].latitude, this.props.beersMarker[i].breweries[i].locations[i].longitude);
+            var name = this.props.beersMarker[i].locations[i].name;
+            var address = this.props.beersMarker[i].locations[i].streetAddress;
+            var postalCode = this.props.beersMarker[i].locations[i].postalCode;
 
-        //     this.createMarker(latlng, map);
+            this.createMarker(latlng, map);
 
-        //     bounds.extend(latlng);
-        // }
-        // for (let i = 0; i < this.props.beersMarker.length; i++) {
-        //     var latlng = new google.maps.LatLng(this.props.beersMarker[i].latitude, this.props.beersMarker[i].longitude);
-        //     var name = this.props.beersMarker[i].name;
-        //     var address = this.props.beersMarker[i].streetAddress;
-        //     var postalCode = this.props.beersMarker[i].postalCode;
-
-        //     this.createMarker(latlng, map);
-
-        //     bounds.extend(latlng);
-        // }
+            bounds.extend(latlng);
+        }
         console.log('MAP-->', map.center.lat());
         map.fitBounds(bounds);
     }
@@ -115,7 +117,22 @@ export default class AccessGoogle extends Component {
             position: latlng,
             //title: this.name
         });
-        console.log('!!!!!this.map', this.map);
+
+        google.maps.event.addListener(marker, 'click', function() {
+
+            var iwContent = '<div id="iw_container">' +
+            '<div class="iw_title">' + name + '</div>' +
+            '<div class="iw_content">' + address + '<br />' +
+            // address2 + '<br />' +
+            postalCode + '</div></div>';
+
+            // including content to the infowindow
+            infoWindow.setContent(iwContent);
+
+            // opening the infowindow in the current map and at the current marker location
+            infoWindow.open(map, marker);
+        })
+        //console.log('!!!!!this.map, address', this.map, address);
     }
 
     initialize() {
@@ -128,8 +145,19 @@ export default class AccessGoogle extends Component {
         let map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
         console.log('map in init!!-->', map);
 
+        // a new Info Window is created
+        let infoWindow = new google.maps.InfoWindow();
+
+        // Event that closes the InfoWindow with a click on the map
+        // google.maps.event.addListener(map, 'click', function() {
+        //     infoWindow.close();
+        // });
+
         this.displayMarker(map);
+        
+        google.maps.event.addDomListener(window, 'load', this.initialize);
     }
+
     // ComponentDidMount() {
     //     console.log('if ur seeing this it loads');
     //     google.maps.event.addDomListener(window, 'load', initialize);

@@ -32,7 +32,7 @@ class Search extends React.Component {
       msgBody: 'Please fill in at least one field because the amount of data you get back will be too damn high.',
       completed: 0
     };
-    this.handler=this.handler.bind(this);
+    this.handler = this.handler.bind(this);
     this.searchVenueByName = this.searchVenueByName.bind(this);
     this.searchVenueByLocation = this.searchVenueByLocation.bind(this);
   }
@@ -307,7 +307,7 @@ class Search extends React.Component {
   }
   
   render() {
-    console.log('this.props from search = ', this.props)
+    //console.log('this.props from search = ', this.props)
     return (
       <div className="search-bar">
         <input
@@ -359,6 +359,7 @@ class Search extends React.Component {
 }
 
 const stateToProps = (state) => {
+  //console.log('STATE TO PROPS INVOKED, state = ', state)
   return {
     venue: state.venue
   }
