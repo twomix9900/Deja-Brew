@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
 import { Navbar, Button } from 'react-bootstrap';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ReactDOM from 'react-dom';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
+
 
 class DejaBrewNavBar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {open: false};
   }
+
+  handleToggle () {
+    this.setState({open: !this.state.open});
+  }
+
+  handleClose () {
+    this.setState({open: false});
+  }
+
 
   goTo(route) {
     this.props.history.replace(`/${route}`)
@@ -21,89 +36,27 @@ class DejaBrewNavBar extends React.Component {
 
   render() {
     return (
-      <div>
-        <Navbar fluid>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="#">Deja-Brew</a>
-            </Navbar.Brand>
-
-            {
-              !this.props.auth.isAuthenticated() && (
-                <Button
-                  bsStyle="primary"
-                  className="btn-margin"
-                  onClick={this.login.bind(this)}
-                >
-                  Log In
-                  </Button>
-              )
-            }
-            {
-              this.props.auth.isAuthenticated() && (
-                <Button
-                  bsStyle="primary"
-                  className="btn-margin"
-                  onClick={this.logout.bind(this)}
-                >
-                  Log Out
-                  </Button>
-              )
-            }
-            <Button
-              bsStyle="primary"
-              className="btn-margin"
-              onClick={this.goTo.bind(this, 'home')}
-            >
-              Home
-            </Button>
-            {
-              this.props.auth.isAuthenticated() && (
-                <Button
-                  bsStyle="primary"
-                  className="btn-margin"
-                  onClick={this.goTo.bind(this, 'profile')}
-                >
-                  Profile
-                  </Button>
-              )
-            }
-            {
-              this.props.auth.isAuthenticated() && (
-                <Button
-                  bsStyle="primary"
-                  className="btn-margin"
-                  onClick={this.goTo.bind(this, 'details')}
-                >
-                  Details (TESTING ONLY)
-                  </Button>
-              )
-            }
-            {
-              this.props.auth.isAuthenticated() && (
-                <Button
-                  bsStyle="primary"
-                  className="btn-margin"
-                  onClick={this.goTo.bind(this, 'addBeer')}
-                >
-                  Add Beer
-                  </Button>
-              )
-            }
-            {
-              this.props.auth.isAuthenticated() && (
-                <Button
-                  bsStyle="primary"
-                  className="btn-margin"
-                  onClick={this.goTo.bind(this, 'addBrewery')}
-                >
-                  Add Brewery
-                  </Button>
-              )
-            }
-          </Navbar.Header>
-        </Navbar>
-      </div>
+      <MuiThemeProvider>
+        <div>
+          <RaisedButton
+            label="Deja-Brew"
+            onTouchTap={this.handleToggle.bind(this)}
+          />
+          <Drawer
+            docked={false}
+            width={200}
+            open={this.state.open}
+            onRequestChange={(open) => this.setState({ open })}
+          >
+            { !this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.login.bind(this)}>Log in</MenuItem>) }
+            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.logout.bind(this)}>Log out</MenuItem>) }
+            <MenuItem onTouchTap={this.goTo.bind(this, 'home')}>Home</MenuItem>
+            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'profile')}>Profile</MenuItem>) }
+            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.logout.bind(this, 'addBeer')}>Add Beer</MenuItem>) }
+            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.logout.bind(this, 'addBrewery')}>Add Brewery</MenuItem>) }
+          </Drawer>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
