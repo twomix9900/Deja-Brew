@@ -17,13 +17,23 @@ class Details extends React.Component {
       userInfo: {}
     }
     this.sendDirections = this.sendDirections.bind(this);
+    this.getBeersFromBrewery = this.getBeersFromBrewery.bind(this);
   }
   
   componentDidMount() {
     let info = JSON.parse(localStorage.getItem('userInfo'));
     this.setState({ userInfo: info });
     // phone={ this.state.userInfo.phone }
+    this.getBeersFromBrewery();
   }
+
+  getBeersFromBrewery() {
+    axios.get('/brewery/beers/' + this.props.venue.selectedVenue.id).then((data) => {
+      console.log('data from getBeersFromBrewery = ', data)
+    }).catch((err) => console.log('err = ', err))
+
+  }
+
 
   sendDirections() {
     let queryName;
@@ -47,12 +57,13 @@ class Details extends React.Component {
         <MuiThemeProvider>
           <div>
             <Paper style={style} zDepth={5}>
-               <h1>BEER NAME: {this.props.venue.selectedVenue.name}</h1>
-               BREWERY ICON: {this.props.venue.selectedVenue.brewery.images ? <img src={this.props.venue.selectedVenue.brewery.images.large} alt="boohoo" className="img-responsive" /> : null} 
-              <h3>ABV: {this.props.venue.selectedVenue.abv}</h3>
-              <h3>BREWERY ID: {this.props.venue.selectedVenue.breweryId}</h3>
-              <h3>WEBSITE: {this.props.venue.selectedVenue.brewery.website}</h3>
-              <p>{this.props.venue.selectedVenue.brewery.description}</p>   
+              <h1>Brewery Name: {this.props.venue.selectedVenue.name || this.props.venue.selectedVenue.brewery.name}</h1>
+              Brewery Icon: {this.props.venue.selectedVenue.images ? <img src={this.props.venue.selectedVenue.images.large} alt="boohoo" className="img-responsive" /> : null || this.props.venue.selectedVenue.brewery.images.large}
+              <h3>Hours: {this.props.venue.selectedVenue.hoursOfOperation || this.props.venue.selectedVenue.locations.hoursOfOperation}</h3>
+              <h3>Brewery Id: {this.props.venue.selectedVenue.id || this.props.venue.selectedVenue.breweryId}</h3>
+              Beer Name: {this.props.venue.searchedVenueByName}
+              <h3>Website: {this.props.venue.selectedVenue.website || this.props.venue.selectedVenue.brewery.website}</h3>
+              <p>Description: {this.props.venue.selectedVenue.description || this.props.venue.selectedVenue.brewery.description}</p>
               <RaisedButton
                 style={style.button}
                 onClick={this.sendDirections.bind(this)}
