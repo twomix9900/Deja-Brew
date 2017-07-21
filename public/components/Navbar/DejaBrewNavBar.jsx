@@ -23,6 +23,7 @@ class DejaBrewNavBar extends React.Component {
 
 
   goTo(route) {
+    this.handleToggle();
     this.props.history.replace(`/${route}`)
   }
 
@@ -52,8 +53,8 @@ class DejaBrewNavBar extends React.Component {
             { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.logout.bind(this)}>Log out</MenuItem>) }
             <MenuItem onTouchTap={this.goTo.bind(this, 'home')}>Home</MenuItem>
             { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'profile')}>Profile</MenuItem>) }
-            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.logout.bind(this, 'addBeer')}>Add Beer</MenuItem>) }
-            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.logout.bind(this, 'addBrewery')}>Add Brewery</MenuItem>) }
+            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'addBeer')}>Add Beer</MenuItem>) }
+            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'addBrewery')}>Add Brewery</MenuItem>) }
           </Drawer>
         </div>
       </MuiThemeProvider>

@@ -27,16 +27,24 @@ const BreweryRating = db.define('breweryRating',{
   breweryRating: Sequelize.INTEGER
 });
 
+const Beer = db.define('beer', {
+  uniqId: Sequelize.STRING(10)
+});
+
+const Brewery = db.define('brewery', {
+  uniqId: Sequelize.STRING(10)
+});
+
 User.hasMany(Friend);
 Friend.belongsTo(User);
-
 BeerRating.belongsTo(User);
-
 BreweryRating.belongsTo(User);
 
 module.exports = {
   User: User,
   Friend: Friend,
+  Brewery: Brewery,
+  Beer: Beer,
   BeerRating: BeerRating,
   BreweryRating: BreweryRating
 }
