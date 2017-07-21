@@ -46,6 +46,7 @@
     "sequelize": "^4.2.1",
     "style-loader": "^0.18.2",
     "svg-inline-loader": "^0.7.1",
+    "twilio": "^3.5.0",
     "url-loader": "^0.5.9",
     "uuid": "^3.1.0"
   },
