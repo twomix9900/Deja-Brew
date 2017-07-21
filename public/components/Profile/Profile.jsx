@@ -18,7 +18,11 @@ export default class Profile extends Component {
 
   componentDidMount() {
     let info = JSON.parse(localStorage.getItem('userInfo'));
-    this.setState({ userInfo: info });
+    let auth0 = info.auth0Id;
+    axios.get('/users/' + auth0)
+    .then((data) => {
+      this.setState({ userInfo: data.data[0] });
+    })
   }
 
   render() {
