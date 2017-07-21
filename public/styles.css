@@ -120,6 +120,7 @@ body {
 }
 
 .images-container {
+  background-image: url("./images/bg_cont.png");
   height: inherit;
   position: absolute;
   top: 50px;
@@ -208,11 +209,22 @@ img {
   left:2px;
 }
 
-#sortsNum, #typesNum, #categoriesNum, #countriesNum {
+#sortsNum, #typesNum, #categoriesNum, #countriesNum, #stylesNum {
   display: inline;
-  font-size:37px;
+  font-size:35px;
 }
 
 .blackColor {
   color:black;
+}
+
+.addBeerImage {
+  background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('./images/homepage.jpg');
+  height:100%;
+  background-size: cover;
+}
+
+.whiteColor {
+  color:white;
+  font-size:60px;
 }

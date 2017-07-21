@@ -32,7 +32,7 @@ export const makeMainRoutes = () => {
             <Route path="/home" render={(props) => <App auth={auth} {...props} />} />
             <Route path="/profile" render={(props) => <Profile auth={auth} {...props} />} />
             <Route path="/details" render={(props) => <Details {...props} />} />
-            <Route path="/addBeer" render={(props) => <AddBeer {...props} />} />
+            <Route path="/addBeer" render={(props) => <AddBeer {...props}/>} />
             <Route path="/addBrewery" render={(props) => <AddBrewery {...props} />} />
             <Route path="/callback" render={(props) => {
               handleAuthentication(props);

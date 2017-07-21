@@ -39,6 +39,7 @@ class Landing extends React.Component {
       this.animateValue("sortsNum", 64000, 10000);
       this.animateValue("typesNum", 9000, 10000);
       this.animateValue("categoriesNum", 0, 10000);
+      this.animateValue("stylesNum", 0, 10000);
       this.animateValue("countriesNum", 0, 10000);
     }
     else {
@@ -69,9 +70,10 @@ class Landing extends React.Component {
               <h1 className="header">DÉJÀ BREW</h1>
               <h3 className="subHeader blackColor">
                 <div id="sortsNum">65527</div> SORTS OF BEER<br/><br/>
-                <div id="typesNum">9134</div> TYPES OF BREWERIES<br/><br/>
-                <div id="categoriesNum">15</div> CATEGORIES OF BEER TYPES<br/><br/>
-                <div id="countriesNum">170</div>+ COUNTRIES SERVED
+                <div id="typesNum">9134</div> NAMES OF BREWERIES<br/><br/>
+                <div id="categoriesNum">15</div> CATEGORIES OF BEER<br/><br/>
+                <div id="stylesNum">170</div> STYLES OF BEER<br/><br/>
+                <div id="countriesNum">160</div>+ COUNTRIES AVAILABLE<br/><br/>
                 <button type="button" className="btnCustom" onClick={this.showSecondPage.bind(this)}>
                   <span className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
                 </button>

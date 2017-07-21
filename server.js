@@ -6,6 +6,8 @@ const db = require('./server/db');
 const {
   User,
   Friend,
+  Beer,
+  Brewery,
   BreweryRating,
   BeerRating
 } = require('./server/db/dbModel.js')
@@ -43,6 +45,8 @@ db.authenticate()
   .then(() => Friend.sync())
   .then(() => BreweryRating.sync())
   .then(() => BeerRating.sync()) 
+  .then(() => Beer.sync()) 
+  .then(() => Brewery.sync()) 
   .then(() => {
     console.log('successfully connected to database');
   })
