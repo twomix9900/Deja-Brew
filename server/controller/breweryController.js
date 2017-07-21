@@ -71,6 +71,18 @@ const breweryController = {
       console.log('error getting getBreweriesLatLng ', err);
       res.sendStatus(400);
     })
+  },
+
+  getBeerStyles: (req, res) => {
+    console.log('getBeerStyles server')
+    axios.get(baseUrl + 'styles?key=' + API_KEY)
+    .then((req) => {
+      res.send(req.data)
+    })
+    .catch((err) => {
+      console.log('error getting getBreweriesLatLng ', err);
+      res.sendStatus(400);
+    })
   }
 
 }
