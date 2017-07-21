@@ -7,13 +7,7 @@ const userController = {
     let contactNumber = req.params.phoneNumber.slice(0, 10);
     let queryName = req.params.phoneNumber.slice(10);
     let googleSearch = 'https://www.google.com/maps/dir/?api=1&destination=' + queryName + '&travelmode=driving'
-    console.log('req.params.phoneNumber.slice(0, 10) from sendDirections = ', req.params.phoneNumber.slice(0, 10))
-    console.log('req.params.phoneNumber.slice(10) from sendDirections = ', req.params.phoneNumber.slice(10))
-    console.log('queryName = ', queryName)
-    console.log('contactNumber = ', contactNumber)
-    console.log('googleSearch = ', googleSearch)
-
-
+    
     client.messages.create({
       to: '+1' + contactNumber,
       from: process.env.TWILIO_NUMBER,
