@@ -287,6 +287,7 @@ class Search extends React.Component {
   }
   
   render() {
+    //console.log('this.props from search = ', this.props)
     return (
       <div className="search-bar">
         <input
