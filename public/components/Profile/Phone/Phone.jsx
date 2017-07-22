@@ -57,13 +57,13 @@ export default class Phone extends Component {
   
   render() {
     return (
-      <div>
-        ({ this.state.displayPhone }) ? (
+      <div>{
+        ( this.state.displayPhone ) ? (
           <DisplayPhone handlePhoneClick={ this.state.handlePhoneClick } phone={ this.state.phone } />
         ) : (
           <QueryPhone handleSubmit={ this.submitPhone } />
         )
-      </div>
+      }</div>
     )
   }
 }
