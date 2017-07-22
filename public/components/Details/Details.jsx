@@ -23,7 +23,7 @@ class Details extends React.Component {
     }
     this.sendDirections = this.sendDirections.bind(this);
     this.getBeersFromBrewery = this.getBeersFromBrewery.bind(this);
-    this.onChangePage = this.onChangePage.bind(this);
+    //this.onChangePage = this.onChangePage.bind(this);
     this.renderBeerList = this.renderBeerList.bind(this);
   }
   
@@ -61,11 +61,11 @@ class Details extends React.Component {
     return beers;
   }
 
-  onChangePage(pageOfItems) {
-    //console.log('pageOfItems: ', pageOfItems)
-      // update state with new page of items
-      this.setState({ pageOfItems: this.state.beersFromBrewery });
-  }
+  // onChangePage(pageOfItems) {
+  //   //console.log('pageOfItems: ', pageOfItems)
+  //     // update state with new page of items
+  //     this.setState({ pageOfItems: this.state.beersFromBrewery });
+  // }
 
   sendDirections() {
     let queryName;
@@ -108,8 +108,8 @@ class Details extends React.Component {
                 <span className="Get Directions" />
               </RaisedButton>              
             </Paper>
-            <Pagination items={this.state.beersFromBrewery} onChangePage={this.onChangePage}
-            />
+            {/*<Pagination items={this.state.beersFromBrewery} onChangePage={this.onChangePage}
+            />*/}
           </div>
         </MuiThemeProvider>
       </div>
@@ -118,7 +118,7 @@ class Details extends React.Component {
 }
   
 const style = {
-  height: 2000,
+  height: 'auto',
   width: 1200,
   margin: 40,
   textAlign: 'left',
