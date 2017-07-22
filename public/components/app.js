@@ -28,7 +28,6 @@ class App extends Component {
       BreweriesByBeerNameArray: searchData,
       BreweriesByLocationArray: []
     });
-    console.log('BreweriesByBeerNameArray ', this.state.BreweriesByBeerNameArray)
   }
 
   handleBreweriesByBreweryNameSearch(searchData) {
@@ -36,7 +35,6 @@ class App extends Component {
       BreweriesByBreweryNameArray: searchData,
       BreweriesByLocationArray: []
     });
-    console.log('BreweriesByBreweryNameArray ', this.state.BreweriesByBreweryNameArray)
   }
 
   handleBreweriesByLocationSearch(searchData) {
@@ -45,11 +43,9 @@ class App extends Component {
       BreweriesByBeerNameArray: [],
       BreweriesByBreweryNameArray: []
     });
-    console.log('BreweriesByLocationArray ', this.state.BreweriesByLocationArray)
   }
 
     render() {
-      console.log('rendering app', this.props);
       return (
         <div className="backgroundImage">
           <div className="container">
@@ -62,7 +58,6 @@ class App extends Component {
             />
             
           </MuiThemeProvider>
-
           <AccessGoogle 
               beersMarker={this.state.BreweriesByBeerNameArray}
               breweriesMarker={this.state.BreweriesByBreweryNameArray}
@@ -76,9 +71,6 @@ class App extends Component {
               breweryLocations={this.state.BreweriesByLocationArray}
             />
           </MuiThemeProvider>
-          {/*<MuiThemeProvider>*/}
-            {/*<Details />*/}
-          {/*</MuiThemeProvider>*/}
           </div>
         </div>
       );
