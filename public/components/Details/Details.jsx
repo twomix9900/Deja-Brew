@@ -5,9 +5,10 @@ import Search from '../../components/Search/search.jsx';
 import actions from '../../actions';
 import { connect, Store } from 'react-redux';
 import Paper from 'material-ui/Paper';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
+
+
 
 class Details extends React.Component {
   constructor(props) {
@@ -51,12 +52,13 @@ class Details extends React.Component {
   }
 
   render() {
-    console.log('Details->this.props = ', this.props.venue);
+    console.log('Details->this.props = ', this.props.venue.selectedVenue);
+    console.log('breweriesByBeerNameArray-->', this.props);
     return (
       <div>
         <MuiThemeProvider>
           <div>
-            <Paper style={style} zDepth={5}>
+            <Paper style={style} zDepth={5}>              
               <h1>Brewery Name: {this.props.venue.selectedVenue.name || this.props.venue.selectedVenue.brewery.name}</h1>
               Brewery Icon: {this.props.venue.selectedVenue.images ? <img src={this.props.venue.selectedVenue.images.large} alt="boohoo" className="img-responsive" /> : null || this.props.venue.selectedVenue.brewery.images.large}
               <h3>Hours: {this.props.venue.selectedVenue.hoursOfOperation || this.props.venue.selectedVenue.locations.hoursOfOperation}</h3>
@@ -70,7 +72,7 @@ class Details extends React.Component {
                 label='Get Directions'
               >
                 <span className="Get Directions" />
-              </RaisedButton>
+              </RaisedButton>              
             </Paper>
           </div>
         </MuiThemeProvider>
