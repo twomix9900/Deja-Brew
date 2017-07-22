@@ -15,26 +15,40 @@ export default class AccessGoogle extends Component {
     displayMarker(map) {
         var bounds = new google.maps.LatLngBounds();
         if (!!this.props.breweryLocationsMarker.length) {
+            console.log('breweryLocationsMarker', this.props)
             for (let i = 0; i < this.props.breweryLocationsMarker.length; i++) {
-                let latlng = new google.maps.LatLng(this.props.breweryLocationsMarker[i].latitude, this.props.breweryLocationsMarker[i].longitude);
-                // // var name = this.props.breweryLocationsMarker[i].name;
-                // // var address = this.props.breweryLocationsMarker[i].streetAddress;
-                // // var postalCode = this.props.breweryLocationsMarker[i].postalCode;
+                let lng;
+                let lat;
+                this.props.breweryLocationsMarker ? lat = this.props.breweryLocationsMarker[i].latitude : null;
+                this.props.breweryLocationsMarker ? lng = this.props.breweryLocationsMarker[i].longitude : null;
 
-                this.createMarker(latlng, map);
-                bounds.extend(latlng);
-            }
-        } else if (this.props.beersMarker.length > this.props.breweriesMarker.length) {
-            let lng;
-            let lat;
-
-            for (let i = 0; i < this.props.breweriesMarker.length; i++) {
-                this.props.beersMarker[i].locations ? lat = this.props.beersMarker[i].locations[0].latitude : lat = this.props.beersMarker[i].breweries[0].locations[0].latitude
-                this.props.beersMarker[i].locations ? lng = this.props.beersMarker[i].locations[0].longitude : lng = this.props.beersMarker[i].breweries[0].locations[0].longitude
                 if (lng && lat) {
                     let latlng = new google.maps.LatLng(lat, lng);
                     this.createMarker(latlng, map);
                     bounds.extend(latlng);
+                    map.fitBounds(bounds);
+                }
+
+                // // var name = this.props.breweryLocationsMarker[i].name;
+                // // var address = this.props.breweryLocationsMarker[i].streetAddress;
+                // // var postalCode = this.props.breweryLocationsMarker[i].postalCode;
+
+            }
+        } else if (this.props.beersMarker.length > this.props.breweriesMarker.length) {
+            console.log('beersMarker', this.props)
+            for (let i = 0; i < this.props.beersMarker.length; i++) {
+                let lng;
+                let lat;
+                this.props.beersMarker[i].locations ? lat = this.props.beersMarker[i].locations[0].latitude : null;
+                this.props.beersMarker[i].breweries ? lat = this.props.beersMarker[i].breweries[0].locations[0].latitude : null;
+                this.props.beersMarker[i].locations ? lng = this.props.beersMarker[i].locations[0].longitude : null;
+                this.props.beersMarker[i].breweries ? lng = this.props.beersMarker[i].breweries[0].locations[0].longitude : null;
+
+                if (lng && lat) {
+                    let latlng = new google.maps.LatLng(lat, lng);
+                    this.createMarker(latlng, map);
+                    bounds.extend(latlng);
+                    map.fitBounds(bounds);
                 }
 
                 // var name = this.props.beersMarker[i].name;
@@ -43,24 +57,35 @@ export default class AccessGoogle extends Component {
             }
 
         } else if (this.props.breweriesMarker.length > this.props.beersMarker.length) {
-            let lng;
-            let lat;
-
+            console.log('breweriesMarker', this.props)
             for (let i = 0; i < this.props.breweriesMarker.length; i++) {
-                this.props.breweriesMarker[i].locations ? lat = this.props.breweriesMarker[i].locations[0].latitude : lat = this.props.breweriesMarker[i].breweries[0].locations[0].latitude
-                this.props.breweriesMarker[i].locations ? lng = this.props.breweriesMarker[i].locations[0].longitude : lng = this.props.breweriesMarker[i].breweries[0].locations[0].longitude
+                let lng;
+                let lat;
+
+                this.props.breweriesMarker[i].locations ? lat = this.props.breweriesMarker[i].locations[0].latitude : null;
+                this.props.breweriesMarker[i].locations ? lng = this.props.breweriesMarker[i].locations[0].longitude : null;
+
+                if (this.props.breweriesMarker[i].breweries) {
+                    this.props.breweriesMarker[i].breweries[0].locations ? lat = this.props.breweriesMarker[i].breweries[0].locations[0].latitude : null;
+                    this.props.breweriesMarker[i].breweries[0].locations ? lng = this.props.breweriesMarker[i].breweries[0].locations[0].longitude : null;
+                }
+
                 if (lng && lat) {
                     let latlng = new google.maps.LatLng(lat, lng);
                     this.createMarker(latlng, map);
                     bounds.extend(latlng);
+                    map.fitBounds(bounds);
                 }
 
                 // var name = this.props.breweriesMarker[i].name;
                 // var address = this.props.breweriesMarker[i].streetAddress;
                 // var postalCode = this.props.breweriesMarker[i].postalCode;
             }
+        } else {
+            console.log('NOTHING', this.props)
+            return;
         }
-        map.fitBounds(bounds);
+
     }
 
     createMarker(latlng, map) {
