@@ -58,6 +58,7 @@ class Details extends React.Component {
       <div>
         <MuiThemeProvider>
           <div>
+          
             <Paper style={style} zDepth={5}>
               <h1>Brewery Name: {this.props.venue.selectedVenue.name || this.props.venue.selectedVenue.brewery.name}</h1>
               Brewery Icon: {this.props.venue.selectedVenue.images ? <img src={this.props.venue.selectedVenue.images.large} alt="boohoo" className="img-responsive" /> : null || this.props.venue.selectedVenue.brewery.images.large}
@@ -73,9 +74,13 @@ class Details extends React.Component {
               >
                 <span className="Get Directions" />
               </RaisedButton>
-              <Drinkbuddy />
             </Paper>
           </div>
+        </MuiThemeProvider>
+        <MuiThemeProvider>
+          <div>
+            <DrinkBuddy />
+          </div>  
         </MuiThemeProvider>
       </div>
     );
