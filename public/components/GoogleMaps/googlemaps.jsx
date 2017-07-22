@@ -15,7 +15,6 @@ export default class AccessGoogle extends Component {
     displayMarker(map) {
         var bounds = new google.maps.LatLngBounds();
         if (!!this.props.breweryLocationsMarker.length) {
-            console.log('breweryLocationsMarker', this.props)
             for (let i = 0; i < this.props.breweryLocationsMarker.length; i++) {
                 let lng;
                 let lat;
@@ -35,7 +34,6 @@ export default class AccessGoogle extends Component {
 
             }
         } else if (this.props.beersMarker.length > this.props.breweriesMarker.length) {
-            console.log('beersMarker', this.props)
             for (let i = 0; i < this.props.beersMarker.length; i++) {
                 let lng;
                 let lat;
@@ -57,7 +55,6 @@ export default class AccessGoogle extends Component {
             }
 
         } else if (this.props.breweriesMarker.length > this.props.beersMarker.length) {
-            console.log('breweriesMarker', this.props)
             for (let i = 0; i < this.props.breweriesMarker.length; i++) {
                 let lng;
                 let lat;
@@ -82,7 +79,6 @@ export default class AccessGoogle extends Component {
                 // var postalCode = this.props.breweriesMarker[i].postalCode;
             }
         } else {
-            console.log('NOTHING', this.props)
             return;
         }
 
