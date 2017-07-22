@@ -10,12 +10,14 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 
 
+
 class Details extends React.Component {
   constructor(props) {
     super(props);
     console.log('props from Details! = ', props)
     this.state = {
-      userInfo: {}
+      userInfo: {},
+      beersFromBrewery: []
     }
     this.sendDirections = this.sendDirections.bind(this);
     this.getBeersFromBrewery = this.getBeersFromBrewery.bind(this);
@@ -24,27 +26,33 @@ class Details extends React.Component {
   componentDidMount() {
     let info = JSON.parse(localStorage.getItem('userInfo'));
     this.setState({ userInfo: info });
+    console.log('props in details beers brew-->',this.props.venue.selectedVenue.id);
+    this.getBeersFromBrewery();
     // phone={ this.state.userInfo.phone }
     this.getBeersFromBrewery();
   }
 
   getBeersFromBrewery() {
-    axios.get('/brewery/beers/' + this.props.venue.selectedVenue.id).then((data) => {
-      console.log('data from getBeersFromBrewery = ', data)
-    }).catch((err) => console.log('err = ', err))
-
+    axios.get('/brewery/beers/' + this.props.venue.selectedVenue.id)
+    .then((data) => {
+      console.log('data from getBeersFromBrewery = ', data.data.data)
+      this.setState({
+        beersFromBrewery: data
+      })
+    })
+    .catch((err) => console.log('getBeersFromBrewery err = ', err))
   }
-
 
   sendDirections() {
     let queryName;
-    if (this.props.venue.selectedVenue.name !== 'Main Brewery') {
-      queryName = this.props.venue.selectedVenue.name.split(' ').join('+');
-    } else {
-      queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
-    }
-    console.log('Button pressed, this.props.venue.selectedVenue.name = ', this.props.venue.selectedVenue.name);
-    console.log('queryName from Details page = ', queryName)
+
+    this.props.venue.selectedVenue.name !== 'Main Brewery' ? queryName = this.props.venue.selectedVenue.name.split(' ').join('+') : queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
+
+    // if (this.props.venue.selectedVenue.name !== 'Main Brewery') {
+    //   queryName = this.props.venue.selectedVenue.name.split(' ').join('+');
+    // } else {
+    //   queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
+    // }
     axios.get('/users/sendDirections/' + this.state.userInfo.phone.slice(3) + queryName)
     .then((data) => {
       console.log('data from sendDirections = ', data)  
@@ -53,7 +61,7 @@ class Details extends React.Component {
 
   render() {
     console.log('Details->this.props = ', this.props.venue.selectedVenue);
-    console.log('breweriesByBeerNameArray-->', this.props);
+    console.log('beersFromBrewery-->', this.state.beersFromBrewery.data);
     return (
       <div>
         <MuiThemeProvider>
@@ -63,9 +71,15 @@ class Details extends React.Component {
               Brewery Icon: {this.props.venue.selectedVenue.images ? <img src={this.props.venue.selectedVenue.images.large} alt="boohoo" className="img-responsive" /> : null || this.props.venue.selectedVenue.brewery.images.large}
               <h3>Hours: {this.props.venue.selectedVenue.hoursOfOperation || this.props.venue.selectedVenue.locations.hoursOfOperation}</h3>
               <h3>Brewery Id: {this.props.venue.selectedVenue.id || this.props.venue.selectedVenue.breweryId}</h3>
-              Beer Name: {this.props.venue.searchedVenueByName}
               <h3>Website: {this.props.venue.selectedVenue.website || this.props.venue.selectedVenue.brewery.website}</h3>
               <p>Description: {this.props.venue.selectedVenue.description || this.props.venue.selectedVenue.brewery.description}</p>
+              Beer List: {this.state.beersFromBrewery.map((beer, i) =>
+                <ul>
+                  key={i}
+                  beer={beer}
+                  abv={this.props.abv}
+                </ul>
+              )}
               <RaisedButton
                 style={style.button}
                 onClick={this.sendDirections.bind(this)}
