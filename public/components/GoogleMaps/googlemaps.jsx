@@ -80,6 +80,8 @@ export default class AccessGoogle extends Component {
 
         let map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
         this.displayMarker(map);
+        
+        google.maps.event.addDomListener(window, 'load', this.initialize);
     }
 
     render() {
