@@ -9,6 +9,8 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import DrinkBuddy from '../DrinkBuddy/DrinkBuddy.jsx'
+
 class Details extends React.Component {
   constructor(props) {
     super(props);
@@ -71,6 +73,7 @@ class Details extends React.Component {
               >
                 <span className="Get Directions" />
               </RaisedButton>
+              <Drinkbuddy />
             </Paper>
           </div>
         </MuiThemeProvider>
