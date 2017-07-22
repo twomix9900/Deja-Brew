@@ -56,7 +56,6 @@ class Details extends React.Component {
       <div>
         <MuiThemeProvider>
           <div>
-<<<<<<< HEAD
             <Paper style={style} zDepth={5}>
               <h1>Brewery Name: {this.props.venue.selectedVenue.name || this.props.venue.selectedVenue.brewery.name}</h1>
               Brewery Icon: {this.props.venue.selectedVenue.images ? <img src={this.props.venue.selectedVenue.images.large} alt="boohoo" className="img-responsive" /> : null || this.props.venue.selectedVenue.brewery.images.large}
@@ -65,15 +64,6 @@ class Details extends React.Component {
               Beer Name: {this.props.venue.searchedVenueByName}
               <h3>Website: {this.props.venue.selectedVenue.website || this.props.venue.selectedVenue.brewery.website}</h3>
               <p>Description: {this.props.venue.selectedVenue.description || this.props.venue.selectedVenue.brewery.description}</p>
-=======
-            <Paper style={style} zDepth={5}>              
-              <h1>BEER NAME: {this.props.venue.selectedVenue.name}</h1>
-              BREWERY ICON: {this.props.venue.selectedVenue.images ? <img src={this.props.venue.selectedVenue.images.large} alt="boohoo" className="img-responsive" /> : null}
-              <h3>HOURS: {this.props.venue.selectedVenue.locations[0].hoursOfOperation}</h3>
-              <h3>BREWERY ID: {this.props.venue.selectedVenue.id}</h3>
-              <h3>WEBSITE: {this.props.venue.selectedVenue.website}</h3>
-              <p>{this.props.venue.selectedVenue.description}</p>
->>>>>>> (UPDATE) merges changes
               <RaisedButton
                 style={style.button}
                 onClick={this.sendDirections.bind(this)}
