@@ -27,6 +27,9 @@ export default class Phone extends Component {
       this.setState({ PhoneNum: phoneSubmission });
       axios.put('/users/' + this.props.userId, { phone: phoneSubmission })
       .then(() => {
+        let info = JSON.parse(localStorage.getItem('userInfo'));
+        info.phone = phoneSubmission;
+        localStorage.setItem('userInfo', JSON.stringify(info));
         this.setState({ displayPhone: <DisplayPhone handlePhoneClick={ this.editPhone } phone={ phoneSubmission } /> });
       })
     } else {
