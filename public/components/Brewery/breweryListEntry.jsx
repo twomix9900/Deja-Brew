@@ -28,7 +28,8 @@ class BreweryListEntry extends React.Component {
       open: false,
       msgTitle: 'Please sign in',
       msgBody: 'Users must be signed in to vote',
-      userInfo: {}
+      userInfo: {},
+      opinionClick: false
     };
     this.selectVenue = this.selectVenue.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -89,37 +90,45 @@ class BreweryListEntry extends React.Component {
 
   handleUpClick() {
     console.log('inside up click')
-    let userId;
-    if (this.state.userInfo) {
-      userId = this.state.userInfo.id;
-    } else {
-      userId= undefined;
-    }
-    if (userId) {
-      axios.put('/breweryRatings/' + userId + '?breweryId=' + this.props.breweryId, { breweryRating: 1 })
-        .then(() => {
-          this.tallyLikes(this.state.userInfo);
-        })
-    } else {
-      this.setState({ open: true });
+    if (!this.state.opinionClick) {
+      this.setState({ opinionClick: true })
+      let userId;
+      if (this.state.userInfo) {
+        userId = this.state.userInfo.id;
+      } else {
+        userId= undefined;
+      }
+      if (userId) {
+        axios.put('/breweryRatings/' + userId + '?breweryId=' + this.props.breweryId, { breweryRating: 1 })
+          .then(() => {
+            this.setState({ opinionClick: false })
+            this.tallyLikes(this.state.userInfo);
+          })
+      } else {
+        this.setState({ opinionClick: false, open: true });
+      }
     }
   }
 
   handleDownClick() {
     console.log('inside down click')
-    let userId;
-    if (this.state.userInfo) {
-      userId = this.state.userInfo.id;
-    } else {
-      userId= undefined;
-    }
-    if (userId) {
-      axios.put('/breweryRatings/' + userId + '?breweryId=' + this.props.breweryId, { breweryRating: -1 })
-        .then(() => {
-          this.tallyLikes(this.state.userInfo);
-        })
-    } else {
-      this.setState({ open: true });
+    if (!this.state.opinionClick) {
+      this.setState({ opinionClick: true })    
+      let userId;
+      if (this.state.userInfo) {
+        userId = this.state.userInfo.id;
+      } else {
+        userId= undefined;
+      }
+      if (userId) {
+        axios.put('/breweryRatings/' + userId + '?breweryId=' + this.props.breweryId, { breweryRating: -1 })
+          .then(() => {
+            this.setState({ opinionClick: false })
+            this.tallyLikes(this.state.userInfo);
+          })
+      } else {
+        this.setState({ opinionClick: false, open: true });
+      }
     }
   }
 

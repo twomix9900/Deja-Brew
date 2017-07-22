@@ -31,7 +31,8 @@ class BeerListEntry extends React.Component {
       open: false,
       msgTitle: 'Please sign in',
       msgBody: 'Users must be signed in to vote',
-      userInfo: {}
+      userInfo: {},
+      opinionClick: false
     };
     this.selectVenue = this.selectVenue.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -82,7 +83,6 @@ class BeerListEntry extends React.Component {
         data.data[idx].beerRating === 1 && likeCount++;
         data.data[idx].beerRating === -1 && dislikeCount++;
         if (data.data[idx].userId === userId) {
-          console.log('userInfo id', data.data[idx].userId)
           opinion = data.data[idx].beerRating;
         }
       }
@@ -91,38 +91,47 @@ class BeerListEntry extends React.Component {
   }
 
   handleUpClick() {
+    console.log('check for multiclick')
+    if (!this.state.opinionClick) {
     console.log('inside up click')
-    let userId;
-    if (this.state.userInfo) {
-      userId = this.state.userInfo.id;
-    } else {
-      userId= undefined;
-    }
-    if (userId) {
-      axios.put('/beerRatings/' + userId + '?beerId=' + this.props.beerId, { beerRating: 1 })
-        .then(() => {
-          this.tallyLikes(this.state.userInfo);
-        })
-    } else {
-      this.setState({ open: true });
+      this.setState({ opinionClick: true });
+      let userId;
+      if (this.state.userInfo) {
+        userId = this.state.userInfo.id;
+      } else {
+        userId= undefined;
+      }
+      if (userId) {
+        axios.put('/beerRatings/' + userId + '?beerId=' + this.props.beerId, { beerRating: 1 })
+          .then(() => {
+            this.setState({ opinionClick: false })
+            this.tallyLikes(this.state.userInfo);
+          })
+      } else {
+        this.setState({ opinionClick: false, open: true });
+      }
     }
   }
 
   handleDownClick() {
     console.log('inside down click')
-    let userId;
-    if (this.state.userInfo) {
-      userId = this.state.userInfo.id;
-    } else {
-      userId= undefined;
-    }
-    if (userId) {
-      axios.put('/beerRatings/' + userId + '?beerId=' + this.props.beerId, { beerRating: -1 })
-        .then(() => {
-          this.tallyLikes(this.state.userInfo);
-        })
-    } else {
-      this.setState({ open: true });
+    if (!this.state.opinionClick) {
+      this.setState({ opinionClick: true });
+      let userId;
+      if (this.state.userInfo) {
+        userId = this.state.userInfo.id;
+      } else {
+        userId= undefined;
+      }
+      if (userId) {
+        axios.put('/beerRatings/' + userId + '?beerId=' + this.props.beerId, { beerRating: -1 })
+          .then(() => {
+            this.setState({ opinionClick: false })
+            this.tallyLikes(this.state.userInfo);
+          })
+      } else {
+        this.setState({ opinionClick: false, open: true });
+      }
     }
   }
 
