@@ -7,6 +7,7 @@ import { connect, Store } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
+import Pagination from '../Brewery/pagination.jsx';
 
 
 
@@ -17,30 +18,53 @@ class Details extends React.Component {
     console.log('props from Details! = ', props)
     this.state = {
       userInfo: {},
-      beersFromBrewery: []
+      beersFromBrewery: [],
+      pageOfItems: []
     }
     this.sendDirections = this.sendDirections.bind(this);
     this.getBeersFromBrewery = this.getBeersFromBrewery.bind(this);
+    this.onChangePage = this.onChangePage.bind(this);
+    this.renderBeerList = this.renderBeerList.bind(this);
   }
   
-  componentDidMount() {
+  componentWillMount() {
+    console.log(this.state.beersFromBrewery)
     let info = JSON.parse(localStorage.getItem('userInfo'));
     this.setState({ userInfo: info });
     console.log('props in details beers brew-->',this.props.venue.selectedVenue.id);
     this.getBeersFromBrewery();
     // phone={ this.state.userInfo.phone }
-    this.getBeersFromBrewery();
   }
 
   getBeersFromBrewery() {
     axios.get('/brewery/beers/' + this.props.venue.selectedVenue.id)
     .then((data) => {
-      console.log('data from getBeersFromBrewery = ', data.data.data)
+      //console.log('data from getBeersFromBrewery = ', data.data.data)
       this.setState({
-        beersFromBrewery: data
+        beersFromBrewery: data.data.data
       })
     })
     .catch((err) => console.log('getBeersFromBrewery err = ', err))
+  }
+
+  renderBeerList() {
+    let beers = [];
+    beers = this.state.beersFromBrewery.map((beer, idx) => {
+      return (
+        <div key={idx}>
+          <li>Name: {beer.name}</li>
+          <li>Type: {beer.style.name}</li>
+          <li>Abv: {beer.abv}</li>
+        </div>
+      )
+    })
+    return beers;
+  }
+
+  onChangePage(pageOfItems) {
+    //console.log('pageOfItems: ', pageOfItems)
+      // update state with new page of items
+      this.setState({ pageOfItems: this.state.beersFromBrewery });
   }
 
   sendDirections() {
@@ -60,8 +84,7 @@ class Details extends React.Component {
   }
 
   render() {
-    console.log('Details->this.props = ', this.props.venue.selectedVenue);
-    console.log('beersFromBrewery-->', this.state.beersFromBrewery.data);
+    console.log('beersFrBreweryDATA-->', this.state.beersFromBrewery);
     return (
       <div>
         <MuiThemeProvider>
@@ -73,13 +96,10 @@ class Details extends React.Component {
               <h3>Brewery Id: {this.props.venue.selectedVenue.id || this.props.venue.selectedVenue.breweryId}</h3>
               <h3>Website: {this.props.venue.selectedVenue.website || this.props.venue.selectedVenue.brewery.website}</h3>
               <p>Description: {this.props.venue.selectedVenue.description || this.props.venue.selectedVenue.brewery.description}</p>
-              Beer List: {this.state.beersFromBrewery.map((beer, i) =>
-                <ul>
-                  key={i}
-                  beer={beer}
-                  abv={this.props.abv}
-                </ul>
-              )}
+              <h3>Beer List:</h3>
+              <ul>
+               {this.renderBeerList()}
+              </ul> 
               <RaisedButton
                 style={style.button}
                 onClick={this.sendDirections.bind(this)}
@@ -88,6 +108,8 @@ class Details extends React.Component {
                 <span className="Get Directions" />
               </RaisedButton>              
             </Paper>
+            <Pagination items={this.state.beersFromBrewery} onChangePage={this.onChangePage}
+            />
           </div>
         </MuiThemeProvider>
       </div>
@@ -96,9 +118,9 @@ class Details extends React.Component {
 }
   
 const style = {
-  height: 1000,
-  width: 1000,
-  margin: 20,
+  height: 2000,
+  width: 1200,
+  margin: 40,
   textAlign: 'left',
   display: 'inline-block',
   backgroundColor: '#FFCC80',
