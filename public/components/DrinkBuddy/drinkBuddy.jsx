@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import AppBar from 'material-ui/AppBar';
+import RaisedButton from 'material-ui/RaisedButton';
 import {
   Table,
   TableBody,
@@ -30,6 +31,7 @@ export default class drinkBuddy extends Component {
     this.handleFriendSelect=this.handleFriendSelect.bind(this);
     this.sortFriendList=this.sortFriendList.bind(this);
     this.formatPhone=this.formatPhone.bind(this);
+    this.handleSendDirections=this.handleSendDirections.bind(this);
   }
 
   componentWillMount() {
@@ -39,6 +41,7 @@ export default class drinkBuddy extends Component {
       return data.data
     })
     .then((data) => {
+      for (let i = 0; i < data.length; i++) { data[i].selected = false }
       this.setState({ friendList: data });
       this.sortFriendList();
     })
@@ -64,10 +67,7 @@ export default class drinkBuddy extends Component {
   }
 
   handleFriendAdd() {
-    console.log('selected', this.state.selected, this.state.selectedCache);
     this.setState({ newFriendQuery: false })
-    console.log('*** selected', this.state.selected, this.state.selectedCache);
-
   }
 
   handleSubmit(friendName, phone) {
@@ -76,37 +76,35 @@ export default class drinkBuddy extends Component {
     } else {
       let userInfo=JSON.parse(localStorage.getItem('userInfo'));
       let list = this.state.friendList;
+      list.forEach((obj)=>{ obj.selected = false });
+      let selectedArr = this.state.selected;
+      if (selectedArr === 'none') {
+        selectedArr === []
+      } else if (selectedArr === 'all') {
+        list.forEach((obj)=>{ obj.selected = true });
+      } else {
+      selectedArr.forEach((i)=>{ list[i].selected = true });
+      }
       list.push({ name: friendName, phone: '+1 ' + phone, selected: true });
       this.setState({ friendList: list })
       axios.put('friends/' + userInfo.id, { name: friendName, phone: '+1 ' + phone })
       .then(() => {
-        this.sortFriendList()
-        this.setState({ newFriendQuery: true })
+        this.sortFriendList();
+        let newFriendArr = [];
+        let list = this.state.friendList;
+        for (let i = 0; i < list.length; i++) {
+          if (list[i].selected) { newFriendArr.push(i) }
+        }
+        this.setState({ selected: newFriendArr, newFriendQuery: true });
       })
     }
   }
 
   handleRowSelection(selectedRows) {
-    console.log('*** what is this', selectedRows, this.state.selected)
     if (selectedRows == []) {
       this.setState({ selectedCache: this.state.selected })
     }
     this.setState({ selected: selectedRows });
-    // let list = this.state.friendList;
-    // if (selectedRows === 'all') {
-    //   for (let i = 0; i < list.length; i++) {
-    //     list[i].selected = true;
-    //   }
-    // } else if (selectedRows === 'none') {
-    //   for (let i = 0; i < list.length; i++) {
-    //     list[i].selected = false;
-    //   }
-    // } else {
-    //   for (let i = 0; i < selectedRows.length; i++) {
-    //     list[selectedRows[i]].selected = true;
-    //   }
-    // }
-    // this.setState({ friendList: list })
   }
 
   handleFriendSelect(i) {
@@ -115,9 +113,19 @@ export default class drinkBuddy extends Component {
     this.setState({ friendList: list });
   }
 
+  handleSendDirections() {
+    console.log('inside Send Directions to Friends')
+  }
+
   render() {
     return (
-      <div><AppBar title="my drinking buddies" showMenuIconButton={false} />
+      <div><AppBar 
+        title="my drinking buddies" 
+        showMenuIconButton={false} 
+        iconElementRight={
+          <RaisedButton
+            onClick={(e)=>{ this.handleSendDirections() }} 
+            label='Brew Beacon' />}/>
         <Table multiSelectable={true} onRowSelection={ this.handleRowSelection }>
           <TableHeader enableSelectAll={true}>
             <TableRow>
@@ -141,7 +149,7 @@ export default class drinkBuddy extends Component {
             <FriendAdd handleAddFriendClick={ this.handleFriendAdd } />
           ) : (
             <QueryFriendInfo handleSubmit={ this.handleSubmit } />
-          ) }      
+          ) }
       </div>
     )
   }
