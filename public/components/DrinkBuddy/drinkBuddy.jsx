@@ -133,7 +133,8 @@ class drinkBuddy extends Component {
     let list = this.state.friendList;
     let selectedArr = this.state.selected.slice();
     for (let i = 0; i < selectedArr.length; i++) {
-      let friendNumber = list[i].phone.slice(3);
+      let friendNumber = list[selectedArr[i]].phone.slice(3);
+      console.log('friend number', friendNumber);
       axios.get('/users/sendDirections/' + friendNumber + queryName)
       .then(() => {
         console.log('success in sending directions');
