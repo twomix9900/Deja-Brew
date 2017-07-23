@@ -10,12 +10,16 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
+import {
+  connect,
+  Store
+} from 'react-redux';
 
 import FriendListEntry from '../Profile/Friends/FriendListEntry.jsx';
 import FriendAdd from '../Profile/Friends/FriendAdd.jsx';
 import QueryFriendInfo from '../Profile/Friends/QueryFriendInfo.jsx';
 
-export default class drinkBuddy extends Component {
+class drinkBuddy extends Component {
   
   constructor(props) {
     super(props);
@@ -23,7 +27,6 @@ export default class drinkBuddy extends Component {
       friendList: [],
       newFriendQuery: true,
       selected: [],
-      selectedCache: []
     }
     this.handleFriendAdd=this.handleFriendAdd.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -79,7 +82,7 @@ export default class drinkBuddy extends Component {
       list.forEach((obj)=>{ obj.selected = false });
       let selectedArr = this.state.selected;
       if (selectedArr === 'none') {
-        selectedArr === []
+        selectedArr = []
       } else if (selectedArr === 'all') {
         list.forEach((obj)=>{ obj.selected = true });
       } else {
@@ -101,10 +104,15 @@ export default class drinkBuddy extends Component {
   }
 
   handleRowSelection(selectedRows) {
-    if (selectedRows == []) {
-      this.setState({ selectedCache: this.state.selected })
-    }
+    let list = this.state.friendList;
+    if (selectedRows === 'none') {
+      selectedRows = [];
+    } else if (selectedRows === 'all') {
+      selectedRows = [];
+      list.map((cur, i)=>{ selectedRows.push(i) });
+      }
     this.setState({ selected: selectedRows });
+    this.forceUpdate();
   }
 
   handleFriendSelect(i) {
@@ -114,10 +122,20 @@ export default class drinkBuddy extends Component {
   }
 
   handleSendDirections() {
-    console.log('inside Send Directions to Friends')
+    console.log('inside Send Directions to Friends');
+    // let list = this.state.friendList;
+    // let selectedArr = this.state.selected;
+    // if (selectedArr === 'none') {
+    //   selectedArr = [];
+    // } else if (selectedArr === 'all') {
+    //   selectedArr = [];
+    //   list.map((cur, i)=>{ selectedArr.push(i) });
+    //   }
+    console.log('selected ***'+ this.state.selected +'***')
   }
 
   render() {
+    console.log('rendering')
     return (
       <div><AppBar 
         title="my drinking buddies" 
@@ -153,5 +171,20 @@ export default class drinkBuddy extends Component {
       </div>
     )
   }
-
 }
+
+const mapStateToProps = (state) => {
+  return {
+    venue: state.venue
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selectVenue: (venue) => {
+      dispatch(actions.selectVenue(venue));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(drinkBuddy);
