@@ -123,15 +123,24 @@ class drinkBuddy extends Component {
 
   handleSendDirections() {
     console.log('inside Send Directions to Friends');
-    // let list = this.state.friendList;
-    // let selectedArr = this.state.selected;
-    // if (selectedArr === 'none') {
-    //   selectedArr = [];
-    // } else if (selectedArr === 'all') {
-    //   selectedArr = [];
-    //   list.map((cur, i)=>{ selectedArr.push(i) });
-    //   }
-    console.log('selected ***'+ this.state.selected +'***')
+    console.log('selected ***'+ this.state.selected +'***');
+    let queryName;
+    if (this.props.venue.selectedVenue.name !== 'Main Brewery') {
+      queryName = this.props.venue.selectedVenue.name.split(' ').join('+');
+    } else {
+      queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
+    }
+    let list = this.state.friendList;
+    let selectedArr = this.state.selected.slice();
+    for (let i = 0; i < selectedArr.length; i++) {
+      let friendNumber = list[i].phone.slice(3);
+      axios.get('/users/sendDirections/' + friendNumber + queryName)
+      .then(() => {
+      })
+      .catch((err)=>{
+        console.log('error sending Directions', err);
+      })
+    }
   }
 
   render() {
