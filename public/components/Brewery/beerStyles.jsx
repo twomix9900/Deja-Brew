@@ -3,7 +3,7 @@ import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-// import Paper from 'material-ui/Paper';
+import Paper from 'material-ui/Paper';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
@@ -19,88 +19,65 @@ const style = {
 class beerStyles extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props from addBeer', props)
     this.state = {
-        beerStyles : ""
+        beerStyles: [],
+        beerStyleText: "Beer Style"
     };
   }
 
-  componentDidMount() {
-    //here vs up there? 
+  componentWillMount() {
     var vm = this;
-    console.log('beerStyles did mount')
      axios.get('/brewery/beerStyles')
      .then(function(response) {
-       console.log('response: ' , response)
-        vm.setState({beerStyles: response.data.data}); 
-        console.log(vm.state.beerStyles[0].category.name)
-        //why does this work?
+       let data = response.data.data;
+        let categories = {};
+        for(var i = 0; i < data.length; i++) {
+          if(!(data[i].category.name in categories)) {
+            let categoryName = data[i].category.name;
+            categories[categoryName] = {};
+            categories[categoryName].id = data[i].category.id;
+            categories[categoryName].styles = [];
+          }
+          let styles = {};
+          styles.name = data[i].name;
+          styles.id = data[i].id;
+          categories[data[i].category.name].styles.push(styles);
+        }
+        vm.setState({beerStyles: categories}); 
      })
   }
 
-// {this.state.pageOfItems.map((beer, i) => 
-//   <BeerListEntry
-//     history={this.props.history}
-//     key={i}
-//     beer={beer}
-//     beerId={beer.id}
-//   />
-// )}
+  handleStyleChange(event) {
+    console.log('value ', event.target.value)
+    this.setState({
+    beerStyleText: event.target.value
+  })
+  console.log(this.state.beerStyleText)
+  }
 
   render() {
     return (
       <div>
         <Menu style={style.menu}>
             <MenuItem
-            primaryText="Beer Style"
+            primaryText={this.state.beerStyleText}
             rightIcon={<ArrowDropRight />}
-
-
-            /*
-            let categories = ['<MenuItem primaryText="Categories" />']
-            
-            
-            
-            
-            
-            menuItems={categories}
-
-
-
-
-            */
-            /*menuItems={[
-                <MenuItem primaryText="Categories" />,
-
-                <MenuItem
-                primaryText={this.state.beerStyles.length ? this.state.beerStyles[0].category.name : ""}
-
-                //this.state.beerStyles[0].category.name
-                //this.state.beerStyles[0].name
-
-
-
+            menuItems=
+            //{<MenuItem primaryText="Select Category"
+            {Object.keys(this.state.beerStyles).map((category) => {
+              return <MenuItem 
+                primaryText={category}   
                 rightIcon={<ArrowDropRight />}
-                menuItems={[
-                  <MenuItem primaryText="Styles"/>,
-                  <MenuItem primaryText="1 Style"/>,
-                  <MenuItem primaryText="2 Style"/>,
-                  <MenuItem primaryText="3 Style"/>,
-                  <MenuItem primaryText="4 Style"/>,
-                ]}
-                />,
-                <MenuItem
-                primaryText="2 Category"
-                rightIcon={<ArrowDropRight />}
-                menuItems={[
-                  <MenuItem primaryText="Styles"/>,
-                  <MenuItem primaryText="1 Style"/>,
-                  <MenuItem primaryText="2 Style"/>,
-                  <MenuItem primaryText="3 Style"/>,
-                  <MenuItem primaryText="4 Style"/>,
-                ]}
+                menuItems=
+                {this.state.beerStyles[category].styles.map((style) => {
+                  return <MenuItem 
+                  primaryText={style.name}   
+                  onClick={this.handleStyleChange.bind(this)}
+                  ref={style.id}
                 />
-            ]}*/
+                })}
+              /> 
+            })}
             />
         </Menu>
       </div>
@@ -109,4 +86,3 @@ class beerStyles extends React.Component {
 }
 
 export default beerStyles
-

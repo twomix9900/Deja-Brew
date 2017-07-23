@@ -55,7 +55,7 @@ class addBeer extends React.Component {
             floatingLabelStyle={{color:'#00bcd4'}}
             errorText="This field is required."
             floatingLabelText="Beer Style"/><br /> 
-            {/* <BeerStyles/> */}
+             <BeerStyles/> 
             <TextField 
             floatingLabelStyle={{color:'#00bcd4'}}
             multiLine={true}
