@@ -136,6 +136,7 @@ class drinkBuddy extends Component {
       let friendNumber = list[i].phone.slice(3);
       axios.get('/users/sendDirections/' + friendNumber + queryName)
       .then(() => {
+        console.log('success in sending directions');
       })
       .catch((err)=>{
         console.log('error sending Directions', err);
