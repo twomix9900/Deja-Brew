@@ -120,8 +120,8 @@ class Details extends React.Component {
   
 const style = {
   height: 'auto',
-  width: 1200,
-  margin: 40,
+  width: 'auto',
+  margin: 'auto',
   textAlign: 'left',
   display: 'inline-block',
   backgroundColor: '#FFCC80',
