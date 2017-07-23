@@ -20,6 +20,7 @@ export default class FriendList extends Component {
     super(props);
     this.state = {
       friendList: [],
+      newFriendQuery: true
     }
     this.FriendAdd=this.handleAddFriend.bind(this);
     this.FriendEdit=this.handleEditFriend.bind(this);
@@ -53,12 +54,12 @@ export default class FriendList extends Component {
   }
 
   componentWillMount() {
-    this.setState({ newFriendQuery: <FriendAdd handleAddFriendClick={ this.FriendAdd } /> })
+    this.setState({ newFriendQuery: true })
   }
 
   handleAddFriend() {
     console.log('inside handle add friend');
-    this.setState({ newFriendQuery: <QueryFriendInfo handleSubmit={ this.handleSubmit } /> })
+    this.setState({ newFriendQuery: false })
   }
 
   handleEditFriend(id, idx) {
@@ -85,12 +86,12 @@ export default class FriendList extends Component {
 
   handleSubmitFriend(friendName, phone) {
     if (friendName === undefined && phone === undefined) {
-      this.setState({ newFriendQuery: <FriendAdd handleAddFriendClick={ this.FriendAdd } /> })
+      this.setState({ newFriendQuery: true })
     } else {
       axios.put('friends/' + this.props.userId, { name: friendName, phone: '+1 ' + phone })
       .then(() => {
         this.getFriendData()
-        this.setState({ newFriendQuery: <FriendAdd handleAddFriendClick={ this.FriendAdd } /> })
+        this.setState({ newFriendQuery: true })
       })
     }
   }
@@ -155,7 +156,11 @@ export default class FriendList extends Component {
             )}
           </TableBody>
         </Table>
-        { this.state.newFriendQuery }
+        { (this.state.newFriendQuery) ? (
+            <FriendAdd handleAddFriendClick={ this.FriendAdd } />
+          ) : (
+            <QueryFriendInfo handleSubmit={ this.handleSubmit } />
+          ) }
       </div>
     );
   }

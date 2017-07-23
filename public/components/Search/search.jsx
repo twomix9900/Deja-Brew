@@ -32,7 +32,7 @@ class Search extends React.Component {
       msgBody: 'Please fill in at least one field because the amount of data you get back will be too damn high.',
       completed: 0
     };
-    this.handler=this.handler.bind(this);
+    this.handler = this.handler.bind(this);
     this.searchVenueByName = this.searchVenueByName.bind(this);
     this.searchVenueByLocation = this.searchVenueByLocation.bind(this);
   }
@@ -80,18 +80,15 @@ class Search extends React.Component {
 
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
       vm.setState({locationValue: document.getElementById('textBoxLocation').value});
-      console.log(document.getElementById('textBoxLocation').value)
     })
   }
 
   searchDejaBrew() {
     // var location = this.wordsToUpperCase(this.state.locationValue);
     var location = this.wordsToUpperCase(this.state.locationValue || this.props.venue.searchedVenueByLocation);
-    console.log('location!: ' , location)
     // var beerBrewery = this.state.beerBreweryValue;
     var beerBrewery = this.state.beerBreweryValue || this.props.venue.searchedVenueByName;
     var radius = parseInt(this.state.value);
-    console.log(radius)
     var vm = this;
 
     let config = {
@@ -104,8 +101,6 @@ class Search extends React.Component {
     }
 
     if(location && !beerBrewery) {
-      console.log('location Y, beerBrewery N')
-
       axios.get('/brewery/breweriesLatLng/' + location, config)
       .then(function(response) {
         var lat = response.data.results[0].geometry.location.lat;
@@ -113,7 +108,6 @@ class Search extends React.Component {
         axios.get('/brewery/breweryLocations/' + lat + '/' + lng + '/' + radius)
         .then(function (response) {
           var breweries = response.data.data;
-          console.log('searchResults from search.jsx', breweries);
           vm.props.handleBreweriesByLocationSearch(breweries);
           //get all beers as well?
         })
@@ -123,13 +117,11 @@ class Search extends React.Component {
       })
     }
     else if (!location && beerBrewery) {
-      console.log('location N, beerBrewery Y')
       //logic: get request for first keyword, save the second+ somewhere here, then 
       //use second+ to filter
       vm.getBeerBrewery(beerBrewery);
     }
     else if (location && beerBrewery) {
-      console.log('location Y, beerBrewery Y')
       vm.getBeerBrewery(beerBrewery, location);
     }
     else {
@@ -178,48 +170,42 @@ class Search extends React.Component {
               })
             }
           }
-          var getPage = i+1;
+          var getPage = i + 1;
           axios.get('/brewery/dejaBrew/' + upperBeerBrewery + '/' + getPage, multiConfig)
-          .then(function(response) {
-            for (var i = 0; i < response.data.data.length; i++) {
-              dejaBrewResults.push(response.data.data[i])
-            }
-            if(response.data.numberOfPages === response.data.currentPage) {
-              vm.separateBeerBrewery(dejaBrewResults, upperBeerBrewery, location, restOfKeywordsArr)
-            }
-          })
-        }  
+            .then(function (response) {
+              for (var i = 0; i < response.data.data.length; i++) {
+                dejaBrewResults.push(response.data.data[i])
+              }
+              if (response.data.numberOfPages === response.data.currentPage) {
+                vm.separateBeerBrewery(dejaBrewResults, upperBeerBrewery, location, restOfKeywordsArr)
+              }
+            })
+        }
       }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   separateBeerBrewery(dejaBrewResults, upperBeerBrewery, location, restOfKeywordsArr) {
-    console.log(dejaBrewResults)
-    console.log(
-      ' upperBeerBrewery: ' + upperBeerBrewery 
-      + ' location: ' + location + ' restOfKeywordsArr: ' + restOfKeywordsArr
-    )
     let vm = this;
     let beerResults = [];
     let breweryResults = [];
     let filteredName = true;
 
     for (var i = 0; i < dejaBrewResults.length; i++) {
-      if(dejaBrewResults[i].name.includes(upperBeerBrewery)) { 
-        if(restOfKeywordsArr.length) {
+      if (dejaBrewResults[i].name.includes(upperBeerBrewery)) {
+        if (restOfKeywordsArr.length) {
           for (var j = 0; j < 1; j++) {
-            if(dejaBrewResults[i].name.includes(restOfKeywordsArr[j])) { 
-              if(dejaBrewResults[i].type === 'brewery') {
-                if(location && dejaBrewResults[i].locations) { //check for location
+            if (dejaBrewResults[i].name.includes(restOfKeywordsArr[j])) {
+              if (dejaBrewResults[i].type === 'brewery') {
+                if (location && dejaBrewResults[i].locations) { //check for location
                   //for(var k = 0; k < dejaBrewResults[i].locations.length; k++) {
-                    //console.log(dejaBrewResults[i].locations[j].locality)
-                    if(dejaBrewResults[i].locations[0].locality === location) {
-                      console.log("once PLEASE")
-                      breweryResults.push(dejaBrewResults[i]);
-                    }
+                  //console.log(dejaBrewResults[i].locations[j].locality)
+                  if (dejaBrewResults[i].locations[0].locality === location) {
+                    breweryResults.push(dejaBrewResults[i])
+                  }
                   //}
                 }
                 else {
@@ -228,15 +214,15 @@ class Search extends React.Component {
 
               }
               else if (dejaBrewResults[i].type === 'beer') {
-                if(location) {
+                if (location) {
                   //for(var j = 0; j < dejaBrewResults[i].breweries[0].locations.length; j++) {
-                    if(dejaBrewResults[i].breweries[0].locations[0].locality === location) {
-                      beerResults.push(dejaBrewResults[i]);
-                    }
+                  if (dejaBrewResults[i].breweries[0].locations[0].locality === location) {
+                    breweryResults.push(dejaBrewResults[i])
+                  }
                   //}
                 }
                 else {
-                  beerResults.push(dejaBrewResults[i])
+                  breweryResults.push(dejaBrewResults[i])
                 }
 
               }
@@ -244,39 +230,34 @@ class Search extends React.Component {
           }
         }
         else {
-          if(dejaBrewResults[i].type === 'brewery') {
-            if(location) { //check for location
+          if (dejaBrewResults[i].type === 'brewery') {
+            if (location) { //check for location
               //for(var k = 0; k < dejaBrewResults[i].locations.length; k++) {
-                //check for multiple locations as well , handle it on client side instead
-                console.log(dejaBrewResults[i].locations[0].locality)
-                if(dejaBrewResults[i].locations[0].locality === location) {
-                  breweryResults.push(dejaBrewResults[i]);
-                }
+              //check for multiple locations as well , handle it on client side instead
+              if (dejaBrewResults[i].locations[0].locality === location) {
+                breweryResults.push(dejaBrewResults[i])
+              }
               //}
             }
             else {
-              console.log('ONCE PLEASE ' , dejaBrewResults[i])
               breweryResults.push(dejaBrewResults[i])
             }
           }
           else if (dejaBrewResults[i].type === 'beer') {
-            if(location) {
+            if (location) {
               //for(var j = 0; j < dejaBrewResults[i].breweries[0].locations.length; j++) {
-                if(dejaBrewResults[i].breweries[0].locations[0].locality === location) {
-                  beerResults.push(dejaBrewResults[i]);
-                }
+              if (dejaBrewResults[i].breweries[0].locations[0].locality === location) {
+                breweryResults.push(dejaBrewResults[i])
+              }
               //}
             }
             else {
-              beerResults.push(dejaBrewResults[i])
+              breweryResults.push(dejaBrewResults[i])
             }
           }
         }
       }
     }
-
-
-
     vm.props.handleBreweriesByBeerNameSearch(beerResults);
     vm.props.handleBreweriesByBreweryNameSearch(breweryResults);
   }
@@ -306,6 +287,7 @@ class Search extends React.Component {
   }
   
   render() {
+    //console.log('this.props from search = ', this.props)
     return (
       <div className="search-bar">
         <input
@@ -357,6 +339,7 @@ class Search extends React.Component {
 }
 
 const stateToProps = (state) => {
+  //console.log('STATE TO PROPS INVOKED, state = ', state)
   return {
     venue: state.venue
   }

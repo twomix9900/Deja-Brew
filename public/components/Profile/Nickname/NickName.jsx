@@ -8,37 +8,42 @@ export default class NickName extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      displayNickName: true,
+      nickname: ''
+    }
     this.editNickname=this.handleEditNickname.bind(this);
     this.submitNickname=this.handleSubmitName.bind(this);
   };
 
   componentWillReceiveProps(NextProps) {
-    this.setState({ Nickname: NextProps.nickname })
-    this.setState({ DisplayNickname: <DisplayNickname handleNameClick={ this.editNickname } nickname={ NextProps.nickname } /> });
+    this.setState({ displayNickname: true, nickname: NextProps.nickname });
   }
 
   handleEditNickname() {
-    this.setState({ DisplayNickname: <QueryNickname handleSubmit={ this.submitNickname } /> });
+    this.setState({ displayNickname: false });
   }
 
   handleSubmitName(nameSubmission) {
     if (nameSubmission !== undefined && nameSubmission !== '') {
-      this.setState({ Nickname: nameSubmission });
       axios.put('/users/' + this.props.userId, { nickname: nameSubmission })
       .then(() => {
-        this.setState({ DisplayNickname: <DisplayNickname handleNameClick={ this.editNickname } nickname={ nameSubmission } /> });
+        this.setState({ displayNickname: true, nickname: nameSubmission });
       })
     } else {
-      this.setState({ DisplayNickname: <DisplayNickname handleNameClick={ this.editNickname } nickname={ this.state.Nickname } /> });
+      this.setState({ displayNickname: true, nickname: this.state.nickname });
     }
   }
 
   render() {
     return (
-      <div>
-        { this.state.DisplayNickname }
-      </div>
+      <div>{   
+        ( this.state.displayNickname ) ? (
+          <DisplayNickname handleNameClick={ this.editNickname } nickname={ this.state.nickname } />
+        ) : ( 
+          <QueryNickname handleSubmit={ this.submitNickname } />
+        ) 
+      }</div>
     )
   }
 }
