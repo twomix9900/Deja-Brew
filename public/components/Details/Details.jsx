@@ -9,10 +9,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 import Pagination from '../Brewery/pagination.jsx';
 
-
-
-
-import DrinkBuddy from '../DrinkBuddy/DrinkBuddy.jsx'
+import DrinkBuddy from '../DrinkBuddy/drinkBuddy.jsx'
 
 class Details extends React.Component {
   constructor(props) {
@@ -91,7 +88,8 @@ class Details extends React.Component {
       <div>
         <MuiThemeProvider>
           <div>
-            <Paper style={style} zDepth={5}>              
+          
+            <Paper style={style} zDepth={5}>
               <h1>Brewery Name: {this.props.venue.selectedVenue.name || this.props.venue.selectedVenue.brewery.name}</h1>
               Brewery Icon: {this.props.venue.selectedVenue.images ? <img src={this.props.venue.selectedVenue.images.large} alt="boohoo" className="img-responsive" /> : null || this.props.venue.selectedVenue.brewery.images.large}
               <h3>Hours: {this.props.venue.selectedVenue.hoursOfOperation || this.props.venue.selectedVenue.locations.hoursOfOperation}</h3>
@@ -109,7 +107,7 @@ class Details extends React.Component {
               >
                 <span className="Get Directions" />
               </RaisedButton>
-              <Drinkbuddy />
+              <DrinkBuddy />
             </Paper>
             {/*<Pagination items={this.state.beersFromBrewery} onChangePage={this.onChangePage}
             />*/}
