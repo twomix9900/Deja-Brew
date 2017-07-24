@@ -12,7 +12,8 @@
     "start": "nodemon server.js",
     "build": "webpack --config public/webpack.config.js",
     "dev": "webpack -w --config public/webpack.config.js",
-    "db_init": "node ./scripts/db_init.js"
+    "db_init": "node ./scripts/db_init.js",
+    "postinstall": "npm run build"
   },
   "author": "Adewale Balogun, Howard Chen, Kay Kim, Jason Shao",
   "license": "ISC",
