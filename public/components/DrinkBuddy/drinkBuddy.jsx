@@ -18,6 +18,7 @@ import {
 import FriendListEntry from '../Profile/Friends/FriendListEntry.jsx';
 import FriendAdd from '../Profile/Friends/FriendAdd.jsx';
 import QueryFriendInfo from '../Profile/Friends/QueryFriendInfo.jsx';
+import DialogMsg from '../Dialog/DialogMsg.jsx';
 
 class DrinkBuddy extends Component {
   
@@ -27,6 +28,9 @@ class DrinkBuddy extends Component {
       friendList: [],
       newFriendQuery: true,
       selected: [],
+      open: false,
+      msgTitle: 'Incomplete Profile',
+      msgBody: 'Your friends would like to know who they will be sharing a cold one with.  Please complete your profile and try again.'
     }
     this.handleFriendAdd=this.handleFriendAdd.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -35,6 +39,7 @@ class DrinkBuddy extends Component {
     this.sortFriendList=this.sortFriendList.bind(this);
     this.formatPhone=this.formatPhone.bind(this);
     this.handleSendDirections=this.handleSendDirections.bind(this);
+    this.handleNoName=this.handleNoName.bind(this);
   }
 
   componentWillMount() {
@@ -122,27 +127,33 @@ class DrinkBuddy extends Component {
   }
 
   handleSendDirections() {
-    console.log('inside Send Directions to Friends');
-    console.log('selected ***'+ this.state.selected +'***');
     let queryName;
-    if (this.props.venue.selectedVenue.name !== 'Main Brewery') {
-      queryName = this.props.venue.selectedVenue.name.split(' ').join('+');
+    let userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    if (userInfo.nickname === '' || userInfo.nickname === undefined) {
+      this.setState({ open: true })
     } else {
-      queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
+      if (this.props.venue.selectedVenue.name !== 'Main Brewery') {
+        queryName = this.props.venue.selectedVenue.name.split(' ').join('+');
+      } else {
+        queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
+      }
+      let list = this.state.friendList;
+      let selectedArr = this.state.selected.slice();
+      for (let i = 0; i < selectedArr.length; i++) {
+        let friendNumber = list[selectedArr[i]].phone.slice(3);
+        axios.get('/directions/friend/' + userInfo.nickname + '/' + friendNumber + queryName)
+        .then(() => {
+          console.log('success in sending directions');
+        })
+        .catch((err)=>{
+          console.log('error sending Directions', err);
+        })
+      }
     }
-    let list = this.state.friendList;
-    let selectedArr = this.state.selected.slice();
-    for (let i = 0; i < selectedArr.length; i++) {
-      let friendNumber = list[selectedArr[i]].phone.slice(3);
-      console.log('friend number', friendNumber);
-      axios.get('/friends/sendDirections/' + friendNumber + queryName)
-      .then(() => {
-        console.log('success in sending directions');
-      })
-      .catch((err)=>{
-        console.log('error sending Directions', err);
-      })
-    }
+  }
+
+  handleNoName() {
+    this.setState({ open: false });
   }
 
   render() {
@@ -179,6 +190,7 @@ class DrinkBuddy extends Component {
           ) : (
             <QueryFriendInfo handleSubmit={ this.handleSubmit } />
           ) }
+        <DialogMsg handler={ this.handleNoName } open={ this.state.open } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
       </div>
     )
   }
