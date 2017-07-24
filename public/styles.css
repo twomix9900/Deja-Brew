@@ -209,7 +209,7 @@ img {
   left:2px;
 }
 
-#sortsNum, #typesNum, #categoriesNum, #countriesNum, #stylesNum {
+#sortsNum, #typesNum, #countriesNum, #stylesNum {
   display: inline;
   font-size:35px;
 }
@@ -219,7 +219,7 @@ img {
 }
 
 .addBeerImage {
-  background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('./images/homepage.jpg');
+  background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('./images/bg_img1.jpg');
   height:100%;
   background-size: cover;
 }
