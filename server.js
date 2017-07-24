@@ -54,7 +54,7 @@ db.authenticate()
     console.log('error connecting to database', err);
   })
 
-const port = 3333;
+const port = process.env.PORT || 3333;
 app.listen(port, function(err) {
   if (err) {
     console.log('unable to connect to port ', port);
