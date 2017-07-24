@@ -72,8 +72,28 @@ const friendController = {
       console.log('error deleting friend entry', err);
       res.sendStatus(404);
     })
-  }
+  },
 
+  sendDirections: (req, res) => {
+    let contactNumber = req.params.phoneNumber.slice(0, 10);
+    let queryName = req.params.phoneNumber.slice(10);
+    let googleSearch = 'https://www.google.com/maps/dir/?api=1&destination=' + queryName + '&travelmode=driving'
+    
+    client.messages.create({
+      to: '+1' + contactNumber,
+      from: process.env.TWILIO_NUMBER,
+      body: 'Please join me at ' + queryName +'.\nDirections to ' + req.params.phoneNumber.slice(10).split('+').join(' ') + ': ' + googleSearch
+    }, function (err, message) {
+      if (err) {
+        console.log('error! ', err);
+      } else {
+        if (message.sid) {
+          console.log('message.sid = ', message.sid)
+        }
+      }
+    })
+    res.sendStatus(200);
+  }
 }
 
 module.exports = friendController;

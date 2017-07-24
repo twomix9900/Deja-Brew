@@ -135,7 +135,7 @@ class DrinkBuddy extends Component {
     for (let i = 0; i < selectedArr.length; i++) {
       let friendNumber = list[selectedArr[i]].phone.slice(3);
       console.log('friend number', friendNumber);
-      axios.get('/users/sendDirections/' + friendNumber + queryName)
+      axios.get('/friends/sendDirections/' + friendNumber + queryName)
       .then(() => {
         console.log('success in sending directions');
       })
