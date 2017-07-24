@@ -136,7 +136,7 @@ export default class FriendList extends Component {
               <TableHeaderColumn></TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody stripedRows={true}>
             { this.state.friendList.map((friend, i) => 
               (friend.edit === 0 || friend.edit === undefined) ? (
                 <FriendListEntry 
@@ -145,7 +145,8 @@ export default class FriendList extends Component {
                 friend={ friend }
                 key={ i } 
                 id={ friend.id } 
-                idx={ i }/>
+                idx={ i }
+                editable={true}/>
               ) : (
                 <EditFriendEntry 
                 handleEditSubmit={ this.handleEditSubmit }

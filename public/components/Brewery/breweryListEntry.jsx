@@ -80,7 +80,6 @@ class BreweryListEntry extends React.Component {
         data.data[idx].breweryRating === 1 && likeCount++;
         data.data[idx].breweryRating === -1 && dislikeCount++;
         if (data.data[idx].userId === userId) {
-          console.log('userInfo id', data.data[idx].userId)
           opinion = data.data[idx].breweryRating;
         }
       }
@@ -89,7 +88,6 @@ class BreweryListEntry extends React.Component {
   }
 
   handleUpClick() {
-    console.log('inside up click')
     if (!this.state.opinionClick) {
       this.setState({ opinionClick: true })
       let userId;
@@ -111,7 +109,6 @@ class BreweryListEntry extends React.Component {
   }
 
   handleDownClick() {
-    console.log('inside down click')
     if (!this.state.opinionClick) {
       this.setState({ opinionClick: true })    
       let userId;
