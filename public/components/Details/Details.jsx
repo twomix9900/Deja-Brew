@@ -12,6 +12,8 @@ import Pagination from '../Brewery/pagination.jsx';
 
 
 
+import DrinkBuddy from '../DrinkBuddy/DrinkBuddy.jsx'
+
 class Details extends React.Component {
   constructor(props) {
     super(props);
@@ -106,7 +108,8 @@ class Details extends React.Component {
                 label='Get Directions'
               >
                 <span className="Get Directions" />
-              </RaisedButton>              
+              </RaisedButton>
+              <Drinkbuddy />
             </Paper>
             {/*<Pagination items={this.state.beersFromBrewery} onChangePage={this.onChangePage}
             />*/}
