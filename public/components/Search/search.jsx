@@ -66,20 +66,21 @@ class Search extends React.Component {
 
   handleChange(event) {
     // this.autocompleteFocus();
-    this.setState({locationValue: event.target.value}); 
+    this.setState({ locationValue: event.target.value });
   }
 
   handleBeerBreweryChange(event) {
-    this.setState({beerBreweryValue: event.target.value}) 
+    this.setState({ beerBreweryValue: event.target.value })
   }
 
   autocompleteFocus() {
     var vm = this;
     let autocomplete = new google.maps.places.Autocomplete(
-    document.getElementById('textBoxLocation'));
+      document.getElementById('textBoxLocation'));
 
-    google.maps.event.addListener(autocomplete, 'place_changed', function() {
-      vm.setState({locationValue: document.getElementById('textBoxLocation').value});
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+      vm.setState({ locationValue: document.getElementById('textBoxLocation').value });
+      console.log(document.getElementById('textBoxLocation').value)
     })
   }
 
@@ -100,21 +101,22 @@ class Search extends React.Component {
       }
     }
 
-    if(location && !beerBrewery) {
+    if (location && !beerBrewery) {
       axios.get('/brewery/breweriesLatLng/' + location, config)
-      .then(function(response) {
-        var lat = response.data.results[0].geometry.location.lat;
-        var lng = response.data.results[0].geometry.location.lng;
-        axios.get('/brewery/breweryLocations/' + lat + '/' + lng + '/' + radius)
         .then(function (response) {
-          var breweries = response.data.data;
-          vm.props.handleBreweriesByLocationSearch(breweries);
-          //get all beers as well?
+          var lat = response.data.results[0].geometry.location.lat;
+          var lng = response.data.results[0].geometry.location.lng;
+          axios.get('/brewery/breweryLocations/' + lat + '/' + lng + '/' + radius)
+            .then(function (response) {
+              var breweries = response.data.data;
+              console.log('searchResults from search.jsx', breweries);
+              vm.props.handleBreweriesByLocationSearch(breweries);
+              //get all beers as well?
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
         })
-        .catch(function (error) {
-          console.log(error);
-        });
-      })
     }
     else if (!location && beerBrewery) {
       //logic: get request for first keyword, save the second+ somewhere here, then 
@@ -126,7 +128,7 @@ class Search extends React.Component {
     }
     else {
       this.setState({ open: true });
-//      alert('Please Fill in a Keyword or Location')
+      //      alert('Please Fill in a Keyword or Location')
     }
   }
 
@@ -134,7 +136,7 @@ class Search extends React.Component {
     var vm = this;
     var restOfKeywordsArr = [];
     var upperBeerBrewery = this.wordsToUpperCase(beerBrewery);
-    if(upperBeerBrewery.constructor === Array && upperBeerBrewery.length > 1) {
+    if (upperBeerBrewery.constructor === Array && upperBeerBrewery.length > 1) {
       var temp = upperBeerBrewery.shift();
       restOfKeywordsArr = upperBeerBrewery;
       upperBeerBrewery = temp;
@@ -149,39 +151,39 @@ class Search extends React.Component {
     }
 
     axios.get('/brewery/dejaBrew/' + upperBeerBrewery + '/1')
-    .then(function (response) {
-      //check for # of pages
-      let dejaBrewResults = response.data.data;
-      if(response.data.numberOfPages === 1) {
-        vm.setState({
-          completed: 100
-        })
-        vm.separateBeerBrewery(dejaBrewResults, upperBeerBrewery, location, restOfKeywordsArr)
-      }
-      else {
-        // vm.setState({
-        //   completed: 0
-        // })
-        for (var i = 1; i < response.data.numberOfPages; i++) { //4, i is 1 ,2 3 
-          let multiConfig = {
-            onDownloadProgress: (progressEvent) => {
-              vm.setState({
-                completed: (Math.floor((progressEvent.loaded * 100) / progressEvent.total)) / (response.data.numberOfPages - i)
-              })
-            }
-          }
-          var getPage = i + 1;
-          axios.get('/brewery/dejaBrew/' + upperBeerBrewery + '/' + getPage, multiConfig)
-            .then(function (response) {
-              for (var i = 0; i < response.data.data.length; i++) {
-                dejaBrewResults.push(response.data.data[i])
-              }
-              if (response.data.numberOfPages === response.data.currentPage) {
-                vm.separateBeerBrewery(dejaBrewResults, upperBeerBrewery, location, restOfKeywordsArr)
-              }
-            })
+      .then(function (response) {
+        //check for # of pages
+        let dejaBrewResults = response.data.data;
+        if (response.data.numberOfPages === 1) {
+          vm.setState({
+            completed: 100
+          })
+          vm.separateBeerBrewery(dejaBrewResults, upperBeerBrewery, location, restOfKeywordsArr)
         }
-      }
+        else {
+          // vm.setState({
+          //   completed: 0
+          // })
+          for (var i = 1; i < response.data.numberOfPages; i++) { //4, i is 1 ,2 3 
+            let multiConfig = {
+              onDownloadProgress: (progressEvent) => {
+                vm.setState({
+                  completed: (Math.floor((progressEvent.loaded * 100) / progressEvent.total)) / (response.data.numberOfPages - i)
+                })
+              }
+            }
+            var getPage = i + 1;
+            axios.get('/brewery/dejaBrew/' + upperBeerBrewery + '/' + getPage, multiConfig)
+              .then(function (response) {
+                for (var i = 0; i < response.data.data.length; i++) {
+                  dejaBrewResults.push(response.data.data[i])
+                }
+                if (response.data.numberOfPages === response.data.currentPage) {
+                  vm.separateBeerBrewery(dejaBrewResults, upperBeerBrewery, location, restOfKeywordsArr)
+                }
+              })
+          }
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -204,7 +206,8 @@ class Search extends React.Component {
                   //for(var k = 0; k < dejaBrewResults[i].locations.length; k++) {
                   //console.log(dejaBrewResults[i].locations[j].locality)
                   if (dejaBrewResults[i].locations[0].locality === location) {
-                    breweryResults.push(dejaBrewResults[i])
+                    console.log("once PLEASE")
+                    breweryResults.push(dejaBrewResults[i]);
                   }
                   //}
                 }
@@ -217,12 +220,12 @@ class Search extends React.Component {
                 if (location) {
                   //for(var j = 0; j < dejaBrewResults[i].breweries[0].locations.length; j++) {
                   if (dejaBrewResults[i].breweries[0].locations[0].locality === location) {
-                    breweryResults.push(dejaBrewResults[i])
+                    beerResults.push(dejaBrewResults[i]);
                   }
                   //}
                 }
                 else {
-                  breweryResults.push(dejaBrewResults[i])
+                  beerResults.push(dejaBrewResults[i])
                 }
 
               }
@@ -234,12 +237,14 @@ class Search extends React.Component {
             if (location) { //check for location
               //for(var k = 0; k < dejaBrewResults[i].locations.length; k++) {
               //check for multiple locations as well , handle it on client side instead
+              console.log(dejaBrewResults[i].locations[0].locality)
               if (dejaBrewResults[i].locations[0].locality === location) {
-                breweryResults.push(dejaBrewResults[i])
+                breweryResults.push(dejaBrewResults[i]);
               }
               //}
             }
             else {
+              console.log('ONCE PLEASE ', dejaBrewResults[i])
               breweryResults.push(dejaBrewResults[i])
             }
           }
@@ -247,29 +252,32 @@ class Search extends React.Component {
             if (location) {
               //for(var j = 0; j < dejaBrewResults[i].breweries[0].locations.length; j++) {
               if (dejaBrewResults[i].breweries[0].locations[0].locality === location) {
-                breweryResults.push(dejaBrewResults[i])
+                beerResults.push(dejaBrewResults[i]);
               }
               //}
             }
             else {
-              breweryResults.push(dejaBrewResults[i])
+              beerResults.push(dejaBrewResults[i])
             }
           }
         }
       }
     }
+
+
+
     vm.props.handleBreweriesByBeerNameSearch(beerResults);
     vm.props.handleBreweriesByBreweryNameSearch(breweryResults);
   }
 
   wordsToUpperCase(words) {
-    if(words.split(' ').length === 1) {
-      return words.charAt(0).toUpperCase() + words.slice(1); 
+    if (words.split(' ').length === 1) {
+      return words.charAt(0).toUpperCase() + words.slice(1);
     }
     else {
       var upperWordsArr = [];
       var lowerWordsArr = words.split(' ');
-      lowerWordsArr.forEach(function(word) {
+      lowerWordsArr.forEach(function (word) {
         upperWordsArr.push(word.charAt(0).toUpperCase() + word.slice(1));
       })
       return upperWordsArr;
@@ -277,7 +285,7 @@ class Search extends React.Component {
   }
 
   handleRadiusChange(event, index, value) {
-    this.setState ({
+    this.setState({
       value
     })
   }
@@ -285,9 +293,8 @@ class Search extends React.Component {
   handler() {
     this.setState({ open: false });
   }
-  
+
   render() {
-    //console.log('this.props from search = ', this.props)
     return (
       <div className="search-bar">
         <input
@@ -306,21 +313,21 @@ class Search extends React.Component {
           placeholder='Search By Location'
           value={this.state.locationValue}
         />
-        <DropDownMenu 
-        className="dropDown"
-        value={this.state.value} 
-        onChange={this.handleRadiusChange.bind(this)}
+        <DropDownMenu
+          className="dropDown"
+          value={this.state.value}
+          onChange={this.handleRadiusChange.bind(this)}
         >
           <MenuItem value={5} primaryText="5 miles" />
           <MenuItem value={10} primaryText="10 miles" />
           <MenuItem value={25} primaryText="25 miles" />
           <MenuItem value={50} primaryText="50 miles" />
         </DropDownMenu>
-        <RaisedButton 
-        style={styles.button}
+        <RaisedButton
+          style={styles.button}
           onClick={this.searchDejaBrew.bind(this)}
-          >
-          <span className="glyphicon glyphicon-search"/>
+        >
+          <span className="glyphicon glyphicon-search" />
         </RaisedButton>
         <LinearProgress
           style={styles.linearBar}
@@ -332,14 +339,13 @@ class Search extends React.Component {
           mode="determinate"
           value={this.state.completed}
         />
-        <DialogMsg handler={ this.handler } open={ this.state.open } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
+        <DialogMsg handler={this.handler} open={this.state.open} msgTitle={this.state.msgTitle} msgBody={this.state.msgBody} />
       </div>
     );
   }
 }
 
 const stateToProps = (state) => {
-  //console.log('STATE TO PROPS INVOKED, state = ', state)
   return {
     venue: state.venue
   }
