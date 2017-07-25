@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {
   Table,
@@ -30,7 +31,8 @@ class DrinkBuddy extends Component {
       selected: [],
       open: false,
       msgTitle: 'Incomplete Profile',
-      msgBody: 'Your friends would like to know who they will be sharing a cold one with.  Please complete your profile and try again.'
+      msgBody: 'Your friends would like to know who they will be sharing a cold one with.  Please complete your profile and try again.',
+      selectAll: true
     }
     this.handleFriendAdd=this.handleFriendAdd.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -109,6 +111,7 @@ class DrinkBuddy extends Component {
   }
 
   handleRowSelection(selectedRows) {
+    console.log('selectedRows', selectedRows)
     let list = this.state.friendList;
     if (selectedRows === 'none') {
       selectedRows = [];
@@ -116,8 +119,8 @@ class DrinkBuddy extends Component {
       selectedRows = [];
       list.map((cur, i)=>{ selectedRows.push(i) });
       }
-    this.setState({ selected: selectedRows });
-    this.forceUpdate();
+    let selectToggle = !(selectedRows.length === list.length)
+    this.setState({ selected: selectedRows, selectAll: selectToggle });
   }
 
   handleFriendSelect(i) {
@@ -157,17 +160,30 @@ class DrinkBuddy extends Component {
   }
 
   render() {
-    console.log('rendering')
     return (
-      <div><AppBar 
-        title="my drinking buddies" 
-        showMenuIconButton={false} 
-        iconElementRight={
-          <RaisedButton
-            onClick={(e)=>{ this.handleSendDirections() }} 
-            label='Brew Beacon' />}/>
+      <div>
+        <AppBar 
+          title="my drinking buddies" 
+          showMenuIconButton={false} 
+          iconElementRight={
+            <RaisedButton
+              onClick={(e)=>{ this.handleSendDirections() }} 
+              label='Brew Beacon' />
+          }
+        />
+        <AppBar 
+          iconElementLeft={ ( this.state.selectAll ) ? (
+            <FlatButton
+              onClick={(e)=>{ this.handleRowSelection('all')}}
+              label='select all'/>
+          ) : (
+            <FlatButton
+              onClick={(e)=>{ this.handleRowSelection('none')}}
+              label='unselect all'/>
+          )}
+        />
         <Table multiSelectable={true} onRowSelection={ this.handleRowSelection }>
-          <TableHeader enableSelectAll={true}>
+          <TableHeader displaySelectAll={false} enableSelectAll={false}>
             <TableRow>
               <TableHeaderColumn>Name</TableHeaderColumn>
               <TableHeaderColumn>Phone Number</TableHeaderColumn>
