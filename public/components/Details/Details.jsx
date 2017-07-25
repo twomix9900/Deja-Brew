@@ -107,7 +107,11 @@ class Details extends React.Component {
               >
                 <span className="Get Directions" />
               </RaisedButton>
-              <DrinkBuddy />
+              {( this.state.userInfo ) ? (
+                <DrinkBuddy />
+              ) : (
+                <div></div>
+              )}
             </Paper>
             {/*<Pagination items={this.state.beersFromBrewery} onChangePage={this.onChangePage}
             />*/}
