@@ -50,13 +50,13 @@ class Details extends React.Component {
           <h1>Name: {brewInfo.brewery ? brewInfo.brewery.name : brewInfo.name}</h1>
           <h5>Icon: 
             {/*{(brewInfo.brewery.images ? brewInfo.brewery.images.large : 'no pic') || (brewInfo.images ? brewInfo.images.large : 'no pic')} */}
-            {brewInfo.images ? <img src={brewInfo.images.squareMedium} alt="boohoo" className="img-responsive" /> : null || brewInfo.brewery.images.squareMedium}
+            {!brewInfo.images ? 'No photo found' : <img src={brewInfo.images.squareMedium} alt="boohoo" className="img-responsive" /> || brewInfo.brewery.images.squareMedium}
           </h5>
           <h3>
-            Hours: {brewInfo.hoursOfOperation ? brewInfo.hoursOfOperation : 'no hours'}
+            Hours: {!brewInfo.hoursOfOperation ? 'No hours listed' : brewInfo.hoursOfOperation}
           </h3>
           <h4>
-            BreweryId: {(brewInfo.breweryId ? brewInfo.breweryId : brewInfo.id) || (brewInfo.id ? brewInfo.id : 'no id')}
+            BreweryId: {(brewInfo.breweryId ? brewInfo.breweryId : brewInfo.id) || (brewInfo.id ? brewInfo.id : 'No id')}
           </h4>
           <h4>
             Website:{/*{(brewInfo.brewery.website ? brewInfo.brewery.website : brewInfo.website) || (brewInfo.website ? brewInfo.website : 'no website')}*/}
