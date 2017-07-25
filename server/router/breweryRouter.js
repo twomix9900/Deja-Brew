@@ -9,5 +9,7 @@ breweryRouter.get('/dejaBrew/:dejaBrew/:currentPage', breweryController.getDejaB
 breweryRouter.get('/breweriesLatLng/:breweryLocation', breweryController.getBreweriesLatLng);
 breweryRouter.get('/beers/:breweryId', breweryController.getBeersFromBrewery);
 breweryRouter.get('/beerStyles', breweryController.getBeerStyles);
+breweryRouter.post('/beer', breweryController.postBeer);
+breweryRouter.post('/beerDatabase', breweryController.postBeerDatabase);
 
 module.exports = breweryRouter;

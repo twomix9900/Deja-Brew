@@ -327,11 +327,6 @@ class Search extends React.Component {
           mode="determinate"
           value={this.state.completed}
         />
-        <LinearProgress
-          style={styles.linearBar}
-          mode="determinate"
-          value={this.state.completed}
-        />
         <DialogMsg handler={ this.handler } open={ this.state.open } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
       </div>
     );

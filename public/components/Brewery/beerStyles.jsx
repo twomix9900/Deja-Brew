@@ -9,10 +9,6 @@ import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 const style = {
-  // menu: {
-  //   margin: 0,
-  //   width: '226px'
-  // },
   display:'inline-block',
   margin: '16px 32px 16px 0'
 };
@@ -20,11 +16,12 @@ const style = {
 class beerStyles extends React.Component {
   constructor(props) {
     super(props);
+    console.log('props from beerStyles: ' , props)
     this.state = {
       textBoxWidth: 220,
       beerStyles: [],
       beerStyleName: "Beer Style",
-      beerStyleId: 0
+      //beerStyleId: 0
       // submitBeer: {
       //   beerStyleName: "Beer Style",
       //   beerStyleId: 0
@@ -56,23 +53,17 @@ class beerStyles extends React.Component {
   }
 
   handleStyleChange(styleId, styleName) {
-    console.log(this)
-    console.log('styleId: ', styleId)
-    console.log('styleName: ', styleName)
-    console.log('length: ', styleName.length)
     this.setState({beerStyleName: styleName})
-    this.setState({beerStyleId: styleId})
-    this.setState({textBoxWidth: styleName.length * 8})
-    // console.log(this.state.beerStyleName)  
-     console.log(this.state.textBoxWidth)  
+    //this.setState({beerStyleId: styleId})
+    this.props.handleBeerStyleId(styleId)
+    this.setState({textBoxWidth: styleName.length * 8})  
   }
 
   render() {
-    {console.log('textboxwidth ' , this.state.textBoxWidth)}
     return (
       <div>
         <Paper style={style}>
-          <Menu desktop={true} autoWidth={false} width={this.state.textBoxWidth}>
+          <Menu desktop={true} autoWidth={false} width={this.state.textBoxWidth} disableAutoFocus={true}>
             <MenuItem
               primaryText={this.state.beerStyleName}
               rightIcon={<ArrowDropRight />}

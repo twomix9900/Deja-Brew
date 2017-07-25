@@ -30,7 +30,7 @@ body {
 }
 
 .backgroundImage {
-  background-image: url("./images/homepage4.jpg");
+  background-image: url("./images/flip.jpg");
   background-size: cover;
   height:100%;
 }
@@ -227,4 +227,20 @@ img {
 .whiteColor {
   color:white;
   font-size:60px;
+}
+
+.addBreweryImage {
+  background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('./images/bg_img2.jpg');
+  height:100%;
+  background-size: cover;
+}
+
+.floatRight {
+  margin-left: 60%;
+  padding-top:10%;
+}
+
+.floatLeft {
+  margin-left: 20%;
+  padding-top:10%;
 }
