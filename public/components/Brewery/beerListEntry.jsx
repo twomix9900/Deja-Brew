@@ -1,16 +1,12 @@
 import React from 'react';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-// import { Route } from 'react-router';
-// import FlatButton from 'material-ui/FlatButton';
+import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import actions from '../../actions';
 import { connect } from 'react-redux';
 import axios from 'axios';
-
 import ThumbsUp from 'material-ui/svg-icons/action/thumb-up';
 import ThumbsDown from 'material-ui/svg-icons/action/thumb-down';
 import Badge from 'material-ui/Badge';
 import { blue500, red500, yellow500 } from 'material-ui/styles/colors';
-
 import DialogMsg from '../Dialog/DialogMsg.jsx';
 
 const styles = {
@@ -22,9 +18,7 @@ const styles = {
 class BeerListEntry extends React.Component {
   constructor(props) {
     super(props);
-//    console.log('props from BeerListEntry' ,props)
     this.state = {
-      //locationValue: ''
       beerLike: 0,
       beerDislike: 0,
       userOpinion: 0,
@@ -37,9 +31,9 @@ class BeerListEntry extends React.Component {
     this.selectVenue = this.selectVenue.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.navigateToDetailsPage = this.navigateToDetailsPage.bind(this);
-    this.handleUpClick=this.handleUpClick.bind(this);
-    this.handleDownClick=this.handleDownClick.bind(this);
-    this.dialogHandler=this.dialogHandler.bind(this);
+    this.handleUpClick = this.handleUpClick.bind(this);
+    this.handleDownClick = this.handleDownClick.bind(this);
+    this.dialogHandler = this.dialogHandler.bind(this);
   }
 
   handleClick(e, data) {
@@ -52,42 +46,42 @@ class BeerListEntry extends React.Component {
     this.props.selectVenue(this.props.beer.breweries[0]);
   }
 
-  navigateToDetailsPage () {
+  navigateToDetailsPage() {
     this.props.history.push('/details');
   }
 
-  componentWillReceiveProps(){
+  componentWillReceiveProps() {
     this.tallyLikes();
   }
 
   componentDidMount() {
     let info = JSON.parse(localStorage.getItem('userInfo'));
     this.setState({ userInfo: info });
-    this.tallyLikes(info); 
+    this.tallyLikes(info);
   }
 
   tallyLikes(info) {
     let likeCount = 0;
     let dislikeCount = 0;
     let userId;
-    if (info) { 
-      userId=info.id;
+    if (info) {
+      userId = info.id;
     } else {
-      userId=undefined;
-    } 
+      userId = undefined;
+    }
     let opinion = 0;
     axios.get('/beerRatings/' + this.props.beerId)
-    .then((data) => {
-      let numberOfEntries = data.data.length;
-      for (let idx = 0; idx < numberOfEntries; idx ++) {
-        data.data[idx].beerRating === 1 && likeCount++;
-        data.data[idx].beerRating === -1 && dislikeCount++;
-        if (data.data[idx].userId === userId) {
-          opinion = data.data[idx].beerRating;
+      .then((data) => {
+        let numberOfEntries = data.data.length;
+        for (let idx = 0; idx < numberOfEntries; idx++) {
+          data.data[idx].beerRating === 1 && likeCount++;
+          data.data[idx].beerRating === -1 && dislikeCount++;
+          if (data.data[idx].userId === userId) {
+            opinion = data.data[idx].beerRating;
+          }
         }
-      }
-      this.setState({ beerLike: likeCount, beerDislike: dislikeCount, userOpinion: opinion })
-    })
+        this.setState({ beerLike: likeCount, beerDislike: dislikeCount, userOpinion: opinion })
+      })
   }
 
   handleUpClick() {
@@ -97,7 +91,7 @@ class BeerListEntry extends React.Component {
       if (this.state.userInfo) {
         userId = this.state.userInfo.id;
       } else {
-        userId= undefined;
+        userId = undefined;
       }
       if (userId) {
         axios.put('/beerRatings/' + userId + '?beerId=' + this.props.beerId, { beerRating: 1 })
@@ -118,7 +112,7 @@ class BeerListEntry extends React.Component {
       if (this.state.userInfo) {
         userId = this.state.userInfo.id;
       } else {
-        userId= undefined;
+        userId = undefined;
       }
       if (userId) {
         axios.put('/beerRatings/' + userId + '?beerId=' + this.props.beerId, { beerRating: -1 })
@@ -137,7 +131,6 @@ class BeerListEntry extends React.Component {
   }
 
   render() {
-
     return (
       <Card>
         <CardHeader
@@ -177,16 +170,16 @@ class BeerListEntry extends React.Component {
         <CardText expandable={true}>
           {this.props.beer.breweries[0].description}
         </CardText>
-       
-        <ThumbsUp onClick={() => { this.handleUpClick() }} color={ (this.state.userOpinion === 1) ? (blue500) : ('') } />
-        ({ this.state.beerLike }) ? (
-          <Badge badgeContent={ this.state.beerLike } />
+
+        <ThumbsUp onClick={() => { this.handleUpClick() }} color={(this.state.userOpinion === 1) ? (blue500) : ('')} />
+        ({this.state.beerLike}) ? (
+          <Badge badgeContent={this.state.beerLike} />
         ) : ()
-        <ThumbsDown onClick={() => { this.handleDownClick() }} color={ (this.state.userOpinion === -1) ? (red500) : ('')} />
-        ({ this.state.beerDisLike }) ? (
-            <Badge badgeContent={ this.state.beerDislike } />
+        <ThumbsDown onClick={() => { this.handleDownClick() }} color={(this.state.userOpinion === -1) ? (red500) : ('')} />
+        ({this.state.beerDisLike}) ? (
+            <Badge badgeContent={this.state.beerDislike} />
         ) : ()
-        <DialogMsg open={ this.state.open } handler={ this.dialogHandler } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
+        <DialogMsg open={this.state.open} handler={this.dialogHandler} msgTitle={this.state.msgTitle} msgBody={this.state.msgBody} />
       </Card>
     );
   }

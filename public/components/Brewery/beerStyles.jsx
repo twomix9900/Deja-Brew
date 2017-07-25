@@ -9,14 +9,14 @@ import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 const style = {
-  display:'inline-block',
+  display: 'inline-block',
   margin: '16px 32px 16px 0'
 };
 
 class beerStyles extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props from beerStyles: ' , props)
+    console.log('props from beerStyles: ', props)
     this.state = {
       textBoxWidth: 220,
       beerStyles: [],
@@ -31,12 +31,12 @@ class beerStyles extends React.Component {
 
   componentWillMount() {
     var vm = this;
-     axios.get('/brewery/beerStyles')
-     .then(function(response) {
+    axios.get('/brewery/beerStyles')
+      .then(function (response) {
         let data = response.data.data;
         let categories = {};
-        for(var i = 0; i < data.length; i++) {
-          if(!(data[i].category.name in categories)) {
+        for (var i = 0; i < data.length; i++) {
+          if (!(data[i].category.name in categories)) {
             let categoryName = data[i].category.name;
             categories[categoryName] = {};
             categories[categoryName].id = data[i].category.id;
@@ -48,15 +48,15 @@ class beerStyles extends React.Component {
           styles.desc = data[i].description;
           categories[data[i].category.name].styles.push(styles);
         }
-        vm.setState({beerStyles: categories}); 
+        vm.setState({ beerStyles: categories });
       })
   }
 
   handleStyleChange(styleId, styleName) {
-    this.setState({beerStyleName: styleName})
+    this.setState({ beerStyleName: styleName })
     //this.setState({beerStyleId: styleId})
     this.props.handleBeerStyleId(styleId)
-    this.setState({textBoxWidth: styleName.length * 8})  
+    this.setState({ textBoxWidth: styleName.length * 8 })
   }
 
   render() {
@@ -70,18 +70,18 @@ class beerStyles extends React.Component {
               menuItems=
               //{<MenuItem primaryText="Select Category"
               {Object.keys(this.state.beerStyles).map((category) => {
-                return <MenuItem 
-                  primaryText={category}   
+                return <MenuItem
+                  primaryText={category}
                   rightIcon={<ArrowDropRight />}
                   menuItems=
                   {this.state.beerStyles[category].styles.map((style) => {
-                    return <MenuItem 
-                    primaryText={style.name}  
-                    //how does MenuItem know onClick is possible? why not onMouseEnter?
-                    onClick={this.handleStyleChange.bind(this, style.id, style.name)}
+                    return <MenuItem
+                      primaryText={style.name}
+                      //how does MenuItem know onClick is possible? why not onMouseEnter?
+                      onClick={this.handleStyleChange.bind(this, style.id, style.name)}
                     />
                   })}
-                /> 
+                />
               })}
             />
           </Menu>

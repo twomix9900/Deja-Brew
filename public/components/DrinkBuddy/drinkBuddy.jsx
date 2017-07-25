@@ -155,7 +155,7 @@ class DrinkBuddy extends Component {
     return (
       <div>
         <AppBar 
-          title="my drinking buddies" 
+          title="Drinking Buddies" 
           showMenuIconButton={false} 
           iconElementRight={
             <RaisedButton
