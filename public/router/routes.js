@@ -7,7 +7,7 @@ import Auth from '../auth/Auth';
 import Profile from '../components/Profile/Profile.jsx';
 import history from '../auth/history';
 import DejaBrewNavBar from '../components/Navbar/DejaBrewNavBar.jsx';
-import Landing from '../components/Navbar/Landing/Landing.jsx';
+import Landing from '../components/Landing/Landing.jsx';
 import AddBeer from '../components/Brewery/addBeer.jsx';
 import AddBrewery from '../components/Brewery/addBrewery.jsx';
 import PendingDejaBrew from '../components/Brewery/pendingDejaBrew.jsx';
