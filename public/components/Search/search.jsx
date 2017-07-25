@@ -30,7 +30,8 @@ class Search extends React.Component {
       open: false,
       msgTitle: 'Both fields cannot be empty',
       msgBody: 'Please fill in at least one field because the amount of data you get back will be too damn high.',
-      completed: 0
+      completed: 0,
+      showProgressBar: false
     };
     this.handler = this.handler.bind(this);
     this.searchVenueByName = this.searchVenueByName.bind(this);
@@ -53,7 +54,6 @@ class Search extends React.Component {
       this.setState({ beerBreweryValue: this.props.venue.searchedVenueByName });
       this.searchDejaBrew();
     }
-
   }
 
   searchVenueByName(data) {
@@ -85,6 +85,7 @@ class Search extends React.Component {
   }
 
   searchDejaBrew() {
+    this.setState({ showProgressBar: true })
     // var location = this.wordsToUpperCase(this.state.locationValue);
     var location = this.wordsToUpperCase(this.state.locationValue || this.props.venue.searchedVenueByLocation);
     // var beerBrewery = this.state.beerBreweryValue;
@@ -329,11 +330,13 @@ class Search extends React.Component {
         >
           <span className="glyphicon glyphicon-search" />
         </RaisedButton>
-        <LinearProgress
-          style={styles.linearBar}
-          mode="determinate"
-          value={this.state.completed}
-        />
+        { this.state.showProgressBar ? 
+          <LinearProgress
+            style={styles.linearBar}
+            mode="determinate"
+            value={this.state.completed}
+          /> : null
+        }
         <DialogMsg handler={this.handler} open={this.state.open} msgTitle={this.state.msgTitle} msgBody={this.state.msgBody} />
       </div>
     );
