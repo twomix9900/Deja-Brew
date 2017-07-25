@@ -10,6 +10,7 @@ import DejaBrewNavBar from '../components/Navbar/DejaBrewNavBar.jsx';
 import Landing from '../components/Navbar/Landing/Landing.jsx';
 import AddBeer from '../components/Brewery/addBeer.jsx';
 import AddBrewery from '../components/Brewery/addBrewery.jsx';
+import PendingDejaBrew from '../components/Brewery/pendingDejaBrew.jsx';
 import Details from '../components/Details/Details.jsx';
 import store from '../stores';
 import { Provider } from 'react-redux';
@@ -34,6 +35,7 @@ export const makeMainRoutes = () => {
             <Route path="/details" render={(props) => <Details {...props} />} />
             <Route path="/addBeer" render={(props) => <AddBeer {...props}/>} />
             <Route path="/addBrewery" render={(props) => <AddBrewery {...props} />} />
+            <Route path="/pendingDejaBrew" render={(props) => <PendingDejaBrew {...props}/>} />
             <Route path="/callback" render={(props) => {
               handleAuthentication(props);
               return <Callback auth={auth} userId={localStorage.userId} {...props} />
