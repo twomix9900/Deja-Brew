@@ -91,9 +91,7 @@ class BeerListEntry extends React.Component {
   }
 
   handleUpClick() {
-    console.log('check for multiclick')
     if (!this.state.opinionClick) {
-    console.log('inside up click')
       this.setState({ opinionClick: true });
       let userId;
       if (this.state.userInfo) {
@@ -114,7 +112,6 @@ class BeerListEntry extends React.Component {
   }
 
   handleDownClick() {
-    console.log('inside down click')
     if (!this.state.opinionClick) {
       this.setState({ opinionClick: true });
       let userId;

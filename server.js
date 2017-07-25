@@ -17,7 +17,8 @@ const friendRouter = require('./server/router/friendRouter.js');
 const breweryRouter = require('./server/router/breweryRouter.js');
 const s3ImageRouter = require('./server/router/s3ImageRouter.js');
 const breweryRatingsRouter = require('./server/router/breweryRatingsRouter.js');
-const beerRatingsRouter = require('./server/router/beerRatingsRouter');
+const beerRatingsRouter = require('./server/router/beerRatingsRouter.js');
+const directionRouter = require('./server/router/directionRouter.js');
 const cors = require('cors');
 
 const app = express();
@@ -35,6 +36,7 @@ app.use('/brewery', breweryRouter);
 app.use('/images', s3ImageRouter);
 app.use('/breweryRatings', breweryRatingsRouter);
 app.use('/beerRatings', beerRatingsRouter);
+app.use('/directions', directionRouter);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
@@ -54,7 +56,7 @@ db.authenticate()
     console.log('error connecting to database', err);
   })
 
-const port = 3333;
+const port = process.env.PORT || 3333;
 app.listen(port, function(err) {
   if (err) {
     console.log('unable to connect to port ', port);
