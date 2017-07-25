@@ -1,30 +1,7 @@
 const { User } = require('../db/dbModel.js');
-var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 const userController = {
-
-  sendDirections: (req, res) => {
-    let contactNumber = req.params.phoneNumber.slice(0, 10);
-    let queryName = req.params.phoneNumber.slice(10);
-    let googleSearch = 'https://www.google.com/maps/dir/?api=1&destination=' + queryName + '&travelmode=driving'
-    
-    client.messages.create({
-      to: '+1' + contactNumber,
-      from: process.env.TWILIO_NUMBER,
-      body: 'Directions to ' + req.params.phoneNumber.slice(10).split('+').join(' ') + ': ' + googleSearch
-    }, function (err, message) {
-      if (err) {
-        console.log('error! ', err);
-      } else {
-        if (message.sid) {
-          console.log('message.sid = ', message.sid)
-        }
-      }
-    })
-
-    res.sendStatus(201);
-    
-  },
 
   getAllUsers: (req, res) => {
     User.findAll()
@@ -101,7 +78,6 @@ const userController = {
       res.sendStatus(404);
     })
   }
-
 }
 
 module.exports = userController;

@@ -1,4 +1,5 @@
 const { Friend } = require('../db/dbModel.js');
+const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 const friendController = {
 
@@ -72,8 +73,7 @@ const friendController = {
       console.log('error deleting friend entry', err);
       res.sendStatus(404);
     })
-  }
-
+  },
 }
 
 module.exports = friendController;

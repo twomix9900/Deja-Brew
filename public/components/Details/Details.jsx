@@ -76,7 +76,7 @@ class Details extends React.Component {
     // } else {
     //   queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
     // }
-    axios.get('/users/sendDirections/' + this.state.userInfo.phone.slice(3) + queryName)
+    axios.get('/directions/user/' + this.state.userInfo.phone.slice(3) + queryName)
     .then((data) => {
       console.log('data from sendDirections = ', data)  
     })

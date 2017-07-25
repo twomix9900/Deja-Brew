@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {
   Table,
@@ -18,6 +19,7 @@ import {
 import FriendListEntry from '../Profile/Friends/FriendListEntry.jsx';
 import FriendAdd from '../Profile/Friends/FriendAdd.jsx';
 import QueryFriendInfo from '../Profile/Friends/QueryFriendInfo.jsx';
+import DialogMsg from '../Dialog/DialogMsg.jsx';
 
 class DrinkBuddy extends Component {
   
@@ -27,14 +29,18 @@ class DrinkBuddy extends Component {
       friendList: [],
       newFriendQuery: true,
       selected: [],
+      open: false,
+      msgTitle: 'Incomplete Profile',
+      msgBody: 'Your friends would like to know who they will be sharing a cold one with.  Please complete your profile and try again.',
+      selectAll: true
     }
     this.handleFriendAdd=this.handleFriendAdd.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
     this.handleRowSelection=this.handleRowSelection.bind(this);
-    this.handleFriendSelect=this.handleFriendSelect.bind(this);
     this.sortFriendList=this.sortFriendList.bind(this);
     this.formatPhone=this.formatPhone.bind(this);
     this.handleSendDirections=this.handleSendDirections.bind(this);
+    this.handleNoName=this.handleNoName.bind(this);
   }
 
   componentWillMount() {
@@ -111,52 +117,69 @@ class DrinkBuddy extends Component {
       selectedRows = [];
       list.map((cur, i)=>{ selectedRows.push(i) });
       }
-    this.setState({ selected: selectedRows });
-    this.forceUpdate();
-  }
-
-  handleFriendSelect(i) {
-    let list = this.state.friendList;
-    list[i].selected = !list[i].selected;
-    this.setState({ friendList: list });
+    let selectToggle = !(selectedRows.length === list.length)
+    this.setState({ selected: selectedRows, selectAll: selectToggle });
   }
 
   handleSendDirections() {
-    console.log('inside Send Directions to Friends');
-    console.log('selected ***'+ this.state.selected +'***');
     let queryName;
-    if (this.props.venue.selectedVenue.name !== 'Main Brewery') {
-      queryName = this.props.venue.selectedVenue.name.split(' ').join('+');
+    let userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    if (userInfo.nickname === '' || userInfo.nickname === undefined) {
+      this.setState({ open: true })
     } else {
-      queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
-    }
-    let list = this.state.friendList;
-    let selectedArr = this.state.selected.slice();
-    for (let i = 0; i < selectedArr.length; i++) {
-      let friendNumber = list[selectedArr[i]].phone.slice(3);
-      console.log('friend number', friendNumber);
-      axios.get('/users/sendDirections/' + friendNumber + queryName)
-      .then(() => {
-        console.log('success in sending directions');
-      })
-      .catch((err)=>{
-        console.log('error sending Directions', err);
-      })
+      if (this.props.venue.selectedVenue.name !== 'Main Brewery') {
+        queryName = this.props.venue.selectedVenue.name.split(' ').join('+');
+      } else {
+        queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
+      }
+      let list = this.state.friendList;
+      let selectedArr = this.state.selected.slice();
+      for (let i = 0; i < selectedArr.length; i++) {
+        let friendNumber = list[selectedArr[i]].phone.slice(3);
+        axios.get('/directions/friend/' + userInfo.nickname + '/' + friendNumber + queryName)
+        .then(() => {
+          console.log('success in sending directions');
+        })
+        .catch((err)=>{
+          console.log('error sending Directions', err);
+        })
+      }
     }
   }
 
+  handleNoName() {
+    this.setState({ open: false });
+  }
+
   render() {
-    console.log('rendering')
     return (
-      <div><AppBar 
-        title="my drinking buddies" 
-        showMenuIconButton={false} 
-        iconElementRight={
-          <RaisedButton
-            onClick={(e)=>{ this.handleSendDirections() }} 
-            label='Brew Beacon' />}/>
+      <div>
+        <AppBar 
+          title="my drinking buddies" 
+          showMenuIconButton={false} 
+          iconElementRight={
+            <RaisedButton
+              onClick={(e)=>{ this.handleSendDirections() }} 
+              label='Brew Beacon' />
+          }
+        />
+        {( this.state.friendList.length) ? (
+          <AppBar 
+            iconElementLeft={ ( this.state.selectAll ) ? (
+              <FlatButton
+                onClick={(e)=>{ this.handleRowSelection('all')}}
+                label='select all'/>
+            ) : (
+              <FlatButton
+                onClick={(e)=>{ this.handleRowSelection('none')}}
+                label='unselect all'/>
+            )}
+          />
+        ) : (
+          <div></div>
+        )}
         <Table multiSelectable={true} onRowSelection={ this.handleRowSelection }>
-          <TableHeader enableSelectAll={true}>
+          <TableHeader displaySelectAll={false} enableSelectAll={false}>
             <TableRow>
               <TableHeaderColumn>Name</TableHeaderColumn>
               <TableHeaderColumn>Phone Number</TableHeaderColumn>
@@ -179,6 +202,7 @@ class DrinkBuddy extends Component {
           ) : (
             <QueryFriendInfo handleSubmit={ this.handleSubmit } />
           ) }
+        <DialogMsg handler={ this.handleNoName } open={ this.state.open } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
       </div>
     )
   }

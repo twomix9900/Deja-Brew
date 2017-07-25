@@ -28,6 +28,9 @@ export default class NickName extends Component {
     if (nameSubmission !== undefined && nameSubmission !== '') {
       axios.put('/users/' + this.props.userId, { nickname: nameSubmission })
       .then(() => {
+        let info = JSON.parse(localStorage.getItem('userInfo'));
+        info.nickname = nameSubmission;
+        localStorage.setItem('userInfo', JSON.stringify(info));
         this.setState({ displayNickname: true, nickname: nameSubmission });
       })
     } else {
