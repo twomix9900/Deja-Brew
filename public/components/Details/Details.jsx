@@ -115,7 +115,11 @@ class Details extends React.Component {
               >
                 <span className="Get Directions" />
               </RaisedButton>
-              <DrinkBuddy />
+              {( this.state.userInfo ) ? (
+                <DrinkBuddy />
+              ) : (
+                <div></div>
+              )}
             </Paper>
           </div>
         </MuiThemeProvider>
