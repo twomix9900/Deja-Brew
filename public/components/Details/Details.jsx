@@ -7,7 +7,7 @@ import { connect, Store } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
-import Pagination from '../Brewery/pagination.jsx';
+
 
 import DrinkBuddy from '../DrinkBuddy/drinkBuddy.jsx'
 
@@ -22,7 +22,6 @@ class Details extends React.Component {
     }
     this.sendDirections = this.sendDirections.bind(this);
     this.getBeersFromBrewery = this.getBeersFromBrewery.bind(this);
-    //this.onChangePage = this.onChangePage.bind(this);
     this.renderBeerList = this.renderBeerList.bind(this);
   }
   
@@ -32,13 +31,11 @@ class Details extends React.Component {
     this.setState({ userInfo: info });
     console.log('props in details beers brew-->',this.props.venue.selectedVenue.id);
     this.getBeersFromBrewery();
-    // phone={ this.state.userInfo.phone }
   }
 
   getBeersFromBrewery() {
     axios.get('/brewery/beers/' + this.props.venue.selectedVenue.id)
     .then((data) => {
-      //console.log('data from getBeersFromBrewery = ', data.data.data)
       this.setState({
         beersFromBrewery: data.data.data
       })
@@ -60,23 +57,12 @@ class Details extends React.Component {
     return beers;
   }
 
-  // onChangePage(pageOfItems) {
-  //   //console.log('pageOfItems: ', pageOfItems)
-  //     // update state with new page of items
-  //     this.setState({ pageOfItems: this.state.beersFromBrewery });
-  // }
-
   sendDirections() {
     let queryName;
 
     this.props.venue.selectedVenue.name !== 'Main Brewery' ? queryName = this.props.venue.selectedVenue.name.split(' ').join('+') : queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
 
-    // if (this.props.venue.selectedVenue.name !== 'Main Brewery') {
-    //   queryName = this.props.venue.selectedVenue.name.split(' ').join('+');
-    // } else {
-    //   queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
-    // }
-    axios.get('/directions/user/' + this.state.userInfo.phone.slice(3) + queryName)
+    axios.get('/users/sendDirections/' + this.state.userInfo.phone.slice(3) + queryName)
     .then((data) => {
       console.log('data from sendDirections = ', data)  
     })
@@ -109,8 +95,6 @@ class Details extends React.Component {
               </RaisedButton>
               <DrinkBuddy />
             </Paper>
-            {/*<Pagination items={this.state.beersFromBrewery} onChangePage={this.onChangePage}
-            />*/}
           </div>
         </MuiThemeProvider>
       </div>
