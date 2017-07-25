@@ -36,15 +36,16 @@ class Landing extends React.Component {
     if($('.headerLeftPrimary').css('display') == 'block') { 
       $('.headerLeftPrimary').hide().removeClass('animated fadeInUp').addClass('animated fadeOutDown');
       $('.headerLeftInfo').show().removeClass('animated fadeOutDown').addClass('animated fadeInDown');
+      $('.btnCustom').css('margin-top', 0);
       this.animateValue("sortsNum", 64000, 10000);
       this.animateValue("typesNum", 9000, 10000);
-      this.animateValue("categoriesNum", 0, 10000);
       this.animateValue("stylesNum", 0, 10000);
       this.animateValue("countriesNum", 0, 10000);
     }
     else {
       $('.headerLeftInfo').hide().removeClass('animated fadeInDown').addClass('animated fadeOutDown');
       $('.headerLeftPrimary').show().removeClass('animated fadeOutDown').addClass('animated fadeInUp');
+      $('.btnCustom').css('margin-top', 20);
     }
   }
 
@@ -71,7 +72,6 @@ class Landing extends React.Component {
               <h3 className="subHeader blackColor">
                 <div id="sortsNum">65527</div> SORTS OF BEER<br/><br/>
                 <div id="typesNum">9134</div> NAMES OF BREWERIES<br/><br/>
-                <div id="categoriesNum">15</div> CATEGORIES OF BEER<br/><br/>
                 <div id="stylesNum">170</div> STYLES OF BEER<br/><br/>
                 <div id="countriesNum">160</div>+ COUNTRIES AVAILABLE<br/><br/>
                 <button type="button" className="btnCustom" onClick={this.showSecondPage.bind(this)}>

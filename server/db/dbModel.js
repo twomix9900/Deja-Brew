@@ -28,11 +28,13 @@ const BreweryRating = db.define('breweryRating',{
 });
 
 const Beer = db.define('beer', {
-  uniqId: Sequelize.STRING(10)
+  uniqId: Sequelize.STRING(10),
+  userId: Sequelize.INTEGER
 });
 
 const Brewery = db.define('brewery', {
-  uniqId: Sequelize.STRING(10)
+  uniqId: Sequelize.STRING(10),
+  userId: Sequelize.INTEGER
 });
 
 User.hasMany(Friend);
