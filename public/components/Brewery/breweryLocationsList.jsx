@@ -8,30 +8,28 @@ class BreweryLocationsList extends React.Component {
     super();
 
     this.state = {
-        pageOfItems: []
+      pageOfItems: []
     };
-  
+
     this.onChangePage = this.onChangePage.bind(this);
   }
 
   onChangePage(pageOfItems) {
-    console.log('pageOfItems: ', pageOfItems)
-      // update state with new page of items
-      this.setState({ pageOfItems: pageOfItems });
+    this.setState({ pageOfItems: pageOfItems });
   }
 
   render() {
     return (
       <div>
         <div className="text-center">
-            {this.state.pageOfItems.map((brewery, i) => 
-              <BreweryLocationsListEntry
-                key={i}
-                brewery={brewery}
-                history={this.props.history}
-              />
-            )}
-            <Pagination items={this.props.breweries} onChangePage={this.onChangePage} />
+          {this.state.pageOfItems.map((brewery, i) =>
+            <BreweryLocationsListEntry
+              key={i}
+              brewery={brewery}
+              history={this.props.history}
+            />
+          )}
+          <Pagination items={this.props.breweries} onChangePage={this.onChangePage} />
         </div>
         <hr />
       </div>

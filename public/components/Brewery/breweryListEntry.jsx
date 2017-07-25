@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import actions from '../../actions';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -8,7 +8,6 @@ import ThumbsUp from 'material-ui/svg-icons/action/thumb-up';
 import ThumbsDown from 'material-ui/svg-icons/action/thumb-down';
 import Badge from 'material-ui/Badge';
 import { blue500, red500, yellow500 } from 'material-ui/styles/colors';
-
 import DialogMsg from '../Dialog/DialogMsg.jsx';
 
 const styles = {
@@ -49,42 +48,42 @@ class BreweryListEntry extends React.Component {
     this.props.selectVenue(this.props.brewery);
   }
 
-  navigateToDetailsPage () {
+  navigateToDetailsPage() {
     this.props.history.push('/details');
   }
 
   componentWillReceiveProps() {
     this.tallyLikes();
   }
-  
+
   componentDidMount() {
     let info = JSON.parse(localStorage.getItem('userInfo'));
     this.setState({ userInfo: info });
-    this.tallyLikes(info); 
+    this.tallyLikes(info);
   }
 
   tallyLikes(info) {
     let likeCount = 0;
     let dislikeCount = 0;
     let userId;
-    if (info) { 
-      userId=info.id;
+    if (info) {
+      userId = info.id;
     } else {
-      userId=undefined;
-    } 
+      userId = undefined;
+    }
     let opinion = 0;
     axios.get('/breweryRatings/' + this.props.breweryId)
-    .then((data) => {
-      let numberOfEntries = data.data.length;
-      for (let idx = 0; idx < numberOfEntries; idx ++) {
-        data.data[idx].breweryRating === 1 && likeCount++;
-        data.data[idx].breweryRating === -1 && dislikeCount++;
-        if (data.data[idx].userId === userId) {
-          opinion = data.data[idx].breweryRating;
+      .then((data) => {
+        let numberOfEntries = data.data.length;
+        for (let idx = 0; idx < numberOfEntries; idx++) {
+          data.data[idx].breweryRating === 1 && likeCount++;
+          data.data[idx].breweryRating === -1 && dislikeCount++;
+          if (data.data[idx].userId === userId) {
+            opinion = data.data[idx].breweryRating;
+          }
         }
-      }
-      this.setState({ breweryLike: likeCount, breweryDislike: dislikeCount, userOpinion: opinion })
-    })
+        this.setState({ breweryLike: likeCount, breweryDislike: dislikeCount, userOpinion: opinion })
+      })
   }
 
   handleUpClick() {
@@ -94,7 +93,7 @@ class BreweryListEntry extends React.Component {
       if (this.state.userInfo) {
         userId = this.state.userInfo.id;
       } else {
-        userId= undefined;
+        userId = undefined;
       }
       if (userId) {
         axios.put('/breweryRatings/' + userId + '?breweryId=' + this.props.breweryId, { breweryRating: 1 })
@@ -110,12 +109,12 @@ class BreweryListEntry extends React.Component {
 
   handleDownClick() {
     if (!this.state.opinionClick) {
-      this.setState({ opinionClick: true })    
+      this.setState({ opinionClick: true })
       let userId;
       if (this.state.userInfo) {
         userId = this.state.userInfo.id;
       } else {
-        userId= undefined;
+        userId = undefined;
       }
       if (userId) {
         axios.put('/breweryRatings/' + userId + '?breweryId=' + this.props.breweryId, { breweryRating: -1 })
@@ -136,49 +135,49 @@ class BreweryListEntry extends React.Component {
   render() {
     return (
       <Card>
-      <CardHeader
-        onClick={() => { this.handleClick(event, this) }}
-        title={this.props.brewery.name}
-        showExpandableButton={true}
-        avatar={this.props.brewery.images ? 
-                this.props.brewery.images.squareMedium 
-                :"../../images/No_picture_available.jpg"}
-      />
-      <CardText 
-      style={styles.card}
-      >
-        Website: <a href={this.props.brewery.website} target="_blank">
+        <CardHeader
+          onClick={() => { this.handleClick(event, this) }}
+          title={this.props.brewery.name}
+          showExpandableButton={true}
+          avatar={this.props.brewery.images ?
+            this.props.brewery.images.squareMedium
+            : "../../images/No_picture_available.jpg"}
+        />
+        <CardText
+          style={styles.card}
+        >
+          Website: <a href={this.props.brewery.website} target="_blank">
             {this.props.brewery.website}
-        </a>
-      </CardText>
-      <CardText 
-      style={styles.card}
-      >
-        Phone: {!!this.props.brewery.locations ?
-          this.props.brewery.locations[0].phone : 'No phone Info'}
-      </CardText>
-      <CardText 
-      style={styles.card}
-      >
-        {!!this.props.brewery.locations ? 
-          this.props.brewery.locations[0].streetAddress : 'No Street Info'}
+          </a>
+        </CardText>
+        <CardText
+          style={styles.card}
+        >
+          Phone: {!!this.props.brewery.locations ?
+            this.props.brewery.locations[0].phone : 'No phone Info'}
+        </CardText>
+        <CardText
+          style={styles.card}
+        >
+          {!!this.props.brewery.locations ?
+            this.props.brewery.locations[0].streetAddress : 'No Street Info'}
           <br />
-        {!!this.props.brewery.locations ?
-          this.props.brewery.locations[0].locality + ', ': ''}
-        {!!this.props.brewery.locations ? 
-          this.props.brewery.locations[0].region : ''}
-      </CardText>
-      <CardText expandable={true}>
-        {this.props.brewery.description}
-      </CardText>
+          {!!this.props.brewery.locations ?
+            this.props.brewery.locations[0].locality + ', ' : ''}
+          {!!this.props.brewery.locations ?
+            this.props.brewery.locations[0].region : ''}
+        </CardText>
+        <CardText expandable={true}>
+          {this.props.brewery.description}
+        </CardText>
 
-      <ThumbsUp onClick={() => { this.handleUpClick() }} color={ (this.state.userOpinion === 1) ? (blue500) : ('') } />
-      <Badge badgeContent={ this.state.breweryLike } />
-      <ThumbsDown onClick={() => { this.handleDownClick() }} color={ (this.state.userOpinion === -1) ? (red500) : ('')} />
-      <Badge badgeContent={ this.state.breweryDislike } />
-      <DialogMsg open={ this.state.open } handler={ this.dialogHandler } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
-    </Card>
-        
+        <ThumbsUp onClick={() => { this.handleUpClick() }} color={(this.state.userOpinion === 1) ? (blue500) : ('')} />
+        <Badge badgeContent={this.state.breweryLike} />
+        <ThumbsDown onClick={() => { this.handleDownClick() }} color={(this.state.userOpinion === -1) ? (red500) : ('')} />
+        <Badge badgeContent={this.state.breweryDislike} />
+        <DialogMsg open={this.state.open} handler={this.dialogHandler} msgTitle={this.state.msgTitle} msgBody={this.state.msgBody} />
+      </Card>
+
     );
   }
 }

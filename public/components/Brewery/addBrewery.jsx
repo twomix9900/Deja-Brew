@@ -3,7 +3,6 @@ import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-// import Paper from 'material-ui/Paper';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
@@ -18,7 +17,6 @@ const style = {
 class addBrewery extends React.Component {
   constructor(props) {
     super(props);
-    //console.log('props from addBeer', props)
     this.state = {
       showBeerStyles: false,
       beerStyleId: '',
