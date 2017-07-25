@@ -37,7 +37,6 @@ class DrinkBuddy extends Component {
     this.handleFriendAdd=this.handleFriendAdd.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
     this.handleRowSelection=this.handleRowSelection.bind(this);
-    this.handleFriendSelect=this.handleFriendSelect.bind(this);
     this.sortFriendList=this.sortFriendList.bind(this);
     this.formatPhone=this.formatPhone.bind(this);
     this.handleSendDirections=this.handleSendDirections.bind(this);
@@ -111,7 +110,6 @@ class DrinkBuddy extends Component {
   }
 
   handleRowSelection(selectedRows) {
-    console.log('selectedRows', selectedRows)
     let list = this.state.friendList;
     if (selectedRows === 'none') {
       selectedRows = [];
@@ -121,12 +119,6 @@ class DrinkBuddy extends Component {
       }
     let selectToggle = !(selectedRows.length === list.length)
     this.setState({ selected: selectedRows, selectAll: selectToggle });
-  }
-
-  handleFriendSelect(i) {
-    let list = this.state.friendList;
-    list[i].selected = !list[i].selected;
-    this.setState({ friendList: list });
   }
 
   handleSendDirections() {
@@ -171,17 +163,21 @@ class DrinkBuddy extends Component {
               label='Brew Beacon' />
           }
         />
-        <AppBar 
-          iconElementLeft={ ( this.state.selectAll ) ? (
-            <FlatButton
-              onClick={(e)=>{ this.handleRowSelection('all')}}
-              label='select all'/>
-          ) : (
-            <FlatButton
-              onClick={(e)=>{ this.handleRowSelection('none')}}
-              label='unselect all'/>
-          )}
-        />
+        {( this.state.friendList.length) ? (
+          <AppBar 
+            iconElementLeft={ ( this.state.selectAll ) ? (
+              <FlatButton
+                onClick={(e)=>{ this.handleRowSelection('all')}}
+                label='select all'/>
+            ) : (
+              <FlatButton
+                onClick={(e)=>{ this.handleRowSelection('none')}}
+                label='unselect all'/>
+            )}
+          />
+        ) : (
+          <div></div>
+        )}
         <Table multiSelectable={true} onRowSelection={ this.handleRowSelection }>
           <TableHeader displaySelectAll={false} enableSelectAll={false}>
             <TableRow>
