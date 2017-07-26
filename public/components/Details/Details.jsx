@@ -33,6 +33,7 @@ class Details extends React.Component {
   }
 
   componentDidMount() {
+    console.log('DETAILS THIS', this);
     if (!this.props.venue.selectedVenue) { this.props.history.push('/home'); }
     this.getBeersFromBrewery();
   }
@@ -56,7 +57,7 @@ class Details extends React.Component {
       return (
         <div>
           <div><h1>{brewInfo.brewery ? brewInfo.brewery.name : brewInfo.name}</h1></div>
-          <div className='maps-container' style={{ display: 'flex', justifyContent: 'space-between', minWidth: '250px', maxWidth: '800px' }}>
+          <div className='maps-container' style={{ display: 'flex', justifyContent: 'space-between', minWidth: '500px', maxWidth: '1600px' }}>
             <div style={{ order: '1', width: '45%', minHeight: '300px', height: 'auto' }}><h3>
               {!brewInfo.images ? ' ' : <img src={brewInfo.images.squareMedium} alt=" " className="img-responsive" /> || brewInfo.brewery.images.squareMedium}
             </h3></div>
@@ -101,14 +102,14 @@ class Details extends React.Component {
     return (
       <div>
         <MuiThemeProvider>
-          <div className='container' style={{minWidth: '250px', maxWidth: '800px'}}>
+          <div className='container' style={{minWidth: '500px', maxWidth: '1600px'}}>
             <Paper style={style} zDepth={0}>
               {this.renderBrewInfo()}
               <h3>Beers by this brewery: </h3>
             </Paper>
             <br/>
             {this.state.pageOfItems.map((brewery, i) =>
-              <div style={{ minWidth: '250px', maxWidth: '800px' }}>
+              <div style={{ minWidth: '500px', maxWidth: '1600px' }}>
                 <DetailsBeerList
                   key={i}
                   brewery={brewery}

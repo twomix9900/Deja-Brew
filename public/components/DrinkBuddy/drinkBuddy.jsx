@@ -153,56 +153,57 @@ class DrinkBuddy extends Component {
 
   render() {
     return (
-      <div style={{minWidth: '500px', maxWidth: '1000px'}}>
-        <AppBar 
-          title="Drinking Buddies" 
-          showMenuIconButton={false} 
+      <div style={{ minWidth: '500px', maxWidth: '1600px' }}>
+        <AppBar
+          title="Drinking Buddies"
+          showMenuIconButton={false}
           iconElementRight={
             <RaisedButton
-              onClick={(e)=>{ this.handleSendDirections() }} 
-              label='Brew Beacon' />
+              onClick={(e) => { this.handleSendDirections() }}
+              label='Brew Beacon'
+            />
           }
         />
-        {( this.state.friendList.length) ? (
-          <AppBar 
-            iconElementLeft={ ( this.state.selectAll ) ? (
+        {(this.state.friendList.length) ? (
+          <AppBar
+            iconElementLeft={(this.state.selectAll) ? (
               <FlatButton
-                onClick={(e)=>{ this.handleRowSelection('all')}}
-                label='select all'/>
+                onClick={(e) => { this.handleRowSelection('all') }}
+                label='select all' />
             ) : (
-              <FlatButton
-                onClick={(e)=>{ this.handleRowSelection('none')}}
-                label='unselect all'/>
-            )}
+                <FlatButton
+                  onClick={(e) => { this.handleRowSelection('none') }}
+                  label='unselect all' />
+              )}
           />
         ) : (
-          <div></div>
-        )}
-        <Table multiSelectable={true} onRowSelection={ this.handleRowSelection }>
+            <div></div>
+          )}
+        <Table multiSelectable={true} onRowSelection={this.handleRowSelection}>
           <TableHeader displaySelectAll={false} enableSelectAll={false}>
             <TableRow>
               <TableHeaderColumn>Name</TableHeaderColumn>
               <TableHeaderColumn>Phone Number</TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody deselectOnClickaway={ false }>
-            { this.state.friendList.map((friend, i) =>
-            <TableRow 
-              key={ i } 
-              selected={ this.isSelected(i) } 
-            >
-              <TableRowColumn>{ friend.name }</TableRowColumn>
-              <TableRowColumn>{ this.formatPhone(friend.phone) }</TableRowColumn>
-            </TableRow>
-            )} 
-            </TableBody>
+          <TableBody deselectOnClickaway={false}>
+            {this.state.friendList.map((friend, i) =>
+              <TableRow
+                key={i}
+                selected={this.isSelected(i)}
+              >
+                <TableRowColumn>{friend.name}</TableRowColumn>
+                <TableRowColumn>{this.formatPhone(friend.phone)}</TableRowColumn>
+              </TableRow>
+            )}
+          </TableBody>
         </Table>
-        { (this.state.newFriendQuery) ? (
-            <FriendAdd handleAddFriendClick={ this.handleFriendAdd } />
-          ) : (
-            <QueryFriendInfo handleSubmit={ this.handleSubmit } />
-          ) }
-        <DialogMsg handler={ this.handleNoName } open={ this.state.open } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
+        {(this.state.newFriendQuery) ? (
+          <FriendAdd handleAddFriendClick={this.handleFriendAdd} />
+        ) : (
+            <QueryFriendInfo handleSubmit={this.handleSubmit} />
+          )}
+        <DialogMsg handler={this.handleNoName} open={this.state.open} msgTitle={this.state.msgTitle} msgBody={this.state.msgBody} />
       </div>
     )
   }
