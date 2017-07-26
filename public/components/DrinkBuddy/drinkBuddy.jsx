@@ -153,7 +153,7 @@ class DrinkBuddy extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{minWidth: '500px', maxWidth: '1000px'}}>
         <AppBar 
           title="Drinking Buddies" 
           showMenuIconButton={false} 
