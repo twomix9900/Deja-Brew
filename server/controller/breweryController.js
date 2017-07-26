@@ -5,6 +5,7 @@ const API_KEY = process.env.SEARCH_KEY;
 const GOOGLE_LATLNG_KEY = process.env.GOOGLE_PLACE_TO_LAT_LONG_KEY;
 
 const { Beer } = require('../db/dbModel.js');
+const { Brewery } = require('../db/dbModel.js');
 
 const breweryController = {
 
@@ -130,7 +131,92 @@ const breweryController = {
       console.log('error creating friend', err);
       res.sendStatus(400);
     })
+  },
+
+  postBrewery: (req, res) => {
+    //ex: https://api.brewerydb.com/v2/beers?name=test&styleId=40&description=hello%20there%20this%20is%20a%20beer
+    //&abv=6.2&ibu=4.4&key=e9e7adf2a5252e434f812ce8dec22583
+    console.log('postBrewery server req body: ', req.body)
+    let restOfParams = '';
+    if(req.body.breweryDescription) {
+      restOfParams += '&description=' + req.body.breweryDescription;
+    }
+    if(req.body.breweryWebsite) {
+      restOfParams += '&brewery=' + req.body.breweryWebsite;
+    }
+    axios.post(baseUrl + 'breweries?name=' + req.body.breweryName + restOfParams + '&key=' + API_KEY)
+    .then((req) => {
+      res.send(req.data)
+    })
+    .catch((err) => {
+      console.log('error getting postBeer ', err);
+      res.sendStatus(400);
+    })
+  },
+
+  postBreweryDatabase: (req, res) => {
+    console.log('postBeerDatabase server req.body:' , req.body)
+    Brewery.create({
+      uniqId: req.body.breweryId,
+      userId: req.body.userId
+    })
+    .then(() => {
+      console.log('Beer successfully created');
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('error creating friend', err);
+      res.sendStatus(400);
+    })
+  },
+
+  getBeerStatus: (req, res) => {
+    console.log('getBeerStatus server req.params:' , req.params.userId)
+    Beer.findAll({ where: {
+      userId: req.params.userId
+    }})
+    .then((data) => {
+      res.status(200);
+      res.json(data);
+    })
+  },
+
+  getBreweryStatus: (req, res) => {
+    console.log('getBreweryStatus server req.params:' , req.params.userId)
+    Brewery.findAll({ where: {
+      userId: req.params.userId
+    }})
+    .then((data) => {
+      res.status(200);
+      res.json(data);
+    })
+  },
+
+    getBeerStatusAPI: (req, res) => {
+    console.log('getBeerStatusAPI server req.params:' , req.params.beerId)
+   axios.get(baseUrl + 'beer/' + req.params.beerId + '?key=' + API_KEY)
+    .then((req) => {
+      res.send(req.data)
+    })
+    .catch((err) => {
+      console.log('error getting getBeerStyles ', err);
+      res.sendStatus(400);
+    })
+  },
+
+    getBreweryStatusAPI: (req, res) => {
+    console.log('getBreweryStatusAPI server req.params:' , req.params.breweryId)
+    axios.get(baseUrl + 'brewery/' + req.params.breweryId + '?key=' + API_KEY)
+    .then((req) => {
+      res.send(req.data)
+    })
+    .catch((err) => {
+      console.log('error getting getBeerStyles ', err);
+      res.sendStatus(400);
+    })
   }
+
+
 
 }
 
