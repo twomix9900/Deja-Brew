@@ -4,7 +4,6 @@ import BeerStyles from './beerStyles.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-// import Paper from 'material-ui/Paper';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
@@ -19,7 +18,7 @@ const style = {
 class addBeer extends React.Component {
   constructor(props) {
     super(props);
-    //console.log('props from addBeer', props)
+    console.log('props from addBeer', props)
     this.state = {
       showBeerStyles: false,
       beerStyleId: '',
@@ -60,6 +59,7 @@ class addBeer extends React.Component {
   }
 
   submitBeer() {
+    let vm = this;
     console.log('submitBeer')
     axios.post('/brewery/beer', {
       beerStyleId: this.state.beerStyleId,
@@ -77,6 +77,8 @@ class addBeer extends React.Component {
         userId: userId
       })
       .then(function(response) {
+        //redirect to pendingDejaBrew here
+        vm.props.history.replace('/pendingDejaBrew')
         console.log("successfuly added to db.")
       })
 
@@ -90,8 +92,8 @@ class addBeer extends React.Component {
     return (
       <MuiThemeProvider>
         <div className="addBeerImage">
-          <div className= "container floatLeft">
-            <h1 className="whiteColor">Add A Beer</h1>  
+          <div className= "container floatLeft images-container">
+            <h1 className="whiteColor">Submit A Beer</h1>  
             <TextField 
             floatingLabelStyle={{color:'#00bcd4'}}
             errorText="This field is required."

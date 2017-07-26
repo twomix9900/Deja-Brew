@@ -3,77 +3,43 @@ import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
-
-const style = {
-  menu: {
-    margin: 0,
-    width: '226px'
-  }
-};
 
 class addBrewery extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      showBeerStyles: false,
-      beerStyleId: '',
-      beerName: '',
-      beerDescription: '',
-      beerABV: '',
-      beerIBU: '',
-      breweryAssociated: ''
+      breweryName: '',
+      breweryWebsite: '',
+      breweryDescription: '',
+      yearEstablished: ''
     };
-    this.handleBeerEntry=this.handleBeerEntry.bind(this);
+    this.handleBreweryEntry=this.handleBreweryEntry.bind(this);
   }
 
-  showBeerStyleMenu() {
-    if(!this.state.showBeerStyles) {
-      this.setState({showBeerStyles: true}); 
-    }
-  }
-
-  componentDidMount() {
-    console.log('addBeer componentDidMount')
-  }
-
-  handleBeerStyleId(id) {
-    console.log('id from beerStyles to addBeer: ', id)
-    this.setState({beerStyleId: id}); 
-  }
-
-  handleBeerEntry(stateName, e) {
-    if(stateName === 'beerIBU' || stateName === 'beerABV') {
-      let numbers = '0123456789.';
-      if(numbers.indexOf(e.target.value[e.target.value.length -1]) === -1) {
-        e.target.value = e.target.value.slice(0, -1)
-      }
-    }
+  handleBreweryEntry(stateName, e) {
     let stateToSet = {};
     stateToSet[stateName] = e.target.value;
     this.setState(stateToSet);
   }
 
-  submitBeer() {
-    console.log('submitBeer')
-    axios.post('/brewery/beer', {
-      beerStyleId: this.state.beerStyleId,
-      beerName: encodeURIComponent(this.state.beerName),
-      beerDescription: encodeURIComponent(this.state.beerDescription),
-      beerABV: this.state.beerABV,
-      beerIBU: this.state.beerIBU,
-      breweryAssociated: this.state.breweryAssociated
+  submitBrewery() {
+    console.log('submitBrewery')
+    let vm = this;
+    axios.post('/brewery/brewery', {
+      breweryName: encodeURIComponent(this.state.breweryName),
+      breweryDescription: encodeURIComponent(this.state.breweryDescription),
+      breweryWebsite: encodeURIComponent(this.state.breweryWebsite)
     })
     .then(function(response) {
       let userId = JSON.parse(localStorage.getItem('userInfo')).id;
-      let beerId = response.data.data.id;
-      axios.post('/brewery/beerDatabase', {
-        beerId: beerId,
+      let breweryId = response.data.data.id;
+      axios.post('/brewery/breweryDatabase', {
+        breweryId: breweryId,
         userId: userId
       })
       .then(function(response) {
+        vm.props.history.replace('/pendingDejaBrew')
         console.log("successfuly added to db.")
       })
 
@@ -87,39 +53,29 @@ class addBrewery extends React.Component {
     return (
       <MuiThemeProvider>
         <div className="addBreweryImage">
-          <div className= "container floatRight">
-            <h1 className="whiteColor">Add A Brewery</h1>  
+          <div className= "container floatRight images-container">
+            <h1 className="whiteColor">Submit A Brewery</h1>  
             <TextField 
             floatingLabelStyle={{color:'#00bcd4'}}
             errorText="This field is required."
-            onChange={(e) => this.handleBeerEntry('beerName', e)}
-            floatingLabelText="Beer Name"/><br />
-            {/* <TextField 
-            className = "beerStyleTextField"
-            onClick={this.showBeerStyleMenu.bind(this)}
+            onChange={(e) => this.handleBreweryEntry('breweryName', e)}
+            floatingLabelText="Brewery Name"/><br />
+             <TextField 
             floatingLabelStyle={{color:'#00bcd4'}}
-            errorText="This field is required."
-            floatingLabelText="Beer Style"/><br />  */}
+            onChange={(e) => this.handleBreweryEntry('breweryWebsite', e)}
+            floatingLabelText="Brewery Website"/><br />  
             <TextField 
             floatingLabelStyle={{color:'#00bcd4'}}
             multiLine={true}
             rows={2}
             rowsMax={4}
-            onChange={(e) => this.handleBeerEntry('beerDescription', e)}
-            floatingLabelText="Beer Description"/><br />
+            onChange={(e) => this.handleBreweryEntry('breweryDescription', e)}
+            floatingLabelText="Brewery Description"/><br />
             <TextField 
             floatingLabelStyle={{color:'#00bcd4'}}
-            onChange={(e) => this.handleBeerEntry('beerABV', e)}
-            floatingLabelText="Beer ABV"/><br />
-            <TextField 
-            floatingLabelStyle={{color:'#00bcd4'}}
-            onChange={(e) => this.handleBeerEntry('beerIBU', e)}
-            floatingLabelText="Beer IBU"/><br />
-            <TextField 
-            floatingLabelStyle={{color:'#00bcd4'}}
-            onChange={(e) => this.handleBeerEntry('breweryAssociated', e)}
-            floatingLabelText="Brewery Associated (ID)"/><br /><br />
-            <RaisedButton label="Submit" primary={true} onClick={this.submitBeer.bind(this)}/>
+            onChange={(e) => this.handleBreweryEntry('yearEstablished', e)}
+            floatingLabelText="Year Established"/><br /><br />
+            <RaisedButton label="Submit" primary={true} onClick={this.submitBrewery.bind(this)}/>
           </div>
         </div>
         
@@ -130,3 +86,8 @@ class addBrewery extends React.Component {
 
 export default addBrewery
 
+
+
+
+// WEBPACK FOOTER //
+// ./public/components/Brewery/addBrewery.jsx

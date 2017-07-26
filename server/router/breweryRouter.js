@@ -11,5 +11,11 @@ breweryRouter.get('/beers/:breweryId', breweryController.getBeersFromBrewery);
 breweryRouter.get('/beerStyles', breweryController.getBeerStyles);
 breweryRouter.post('/beer', breweryController.postBeer);
 breweryRouter.post('/beerDatabase', breweryController.postBeerDatabase);
+breweryRouter.post('/brewery', breweryController.postBrewery);
+breweryRouter.post('/breweryDatabase', breweryController.postBreweryDatabase);
+breweryRouter.get('/beerStatus/:userId', breweryController.getBeerStatus);
+breweryRouter.get('/breweryStatus/:userId', breweryController.getBreweryStatus);
+breweryRouter.get('/beerStatusAPI/:beerId', breweryController.getBeerStatusAPI);
+breweryRouter.get('/breweryStatusAPI/:breweryId', breweryController.getBreweryStatusAPI);
 
 module.exports = breweryRouter;
