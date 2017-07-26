@@ -56,7 +56,7 @@ export default class DetailsGoogleMaps extends Component {
 
   render() {
     return (
-      <div id="map-canvas2" style={{ "height": "500px", "width": "500px" }}></div>
+      <div id="map-canvas2" style={{ "height": "250px", "width": "250px" }} className='container'></div>
     );
   }
 }

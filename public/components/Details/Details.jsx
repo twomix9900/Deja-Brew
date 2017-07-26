@@ -22,7 +22,6 @@ class Details extends React.Component {
     }
     this.sendDirections = this.sendDirections.bind(this);
     this.getBeersFromBrewery = this.getBeersFromBrewery.bind(this);
-    this.renderBeerList = this.renderBeerList.bind(this);
     this.renderBrewInfo = this.renderBrewInfo.bind(this);
     this.onChangePage = this.onChangePage.bind(this);
   }
@@ -52,43 +51,39 @@ class Details extends React.Component {
     let brewInfo = this.props.venue.selectedVenue;
     return (
       <div>
-        <h1>{brewInfo.brewery ? brewInfo.brewery.name : brewInfo.name}</h1>
-        <h5>
-          {!brewInfo.images ? ' ' : <img src={brewInfo.images.squareMedium} alt=" " className="img-responsive" /> || brewInfo.brewery.images.squareMedium}
-        </h5>
-        <h3>
+        <div><h1>{brewInfo.brewery ? brewInfo.brewery.name : brewInfo.name}</h1></div>
+        <div className='maps-container' style={{ display: 'flex', justifyContent: 'space-between', minWidth: '500px', maxWidth: '1000px'}}>
+          <div style={{ order: '1', width: '45%', minHeight: '300px', height: 'auto' }}><h3>
+            {!brewInfo.images ? ' ' : <img src={brewInfo.images.squareMedium} alt=" " className="img-responsive" /> || brewInfo.brewery.images.squareMedium}
+          </h3></div>
+          <div style={{ order: '2', width: '45%', minHeight: '300px', height: 'auto' }}><h3>
+            {this.props.venue.selectedVenue.locations[0].latitude ? <DetailsGoogleMaps venue={this.props.venue} style={style} /> : null}
+          </h3></div>
+          <div style={{ justifyContent: 'flex-end', order: '3' }}><RaisedButton
+            style={style.button}
+            onClick={this.sendDirections.bind(this)}
+            label='Directions'
+          >
+          </RaisedButton></div>
+        </div>
+        <div><h3>
           {!brewInfo.hoursOfOperation ? ' ' : brewInfo.hoursOfOperation}
-        </h3>
-        <h4>
-        </h4>
-        <h4>
+        </h3></div>
+        <div><h4>
           <a href={brewInfo.website || brewInfo.brewery.website} target='_blank'>{brewInfo.website || brewInfo.brewery.website}</a>
-        </h4>
-        <p>
+        </h4></div>
+        <div><p>
           {(brewInfo.description ? brewInfo.description : null) || (brewInfo.brewery ? brewInfo.brewery.description : ' ')}
-        </p>
+        </p></div>
       </div>
     )
   }
 
-  renderBeerList() {
-    let beers = [];
-    beers = this.state.beersFromBrewery.map((beer, idx) => {
-      return (
-        <div key={idx}>
-          <li>Name: {beer.name}</li>
-          <li>Type: {beer.style.name}</li>
-          <li>Abv: {beer.abv}</li>
-        </div>
-      )
-    })
-    return beers;
-  }
-
   sendDirections() {
+    console.log('sendDirections invoked');
     let queryName;
     this.props.venue.selectedVenue.name !== 'Main Brewery' ? queryName = this.props.venue.selectedVenue.name.split(' ').join('+') : queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
-    axios.get('/users/sendDirections/' + this.state.userInfo.phone.slice(3) + queryName)
+    axios.get('/directions/user/' + this.state.userInfo.phone.slice(3) + queryName)
   }
 
   onChangePage(pageOfItems) {
@@ -99,29 +94,26 @@ class Details extends React.Component {
     return (
       <div>
         <MuiThemeProvider>
-          <div>
+          <div className='container'>
             <Paper style={style} zDepth={0}>
               {this.renderBrewInfo()}
               <h3>Beers by this brewery: </h3>
+
             </Paper>
             {this.state.pageOfItems.map((brewery, i) =>
-              <DetailsBeerList
-                key={i}
-                brewery={brewery}
-                history={this.props.history}
-                breweryId={brewery.id}
-              />
+              <div style={{ minWidth: '500px', maxWidth: '950px' }}>
+                <DetailsBeerList
+                  key={i}
+                  brewery={brewery}
+                  history={this.props.history}
+                  breweryId={brewery.id}
+                />
+              </div>
             )}
-            <Pagination items={this.state.beersFromBrewery} onChangePage={this.onChangePage} />
-            {this.props.venue.selectedVenue.locations.latitude ? <DetailsGoogleMaps venue={this.props.venue} style={style} /> : null}
-            {<RaisedButton
-              style={style.button}
-              onClick={this.sendDirections.bind(this)}
-              label='Get Directions'
-            >
-              <span className="Get Directions" />
-            </RaisedButton>}
-            {(this.state.userInfo && this.props.venue.selectedVenue.locations.latitude) ?
+            <div className='pagination-container' style={{display: 'flex'}}>
+              <div style={{justifyContent: 'flex-start', order: '1'}}><Pagination items={this.state.beersFromBrewery} onChangePage={this.onChangePage} /></div>
+            </div>
+            {this.state.userInfo ?
               <DrinkBuddy style={style} />
               : null}
           </div>
