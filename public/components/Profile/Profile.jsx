@@ -27,7 +27,7 @@ export default class Profile extends Component {
 
   render() {
     return (
-      <div>
+      <div className='container'>
         <MuiThemeProvider>
         <div>
           <NickName userId={ this.state.userInfo.id } nickname={ this.state.userInfo.nickname } />
