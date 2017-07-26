@@ -27,59 +27,67 @@ class Details extends React.Component {
   }
 
   componentWillMount() {
+    if (!this.props.venue.selectedVenue) { this.props.history.push('/home'); }
     let info = JSON.parse(localStorage.getItem('userInfo'));
     this.setState({ userInfo: info });
   }
 
   componentDidMount() {
-    console.log('DETAILS THIS \n', this)
+    if (!this.props.venue.selectedVenue) { this.props.history.push('/home'); }
     this.getBeersFromBrewery();
   }
 
   getBeersFromBrewery() {
-    axios.get('/brewery/beers/' + this.props.venue.selectedVenue.id)
-      .then((data) => {
-        this.setState({
-          beersFromBrewery: data.data.data
+    if (this.props.venue.selectedVenue) {
+      axios.get('/brewery/beers/' + this.props.venue.selectedVenue.id)
+        .then((data) => {
+          this.setState({
+            beersFromBrewery: data.data.data
+          })
         })
-      })
-      .catch((err) => console.log('getBeersFromBrewery err = ', err))
+        .catch((err) => console.log('getBeersFromBrewery err = ', err))
+    }
   }
 
   renderBrewInfo() {
-    let brewInfo = this.props.venue.selectedVenue;
-    return (
-      <div>
-        <div><h1>{brewInfo.brewery ? brewInfo.brewery.name : brewInfo.name}</h1></div>
-        <div className='maps-container' style={{ display: 'flex', justifyContent: 'space-between', minWidth: '500px', maxWidth: '1000px'}}>
-          <div style={{ order: '1', width: '45%', minHeight: '300px', height: 'auto' }}><h3>
-            {!brewInfo.images ? ' ' : <img src={brewInfo.images.squareMedium} alt=" " className="img-responsive" /> || brewInfo.brewery.images.squareMedium}
+    if (!this.props.venue.selectedVenue) { this.props.history.push('/home'); }
+    else {
+      let brewInfo = this.props.venue.selectedVenue;
+      return (
+        <div>
+          <div><h1>{brewInfo.brewery ? brewInfo.brewery.name : brewInfo.name}</h1></div>
+          <div className='maps-container' style={{ display: 'flex', justifyContent: 'space-between', minWidth: '500px', maxWidth: '1000px' }}>
+            <div style={{ order: '1', width: '45%', minHeight: '300px', height: 'auto' }}><h3>
+              {!brewInfo.images ? ' ' : <img src={brewInfo.images.squareMedium} alt=" " className="img-responsive" /> || brewInfo.brewery.images.squareMedium}
+            </h3></div>
+            <div style={{ order: '2', width: '45%', minHeight: '300px', height: 'auto' }}><h3>
+              {this.props.venue.selectedVenue.locations[0].latitude ? <DetailsGoogleMaps venue={this.props.venue} style={style} /> : null}
+            </h3></div>
+            <div style={{ justifyContent: 'flex-end', order: '3' }}>
+            <RaisedButton
+              style={style.button}
+              onClick={this.sendDirections.bind(this)}
+              label='SMS Directions'
+              fullWidth='true'
+            >
+            </RaisedButton></div>
+          </div>
+          <div><h3>
+            {!brewInfo.hoursOfOperation ? ' ' : brewInfo.hoursOfOperation}
           </h3></div>
-          <div style={{ order: '2', width: '45%', minHeight: '300px', height: 'auto' }}><h3>
-            {this.props.venue.selectedVenue.locations[0].latitude ? <DetailsGoogleMaps venue={this.props.venue} style={style} /> : null}
-          </h3></div>
-          <div style={{ justifyContent: 'flex-end', order: '3' }}><RaisedButton
-            style={style.button}
-            onClick={this.sendDirections.bind(this)}
-            label='Directions'
-          >
-          </RaisedButton></div>
+          <div><h4>
+            <a href={brewInfo.website || brewInfo.brewery.website} target='_blank'>{brewInfo.website || brewInfo.brewery.website}</a>
+          </h4></div>
+          <div><p>
+            {(brewInfo.description ? brewInfo.description : null) || (brewInfo.brewery ? brewInfo.brewery.description : ' ')}
+          </p></div>
         </div>
-        <div><h3>
-          {!brewInfo.hoursOfOperation ? ' ' : brewInfo.hoursOfOperation}
-        </h3></div>
-        <div><h4>
-          <a href={brewInfo.website || brewInfo.brewery.website} target='_blank'>{brewInfo.website || brewInfo.brewery.website}</a>
-        </h4></div>
-        <div><p>
-          {(brewInfo.description ? brewInfo.description : null) || (brewInfo.brewery ? brewInfo.brewery.description : ' ')}
-        </p></div>
-      </div>
-    )
+      )
+
+    }
   }
 
   sendDirections() {
-    console.log('sendDirections invoked');
     let queryName;
     this.props.venue.selectedVenue.name !== 'Main Brewery' ? queryName = this.props.venue.selectedVenue.name.split(' ').join('+') : queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
     axios.get('/directions/user/' + this.state.userInfo.phone.slice(3) + queryName)
@@ -90,6 +98,12 @@ class Details extends React.Component {
   }
 
   render() {
+    // return (
+    //   <div>
+    //   {this.renderBrewInfo()}
+        
+    //   </div>
+    // )
     return (
       <div>
         <MuiThemeProvider>
