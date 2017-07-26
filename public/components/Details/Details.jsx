@@ -29,7 +29,6 @@ class Details extends React.Component {
   componentWillMount() {
     let info = JSON.parse(localStorage.getItem('userInfo'));
     this.setState({ userInfo: info });
-    let brewInfo = this.props.venue.selectedVenue;
   }
 
   componentDidMount() {

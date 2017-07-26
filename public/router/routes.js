@@ -12,6 +12,7 @@ import AddBeer from '../components/Brewery/addBeer.jsx';
 import AddBrewery from '../components/Brewery/addBrewery.jsx';
 import PendingDejaBrew from '../components/Brewery/pendingDejaBrew.jsx';
 import Details from '../components/Details/Details.jsx';
+import FAQ from '../components/FAQ/FAQ.jsx';
 import store from '../stores';
 import { Provider } from 'react-redux';
 
@@ -35,6 +36,7 @@ export const makeMainRoutes = () => {
             <Route path="/details" render={(props) => <Details {...props} />} />
             <Route path="/addBeer" render={(props) => <AddBeer {...props}/>} />
             <Route path="/addBrewery" render={(props) => <AddBrewery {...props} />} />
+            <Route path="/faq" render={(props) => <FAQ {...props} />} />
             <Route path="/pendingDejaBrew" render={(props) => <PendingDejaBrew {...props}/>} />
             <Route path="/callback" render={(props) => {
               handleAuthentication(props);

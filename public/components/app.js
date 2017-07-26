@@ -9,6 +9,7 @@ import { Navbar, Button } from 'react-bootstrap';
 import AccessGoogle from './GoogleMaps/googlemaps.jsx';
 import Details from './Details/Details.jsx';
 import Route from 'react-router';
+import FAQ from './FAQ/FAQ.jsx';
 
 injectTapEventPlugin();
 
