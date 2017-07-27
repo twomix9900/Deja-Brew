@@ -302,7 +302,7 @@ class Search extends React.Component {
           className="form-control"
           id="textBox"
           type="text"
-          onChange={this.handleBeerBreweryChange.bind(this)}
+          onChange={this.handleBeerBreweryChange.bind(this)} 
           placeholder='Search By Beer or Brewery Name'
           value={this.state.beerBreweryValue}
         />
@@ -310,7 +310,6 @@ class Search extends React.Component {
           className="form-control"
           id="textBoxLocation"
           type="text"
-          onChange={this.handleChange.bind(this)}
           placeholder='Search By Location'
           value={this.state.locationValue}
         />

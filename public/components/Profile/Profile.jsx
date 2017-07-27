@@ -29,7 +29,7 @@ export default class Profile extends Component {
     return (
       <div className='container'>
         <MuiThemeProvider>
-        <div>
+        <div className='profile-container'>
           <NickName userId={ this.state.userInfo.id } nickname={ this.state.userInfo.nickname } />
           <UserImageDrop userId={ this.state.userInfo.id} image={ this.state.userInfo.image } />
           <Email userId={ this.state.userInfo.id } email={ this.state.userInfo.email } />

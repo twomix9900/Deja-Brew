@@ -14,6 +14,18 @@ import FriendAdd from './FriendAdd.jsx';
 import QueryFriendInfo from './QueryFriendInfo.jsx';
 import EditFriendEntry from './EditFriendEntry.jsx';
 
+const styles={
+  light_amber: {
+    backgroundColor: '#FFA000'
+  },
+  medium_amber: {
+    backgroundColor: '#FF8F00'
+  },
+  dark_amber: {
+    backgroundColor: '#FF6F00'
+  }
+}
+
 export default class FriendList extends Component {
   
   constructor(props) {
@@ -126,7 +138,10 @@ export default class FriendList extends Component {
 
   render() {
     return (
-      <div><AppBar title="Friends List" showMenuIconButton={false} />
+      <div><AppBar
+        style={styles.dark_amber} 
+        title="Friends List" 
+        showMenuIconButton={false} />
         <Table>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false} >
             <TableRow>

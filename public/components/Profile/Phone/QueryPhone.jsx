@@ -16,6 +16,15 @@ const styles={
     height: 32,
     color: '#FFF'
   },
+  light_amber: {
+    backgroundColor: '#FFA000'
+  },
+  medium_amber: {
+    backgroundColor: '#FF8F00'
+  },
+  dark_amber: {
+    backgroundColor: '#FF6F00'
+  }
 }
 
 export default class QueryPhone extends Component {
@@ -76,23 +85,25 @@ export default class QueryPhone extends Component {
 
     return (
       <div>
-        <AppBar title={ <span>
-          (<TextField floatingLabelText="Phone Number" floatingLabelFixed={true} maxLength='3' style={ styles.pre } 
-            onChange={(e) => this.handleTextEntry('areacode', e) } />
-          )<TextField floatingLabelText=" " maxLength='3' style={ styles.pre } onChange={(e) => this.handleTextEntry('prefix', e) } />          
-          -<TextField floatingLabelText=" " maxLength='4' style={ styles.SLN } onChange={(e) => this.handleTextEntry('SLN', e) } />
-        </span> } 
-        showMenuIconButton={false} 
-        iconElementRight={ 
-          <div>
-            <FlatButton onClick={() => { this.validate(this.state.areacode, this.state.prefix, this.state.SLN) }}
-              style={styles.button}
-              label="Submit" /> 
-            <FlatButton onClick={() => { this.props.handleSubmit() }}
-              style={styles.button}
-              label="Cancel" /> 
-          </div> 
-        } />
+        <AppBar 
+          style={styles.medium_amber}
+          title={ <span>
+            (<TextField floatingLabelText="Phone Number" floatingLabelFixed={true} maxLength='3' style={ styles.pre } 
+              onChange={(e) => this.handleTextEntry('areacode', e) } />
+            )<TextField floatingLabelText=" " maxLength='3' style={ styles.pre } onChange={(e) => this.handleTextEntry('prefix', e) } />          
+            -<TextField floatingLabelText=" " maxLength='4' style={ styles.SLN } onChange={(e) => this.handleTextEntry('SLN', e) } />
+          </span> } 
+          showMenuIconButton={false} 
+          iconElementRight={ 
+            <div>
+              <FlatButton onClick={() => { this.validate(this.state.areacode, this.state.prefix, this.state.SLN) }}
+                style={styles.button}
+                label="Submit" /> 
+              <FlatButton onClick={() => { this.props.handleSubmit() }}
+                style={styles.button}
+                label="Cancel" /> 
+            </div> 
+          } />
         <DialogMsg handler={ this.handler } open={ this.state.open } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody } />
       </div>
     )

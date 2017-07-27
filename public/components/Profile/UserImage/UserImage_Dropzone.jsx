@@ -4,6 +4,7 @@ import FormData from 'form-data';
 import axios from 'axios';
 import uuid from 'uuid';
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 
 export default class UserImageDrop extends Component {
   constructor(props) {
@@ -67,19 +68,21 @@ export default class UserImageDrop extends Component {
 
   render() {
     return (
-      <div>
+      <div className='image-container' style={{ display: 'flex', justifyContent: 'center' }}>
         { (this.state.profileImage) ? (
           <div>
-            <img src={ this.state.profileImage } style={{height: 200, width: 200}} />
+            <img src={ this.state.profileImage } style={{height: 200, width: 200, alignSelf: 'center'}} />
             <RaisedButton onClick={() => { this.ImageRemove() }} label="Remove" />
           </div>
         ) : (
-          <Dropzone
-            accept='image/jpeg, image/jpg, image/gif, image/png'
-            multiple={ false } 
-            onDropAccepted={ this.onDropAccepted }>
-            <div>Drop image (*.jpeg, *.gif, *.png) file here, or click to add file</div>
-          </Dropzone>
+          <div>
+            <Dropzone
+              accept='image/jpeg, image/jpg, image/gif, image/png'
+              multiple={ false } 
+              onDropAccepted={ this.onDropAccepted }>
+              <div>Drop image (*.jpeg, *.gif, *.png) file here, or click to add file</div>
+            </Dropzone>
+          </div>
         )}
       </div>
     )

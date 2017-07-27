@@ -4,7 +4,17 @@ import FlatButton from 'material-ui/FlatButton';
 
 const styles={
   button: {
-    height: 32
+    height: 32,
+    color: '#FFF'
+  },
+  light_amber: {
+    backgroundColor: '#FFA000'
+  },
+  medium_amber: {
+    backgroundColor: '#FF8F00',
+  },
+  dark_amber: {
+    backgroundColor: '#FF6F00'
   }
 }
 
@@ -17,7 +27,10 @@ const DisplayPhone = ({ handlePhoneClick, phone }) => {
   
   return (
     <div>
-      <AppBar showMenuIconButton={false} title={ <span>Phone Number:{ ' ' + formattedPhone }</span> }
+      <AppBar
+        style={styles.medium_amber} 
+        showMenuIconButton={false} 
+        title={ <span>Phone Number:{ ' ' + formattedPhone }</span> }
         iconElementRight={ <FlatButton 
           onClick={() => { handlePhoneClick() }}
           style={styles.button}

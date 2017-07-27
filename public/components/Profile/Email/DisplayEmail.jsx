@@ -4,7 +4,17 @@ import FlatButton from 'material-ui/FlatButton';
 
 const styles={
   button: {
-    height: 32
+    height: 32,
+    color: '#FFF'
+  },
+  light_amber: {
+    backgroundColor: '#FFA000'
+  },
+  medium_amber: {
+    backgroundColor: '#FF8F00'
+  },
+  dark_amber: {
+    backgroundColor: '#FF6F00'
   }
 }
 
@@ -12,7 +22,10 @@ const DisplayEmail = ({ handleEmailClick, email }) => {
 
   return (
     <div>
-      <AppBar showMenuIconButton={false} title={ <span>email:{ ' ' + email }</span> }
+      <AppBar 
+        style={styles.light_amber} 
+        showMenuIconButton={false} 
+        title={ <span>email:{ ' ' + email }</span> }
         iconElementRight={<FlatButton 
           onClick={() => { handleEmailClick() }}
           style={styles.button}
