@@ -36,16 +36,65 @@ class DejaBrewNavBar extends React.Component {
   }
 
   render() {
+    // return (
+    //   <div>
+    //     <Navbar fluid style={{backgroundColor: 'transparent'}} className='navbar navbar-fixed-top'>
+    //     <div className='container'>
+    //       <Navbar.Header>
+    //         {
+    //           !this.props.auth.isAuthenticated() && (
+    //             <Button
+    //               className="btn btn-link"
+    //               onClick={this.login.bind(this)}
+    //             >
+    //               Log In
+    //               </Button>
+    //           )
+    //         }
+    //         {
+    //           this.props.auth.isAuthenticated() && (
+    //             <Button
+    //               className='btn btn-link'
+    //               onClick={this.logout.bind(this)}
+    //             >
+    //               Log Out
+    //               </Button>
+    //           )
+    //         }
+    //         <Button
+    //           className="btn btn-link"
+    //           onClick={this.goTo.bind(this, 'home')}
+    //         >
+    //           Home
+    //         </Button>
+    //         {
+    //           this.props.auth.isAuthenticated() && (
+    //             <Button
+    //               className="btn btn-link"
+    //               onClick={this.goTo.bind(this, 'profile')}
+    //             >
+    //               Profile
+    //               </Button>
+    //           )
+    //         }
+    //       </Navbar.Header>
+    //       </div>
+    //     </Navbar>
+    //   </div>
+    // );
+
+    
     return (
       <MuiThemeProvider>
         <div>
+          <div className='container'>
           <RaisedButton
-            label="Deja-Brew"
+            label="MENU"
             onTouchTap={this.handleToggle.bind(this)}
           />
           <Drawer
             docked={false}
-            width={200}
+            width={300}
             open={this.state.open}
             onRequestChange={(open) => this.setState({ open })}
           >
@@ -56,11 +105,13 @@ class DejaBrewNavBar extends React.Component {
             { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'addBeer')}>Submit Beer</MenuItem>) }
             { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'addBrewery')}>Submit Brewery</MenuItem>) }
             { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'pendingDejaBrew')}>Pending DejaBrews...</MenuItem>) }
-            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'faq')}>FAQs</MenuItem>)}
+            <MenuItem onTouchTap={this.goTo.bind(this, 'faq')}>FAQs</MenuItem>
           </Drawer>
+          </div>
         </div>
       </MuiThemeProvider>
     );
+
   }
 }
 
