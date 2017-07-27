@@ -133,14 +133,17 @@ export default class FriendList extends Component {
         if (a.name > b.name) return +1;
         return 0;
         })
-    this.setState({ friendList: sortedFriendList })
+    this.setState({ friendList: sortedFriendList})
   }
 
   render() {
+  let fontSize;
+  ( this.props.mobileSize ) ? ( fontSize='16px' ) : ( fontSize='28px');    
     return (
       <div><AppBar
         style={styles.dark_amber} 
-        title="Friends List" 
+        title="Friends List"
+        titleStyle={{ fontSize: fontSize }}
         showMenuIconButton={false} />
         <Table>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false} >
@@ -161,13 +164,15 @@ export default class FriendList extends Component {
                 key={ i } 
                 id={ friend.id } 
                 idx={ i }
-                editable={true}/>
+                editable={true}
+                mobileSize={ this.props.mobileSize }/>
               ) : (
                 <EditFriendEntry 
                 handleEditSubmit={ this.handleEditSubmit }
                 key={ i }
                 id={ friend.id }
-                idx={ i }/>
+                idx={ i }
+                mobileSize={ this.props.mobileSize }/>
               )
             )}
           </TableBody>

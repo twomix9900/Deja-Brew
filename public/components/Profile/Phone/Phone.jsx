@@ -59,9 +59,9 @@ export default class Phone extends Component {
     return (
       <div>{
         ( this.state.displayPhone ) ? (
-          <DisplayPhone handlePhoneClick={ this.state.handlePhoneClick } phone={ this.state.phone } />
+          <DisplayPhone handlePhoneClick={ this.state.handlePhoneClick } phone={ this.state.phone } mobileSize={ this.props.mobileSize } />
         ) : (
-          <QueryPhone handleSubmit={ this.submitPhone } />
+          <QueryPhone handleSubmit={ this.submitPhone } mobileSize={ this.props.mobileSize } />
         )
       }</div>
     )

@@ -12,7 +12,18 @@ export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInfo: {}
+      userInfo: {},
+      mobileSize: false
+    }
+  }
+
+  componentWillMount() {
+    let width = document.getElementById('app').offsetWidth;
+    console.log('width of profile', width)
+    if (width <= 420 ) {
+      this.setState({ mobileSize: true })
+    } else {
+      this.setState({ mobileSize: false })
     }
   }
 
@@ -30,11 +41,21 @@ export default class Profile extends Component {
       <div className='container'>
         <MuiThemeProvider>
         <div className='profile-container'>
-          <NickName userId={ this.state.userInfo.id } nickname={ this.state.userInfo.nickname } />
           <UserImageDrop userId={ this.state.userInfo.id} image={ this.state.userInfo.image } />
-          <Email userId={ this.state.userInfo.id } email={ this.state.userInfo.email } />
-          <Phone userId={ this.state.userInfo.id } phone={ this.state.userInfo.phone } />
-          <FriendList userId={ this.state.userInfo.id } />
+          <NickName 
+            userId={ this.state.userInfo.id } 
+            nickname={ this.state.userInfo.nickname } 
+            mobileSize={ this.state.mobileSize }/>
+          <Email 
+            userId={ this.state.userInfo.id } 
+            email={ this.state.userInfo.email } 
+            mobileSize={ this.state.mobileSize }/>
+          <Phone 
+            userId={ this.state.userInfo.id } 
+            phone={ this.state.userInfo.phone } 
+            mobileSize={ this.state.mobileSize }/>
+          <FriendList userId={ this.state.userInfo.id } 
+            mobileSize={ this.state.mobileSize }/>
         </div>
         </MuiThemeProvider>
       </div>

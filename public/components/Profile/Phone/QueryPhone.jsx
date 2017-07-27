@@ -6,10 +6,12 @@ import DialogMsg from '../../Dialog/DialogMsg.jsx'
 
 const styles={
   pre: {
-    width: '28px'
+    width: '28px',
+    color: '#FFF'
   },
   SLN: {
-    width: '40px'
+    width: '40px',
+    color: '#FFF'
   },
   button: {
     marginTop: 8,
@@ -83,10 +85,14 @@ export default class QueryPhone extends Component {
 
   render() {
 
+    let fontSize;
+    ( this.props.mobileSize ) ? ( fontSize='16px' ) : ( fontSize='28px');
+
     return (
       <div>
         <AppBar 
           style={styles.medium_amber}
+          titleStyle={{ fontSize: fontSize, color: '#FFF' }}
           title={ <span>
             (<TextField floatingLabelText="Phone Number" floatingLabelFixed={true} maxLength='3' style={ styles.pre } 
               onChange={(e) => this.handleTextEntry('areacode', e) } />
