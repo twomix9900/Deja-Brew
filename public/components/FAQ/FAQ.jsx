@@ -12,7 +12,7 @@ export default class FAQ extends Component {
         return (
             <div>
                 <MuiThemeProvider>
-                    <div>
+                    <div className='container'>
                         <Paper style={style} zDepth={1}> 
                             <div className='container'>
                             <h1><u>Frequently Asked Questions</u></h1>
@@ -46,8 +46,6 @@ export default class FAQ extends Component {
 }
 const style = {
     height: 'auto',
-    width: 1450,
-    margin: 'auto',
     textAlign: 'center',
     display: 'inline-block',
     color: 'white',
