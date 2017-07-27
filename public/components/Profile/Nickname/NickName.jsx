@@ -10,7 +10,7 @@ export default class NickName extends Component {
     super(props);
     this.state = {
       displayNickName: true,
-      nickname: ''
+      nickname: '',
     }
     this.editNickname=this.handleEditNickname.bind(this);
     this.submitNickname=this.handleSubmitName.bind(this);
@@ -42,9 +42,9 @@ export default class NickName extends Component {
     return (
       <div>{   
         ( this.state.displayNickname ) ? (
-          <DisplayNickname handleNameClick={ this.editNickname } nickname={ this.state.nickname } />
+          <DisplayNickname handleNameClick={ this.editNickname } nickname={ this.state.nickname } mobileSize={ this.props.mobileSize }/>
         ) : ( 
-          <QueryNickname handleSubmit={ this.submitNickname } />
+          <QueryNickname handleSubmit={ this.submitNickname } mobileSize={ this.props.mobileSize } />
         ) 
       }</div>
     )

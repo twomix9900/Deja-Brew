@@ -68,10 +68,10 @@ export default class UserImageDrop extends Component {
 
   render() {
     return (
-      <div className='image-container' style={{ display: 'flex', justifyContent: 'center' }}>
+      <div className='image-container' style={{ display: 'flex', justifyContent: 'flex-start' }}>
         { (this.state.profileImage) ? (
           <div>
-            <img src={ this.state.profileImage } style={{height: 200, width: 200, alignSelf: 'center'}} />
+            <img src={ this.state.profileImage } style={{height: 200, width: 200}} />
             <RaisedButton onClick={() => { this.ImageRemove() }} label="Remove" />
           </div>
         ) : (
