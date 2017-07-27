@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 
-
 export default class FAQ extends Component {
     constructor(props) {
         super(props);
         this.state = {}
     }
-
-
 
     render() {
         return (

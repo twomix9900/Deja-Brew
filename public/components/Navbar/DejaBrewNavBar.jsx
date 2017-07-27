@@ -13,6 +13,14 @@ class DejaBrewNavBar extends React.Component {
     this.state = {open: false};
   }
 
+  // componentDidMount () {
+  //  $("body").on("mousemove", function (event) {
+  //     if (event.pageX < 250) {
+  //       console.log('this \n', this, '\n', event)
+  //     }
+  //   })
+  // }
+
   handleToggle () {
     this.setState({open: !this.state.open});
   }
@@ -36,77 +44,31 @@ class DejaBrewNavBar extends React.Component {
   }
 
   render() {
-    // return (
-    //   <div>
-    //     <Navbar fluid style={{backgroundColor: 'transparent'}} className='navbar navbar-fixed-top'>
-    //     <div className='container'>
-    //       <Navbar.Header>
-    //         {
-    //           !this.props.auth.isAuthenticated() && (
-    //             <Button
-    //               className="btn btn-link"
-    //               onClick={this.login.bind(this)}
-    //             >
-    //               Log In
-    //               </Button>
-    //           )
-    //         }
-    //         {
-    //           this.props.auth.isAuthenticated() && (
-    //             <Button
-    //               className='btn btn-link'
-    //               onClick={this.logout.bind(this)}
-    //             >
-    //               Log Out
-    //               </Button>
-    //           )
-    //         }
-    //         <Button
-    //           className="btn btn-link"
-    //           onClick={this.goTo.bind(this, 'home')}
-    //         >
-    //           Home
-    //         </Button>
-    //         {
-    //           this.props.auth.isAuthenticated() && (
-    //             <Button
-    //               className="btn btn-link"
-    //               onClick={this.goTo.bind(this, 'profile')}
-    //             >
-    //               Profile
-    //               </Button>
-    //           )
-    //         }
-    //       </Navbar.Header>
-    //       </div>
-    //     </Navbar>
-    //   </div>
-    // );
-
-    
-    return (
-      <MuiThemeProvider>
+  return (      
+      <MuiThemeProvider >
         <div>
-          <div className='container'>
-          <RaisedButton
-            label="MENU"
-            onTouchTap={this.handleToggle.bind(this)}
-          />
-          <Drawer
-            docked={false}
-            width={300}
-            open={this.state.open}
-            onRequestChange={(open) => this.setState({ open })}
-          >
-            { !this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.login.bind(this)}>Log in</MenuItem>) }
-            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.logout.bind(this)}>Log out</MenuItem>) }
-            <MenuItem onTouchTap={this.goTo.bind(this, 'home')}>Home</MenuItem>
-            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'profile')}>Profile</MenuItem>) }
-            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'addBeer')}>Submit Beer</MenuItem>) }
-            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'addBrewery')}>Submit Brewery</MenuItem>) }
-            { this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'pendingDejaBrew')}>Pending DejaBrews...</MenuItem>) }
-            <MenuItem onTouchTap={this.goTo.bind(this, 'faq')}>FAQs</MenuItem>
-          </Drawer>
+          <div className='container' >
+            <div className='navbarContainer'>
+            <RaisedButton
+              label="MENU"
+              onTouchTap={this.handleToggle.bind(this)}
+            />
+            <Drawer
+              docked={false}
+              width={300}
+              open={this.state.open}
+              onRequestChange={(open) => this.setState({ open })}
+            >
+              {!this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.login.bind(this)}>Log in</MenuItem>)}
+              {this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.logout.bind(this)}>Log out</MenuItem>)}
+              <MenuItem onTouchTap={this.goTo.bind(this, 'home')}>Home</MenuItem>
+              {this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'profile')}>Profile</MenuItem>)}
+              {this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'addBeer')}>Submit Beer</MenuItem>)}
+              {this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'addBrewery')}>Submit Brewery</MenuItem>)}
+              {this.props.auth.isAuthenticated() && (<MenuItem onTouchTap={this.goTo.bind(this, 'pendingDejaBrew')}>Pending DejaBrews...</MenuItem>)}
+              <MenuItem onTouchTap={this.goTo.bind(this, 'faq')}>FAQs</MenuItem>
+            </Drawer>
+            </div>
           </div>
         </div>
       </MuiThemeProvider>
