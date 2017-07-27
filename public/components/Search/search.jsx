@@ -65,13 +65,11 @@ class Search extends React.Component {
   }
 
   handleChange(event) {
-    console.log('what is handleChange event', event)
     // this.autocompleteFocus();
     this.setState({ locationValue: event.target.value });
   }
 
   handleBeerBreweryChange(event) {
-    console.log('what is handleBeer event', event)
     this.setState({ beerBreweryValue: event.target.value })
   }
 
@@ -304,7 +302,7 @@ class Search extends React.Component {
           className="form-control"
           id="textBox"
           type="text"
-          onChange={this.handleBeerBreweryChange.bind(this)}
+          onChange={this.handleBeerBreweryChange.bind(this)} 
           placeholder='Search By Beer or Brewery Name'
           value={this.state.beerBreweryValue}
         />
@@ -312,7 +310,6 @@ class Search extends React.Component {
           className="form-control"
           id="textBoxLocation"
           type="text"
-          onChange={this.handleChange.bind(this)}
           placeholder='Search By Location'
           value={this.state.locationValue}
         />

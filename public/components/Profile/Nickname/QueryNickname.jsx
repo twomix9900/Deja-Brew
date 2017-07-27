@@ -8,6 +8,15 @@ const styles={
     marginTop: 8,
     height: 32,
     color: '#FFF'
+  },
+  light_amber: {
+    backgroundColor: '#FFA000'
+  },
+    medium_amber: {
+    backgroundColor: '#FF8F00'
+  },
+  dark_amber: {
+    backgroundColor: '#FF6F00'
   }
 }
 
@@ -16,7 +25,10 @@ const QueryNickname = ({ handleSubmit }) => {
 
   return (
     <div>
-      <AppBar title={ <span><TextField id="nickname" onChange={(e) => text = e.target.value } /></span> } showMenuIconButton={false} 
+      <AppBar 
+        style={styles.light_amber} 
+        title={ <span><TextField id="nickname" onChange={(e) => text = e.target.value } /></span> } 
+        showMenuIconButton={false} 
         iconElementRight={ 
           <div>
             <FlatButton onClick={() => { handleSubmit(text) }}
