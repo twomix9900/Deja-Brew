@@ -7,6 +7,9 @@ const styles={
     height: 32,
     color: '#FFF'
   },
+  very_light_amber: { 
+    backgroundColor: '#FFB300'
+  },
   light_amber: {
     backgroundColor: '#FFA000'
   },
@@ -18,12 +21,16 @@ const styles={
   }
 }
 
-const DisplayNickname = ({ handleNameClick, nickname }) => {
-
+const DisplayNickname = ({ handleNameClick, nickname, mobileSize }) => {
+  let fontSize;
+  ( mobileSize ) ? ( fontSize='16px' ) : ( fontSize='32px' );
+  console.log('what is fontsize', fontSize);
+  console.log('inside Display NickName', mobileSize)
   return (
     <div>
-      <AppBar 
-        style={styles.light_amber} 
+      <AppBar className="profileText"
+        style={styles.very_light_amber}
+        titleStyle={{ fontSize: fontSize }}
         title={ <span>{ (nickname) ? (nickname) : ('your nickname') }</span> } 
         showMenuIconButton={false} 
         iconElementRight={<FlatButton 

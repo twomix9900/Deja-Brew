@@ -18,14 +18,16 @@ const styles={
   }
 }
 
-const DisplayEmail = ({ handleEmailClick, email }) => {
-
+const DisplayEmail = ({ handleEmailClick, email, mobileSize }) => {
+  let fontSize;
+  ( mobileSize ) ? ( fontSize='16px' ) : ( fontSize='28px');
   return (
     <div>
       <AppBar 
         style={styles.light_amber} 
         showMenuIconButton={false} 
         title={ <span>email:{ ' ' + email }</span> }
+        titleStyle={{ fontSize: fontSize }}
         iconElementRight={<FlatButton 
           onClick={() => { handleEmailClick() }}
           style={styles.button}

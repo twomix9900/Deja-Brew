@@ -39,9 +39,9 @@ export default class Email extends Component {
     return (
       <div>{
         ( this.state.displayEmail ) ? (
-          <DisplayEmail handleEmailClick={ this.editEmail } email={ this.state.email } />
+          <DisplayEmail handleEmailClick={ this.editEmail } email={ this.state.email } mobileSize={ this.props.mobileSize } />
         ) : (
-          <QueryEmail handleSubmit={ this.submitEmail } />
+          <QueryEmail handleSubmit={ this.submitEmail } mobileSize={ this.props.mobileSize } />
         ) 
       }</div>
     )

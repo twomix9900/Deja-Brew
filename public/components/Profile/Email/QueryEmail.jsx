@@ -20,9 +20,10 @@ const styles={
   }
 }
 
-const QueryEmail = ({ handleSubmit }) => {
+const QueryEmail = ({ handleSubmit, mobileSize }) => {
   let text;
-
+  let fontSize;
+  ( mobileSize ) ? ( fontSize='16px' ) : ( fontSize='28px');
   return (
     <div>
       <AppBar 
@@ -32,6 +33,7 @@ const QueryEmail = ({ handleSubmit }) => {
             floatingLabelText="email" floatingLabelFixed={true} 
             id="email" onChange={(e) => text = e.target.value } />
           </span> } 
+        titleStyle={{ fontSize: fontSize }}
         showMenuIconButton={false} 
         iconElementRight={ 
           <div>
