@@ -52,7 +52,7 @@ class Landing extends React.Component {
   render () {
     return (
       <div className="landingPage">
-        <audio id="my_audio" src="../../images/lucky.mp3" loop="loop"></audio>
+        {/* <audio id="my_audio" src="../../images/lucky.mp3" loop="loop"></audio> */}
         <div className="container whiteFont">
           <div className="grid">
             <div className="headerLeft headerLeftPrimary">
