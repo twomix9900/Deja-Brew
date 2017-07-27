@@ -123,7 +123,7 @@ body {
   background-image: url("./images/bg_cont.png");
   height: inherit;
   position: absolute;
-  top: 50px;
+  top: 25px;
   left: 0;
   z-index: 1;
   width: 100%;
@@ -236,12 +236,12 @@ img {
 }
 
 .floatRight {
-  margin-left: 60%;
+  padding-left: 60%;
   padding-top:10%;
 }
 
 .floatLeft {
-  margin-left: 20%;
+  padding-left: 20%;
   padding-top:10%;
 }
 
@@ -271,3 +271,13 @@ img {
   font-size: 12px;
   color: rgb(244, 67, 54);
 }
+
+@media (max-width: 1500px) {
+  .floatLeft {
+    padding-top:0%;
+  }
+  .grid {
+  margin-top: -100px
+  }
+}
+
