@@ -1,4 +1,5 @@
 const express = require('express');
+//const compass = require('compass');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const path = require('path');
@@ -28,6 +29,7 @@ app.use(bodyParser.json())
   .use(morgan('dev'))
   .use(cors());
 
+// app.use(compass({ cwd: __dirname + './public' }));
 app.use(express.static(path.join(__dirname,'./public')));
 
 app.use('/users', userRouter);

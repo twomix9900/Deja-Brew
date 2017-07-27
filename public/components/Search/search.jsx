@@ -65,11 +65,13 @@ class Search extends React.Component {
   }
 
   handleChange(event) {
+    console.log('what is handleChange event', event)
     // this.autocompleteFocus();
     this.setState({ locationValue: event.target.value });
   }
 
   handleBeerBreweryChange(event) {
+    console.log('what is handleBeer event', event)
     this.setState({ beerBreweryValue: event.target.value })
   }
 
