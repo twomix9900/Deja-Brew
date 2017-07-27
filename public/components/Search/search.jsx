@@ -47,11 +47,13 @@ class Search extends React.Component {
   componentDidMount() {
     if (!!this.props.venue.searchedVenueByLocation) {
       this.setState({ locationValue: this.props.venue.searchedVenueByLocation });
-      this.searchDejaBrew();
     }
 
     if (!!this.props.venue.searchedVenueByName) {
       this.setState({ beerBreweryValue: this.props.venue.searchedVenueByName });
+    }
+
+    if (!!this.props.venue.searchedVenueByLocation || !!this.props.venue.searchedVenueByName) {
       this.searchDejaBrew();
     }
   }
@@ -207,7 +209,6 @@ class Search extends React.Component {
                   //for(var k = 0; k < dejaBrewResults[i].locations.length; k++) {
                   //console.log(dejaBrewResults[i].locations[j].locality)
                   if (dejaBrewResults[i].locations[0].locality === location) {
-                    console.log("once PLEASE")
                     breweryResults.push(dejaBrewResults[i]);
                   }
                   //}
@@ -245,7 +246,6 @@ class Search extends React.Component {
               //}
             }
             else {
-              console.log('ONCE PLEASE ', dejaBrewResults[i])
               breweryResults.push(dejaBrewResults[i])
             }
           }
@@ -310,6 +310,7 @@ class Search extends React.Component {
           className="form-control"
           id="textBoxLocation"
           type="text"
+          onChange={this.handleChange.bind(this)} 
           placeholder='Search By Location'
           value={this.state.locationValue}
         />

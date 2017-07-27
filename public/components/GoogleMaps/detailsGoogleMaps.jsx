@@ -14,13 +14,23 @@ export default class DetailsGoogleMaps extends Component {
 
   displayMarker(map) {
     var bounds = new google.maps.LatLngBounds();
-    if (!!this.props.venue.selectedVenue) {
+    if (!!this.props.venue.selectedVenue.brewery) {
+      let lng;
+      let lat;
+      this.props.venue.selectedVenue.latitude ? lat = this.props.venue.selectedVenue.latitude : null;
+      this.props.venue.selectedVenue.longitude ? lng = this.props.venue.selectedVenue.longitude : null;
+      if (lng && lat) {
+        let latlng = new google.maps.LatLng(lat, lng);
+        this.createMarker(latlng, map);
+        bounds.extend(latlng);
+        map.fitBounds(bounds);
+      }
+    } else if (!!this.props.venue.selectedVenue.locations) {
       for (let i = 0; i < this.props.venue.selectedVenue.locations.length; i++) {
         let lng;
         let lat;
         this.props.venue.selectedVenue ? lat = this.props.venue.selectedVenue.locations[0].latitude : null;
         this.props.venue.selectedVenue ? lng = this.props.venue.selectedVenue.locations[0].longitude : null;
-
         if (lng && lat) {
           let latlng = new google.maps.LatLng(lat, lng);
           this.createMarker(latlng, map);

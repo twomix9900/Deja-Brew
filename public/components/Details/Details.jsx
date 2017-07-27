@@ -39,21 +39,35 @@ class Details extends React.Component {
   }
 
   getBeersFromBrewery() {
-    if (this.props.venue.selectedVenue) {
-      axios.get('/brewery/beers/' + this.props.venue.selectedVenue.id)
+    if (this.props.venue.selectedVenue.brewery.id) {
+      axios.get('/brewery/beers/' + this.props.venue.selectedVenue.brewery.id)
         .then((data) => {
+          console.log('1 data \n', data)
           this.setState({
             beersFromBrewery: data.data.data
           })
         })
         .catch((err) => console.log('getBeersFromBrewery err = ', err))
+    } else {
+      if (this.props.venue.selectedVenue.id) {
+        axios.get('/brewery/beers/' + this.props.venue.selectedVenue.id)
+          .then((data) => {
+                      console.log('2 data \n', data)
+
+            this.setState({
+              beersFromBrewery: data.data.data
+            })
+          })
+          .catch((err) => console.log('getBeersFromBrewery err = ', err))
+      }
     }
   }
 
   renderBrewInfo() {
     if (!this.props.venue.selectedVenue) { this.props.history.push('/home'); }
     else {
-      let brewInfo = this.props.venue.selectedVenue;
+      let brewInfo = this.props.venue.selectedVenue.brewery || this.props.venue.selectedVenue ;
+      let website = brewInfo.website; 
       return (
         <div>
           <div><h1>{brewInfo.brewery ? brewInfo.brewery.name : brewInfo.name}</h1></div>
@@ -62,7 +76,7 @@ class Details extends React.Component {
               {!brewInfo.images ? ' ' : <img src={brewInfo.images.squareMedium} alt=" " className="img-responsive" /> || brewInfo.brewery.images.squareMedium}
             </h3></div>
             <div style={{ order: '2', width: '45%', minHeight: '300px', height: 'auto' }}><h3>
-              {this.props.venue.selectedVenue.locations[0].latitude ? <DetailsGoogleMaps venue={this.props.venue} style={style} /> : null}
+              {this.props.venue.selectedVenue ? <DetailsGoogleMaps venue={this.props.venue} style={style} /> : null}
             </h3></div>
             <div style={{ justifyContent: 'flex-end', order: '3' }}>
             <RaisedButton
@@ -77,7 +91,7 @@ class Details extends React.Component {
             {!brewInfo.hoursOfOperation ? ' ' : brewInfo.hoursOfOperation}
           </h3></div>
           <div><h4>
-            <a href={brewInfo.website || brewInfo.brewery.website} target='_blank'>{brewInfo.website || brewInfo.brewery.website}</a>
+               <a href={website || ' '} target='_blank'>{website || ' '}</a>   
           </h4></div>
           <div><p>
             {(brewInfo.description ? brewInfo.description : null) || (brewInfo.brewery ? brewInfo.brewery.description : ' ')}
@@ -119,7 +133,7 @@ class Details extends React.Component {
               </div>
             )}
             <div className='pagination-container' style={{display: 'flex'}}>
-              <div style={{justifyContent: 'flex-start', order: '1'}}><Pagination items={this.state.beersFromBrewery} onChangePage={this.onChangePage} /></div>
+              <div style={{justifyContent: 'flex-start', order: '1'}}><Pagination items={this.state.beersFromBrewery || []} onChangePage={this.onChangePage} /></div>
             </div>
             {this.state.userInfo ?
               <DrinkBuddy style={style} />
