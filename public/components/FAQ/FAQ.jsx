@@ -50,5 +50,5 @@ const style = {
     textAlign: 'center',
     display: 'inline-block',
     color: 'white',
-    backgroundColor: '#00B8D4'
+    backgroundColor: '#FFA726'
 };
