@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-//import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import Menu from 'material-ui/Menu';
@@ -16,16 +15,10 @@ const style = {
 class beerStyles extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props from beerStyles: ', props)
     this.state = {
       textBoxWidth: 220,
       beerStyles: [],
       beerStyleName: "Beer Style",
-      //beerStyleId: 0
-      // submitBeer: {
-      //   beerStyleName: "Beer Style",
-      //   beerStyleId: 0
-      // }
     };
   }
 
@@ -54,7 +47,6 @@ class beerStyles extends React.Component {
 
   handleStyleChange(styleId, styleName) {
     this.setState({ beerStyleName: styleName })
-    //this.setState({beerStyleId: styleId})
     this.props.handleBeerStyleId(styleId)
     this.setState({ textBoxWidth: styleName.length * 8 })
   }
@@ -68,7 +60,6 @@ class beerStyles extends React.Component {
               primaryText={this.state.beerStyleName}
               rightIcon={<ArrowDropRight />}
               menuItems=
-              //{<MenuItem primaryText="Select Category"
               {Object.keys(this.state.beerStyles).map((category) => {
                 return <MenuItem
                   primaryText={category}
@@ -77,7 +68,6 @@ class beerStyles extends React.Component {
                   {this.state.beerStyles[category].styles.map((style) => {
                     return <MenuItem
                       primaryText={style.name}
-                      //how does MenuItem know onClick is possible? why not onMouseEnter?
                       onClick={this.handleStyleChange.bind(this, style.id, style.name)}
                     />
                   })}

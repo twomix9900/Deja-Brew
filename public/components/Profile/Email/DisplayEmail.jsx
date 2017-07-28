@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 
-const styles={
+const styles = {
   button: {
     height: 32,
     color: '#FFF'
@@ -20,19 +20,19 @@ const styles={
 
 const DisplayEmail = ({ handleEmailClick, email, mobileSize }) => {
   let fontSize;
-  ( mobileSize ) ? ( fontSize='16px' ) : ( fontSize='28px');
+  (mobileSize) ? (fontSize = '16px') : (fontSize = '28px');
   return (
     <div>
-      <AppBar 
-        style={styles.light_amber} 
-        showMenuIconButton={false} 
-        title={ <span>email:{ ' ' + email }</span> }
+      <AppBar
+        style={styles.light_amber}
+        showMenuIconButton={false}
+        title={<span>email:{' ' + email}</span>}
         titleStyle={{ fontSize: fontSize }}
-        iconElementRight={<FlatButton 
+        iconElementRight={<FlatButton
           onClick={() => { handleEmailClick() }}
           style={styles.button}
-          label="Edit" 
-        />}     
+          label="Edit"
+        />}
       />
     </div>
   )

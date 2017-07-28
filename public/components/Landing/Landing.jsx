@@ -23,9 +23,7 @@ class Landing extends React.Component {
         setTimeout(step, duration/range);
       }
       else {
-        console.log('Easing: ', duration/range);
-        console.log('Elapsed time: ', new Date() - startTime)
-        console.log('');
+        return;
       }
     };
   

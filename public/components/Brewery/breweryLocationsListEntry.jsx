@@ -33,13 +33,13 @@ class BreweryLocationsListEntry extends React.Component {
       msgBody: 'Users must be signed in to vote',
       userInfo: {},
       opinionClick: false
-    };    
+    };
     this.selectVenue = this.selectVenue.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.navigateToDetailsPage = this.navigateToDetailsPage.bind(this);
     this.handleUpClick = this.handleUpClick.bind(this);
     this.handleDownClick = this.handleDownClick.bind(this);
-    this.dialogHandler = this.dialogHandler.bind(this);    
+    this.dialogHandler = this.dialogHandler.bind(this);
   }
 
   handleClick(e, data) {
@@ -134,7 +134,7 @@ class BreweryLocationsListEntry extends React.Component {
 
   dialogHandler() {
     this.setState({ open: false })
-  }  
+  }
 
   render() {
     return (
@@ -175,7 +175,7 @@ class BreweryLocationsListEntry extends React.Component {
         <Badge badgeContent={this.state.breweryLike} />
         <ThumbsDown onClick={() => { this.handleDownClick() }} color={(this.state.userOpinion === -1) ? (red500) : ('')} />
         <Badge badgeContent={this.state.breweryDislike} />
-        <DialogMsg open={this.state.open} handler={this.dialogHandler} msgTitle={this.state.msgTitle} msgBody={this.state.msgBody} />       
+        <DialogMsg open={this.state.open} handler={this.dialogHandler} msgTitle={this.state.msgTitle} msgBody={this.state.msgBody} />
       </Card>
     );
   }

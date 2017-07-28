@@ -38,23 +38,20 @@ class Details extends React.Component {
   }
 
   componentDidMount() {
-    console.log('DETAILS THIS', this);
     if (this.props.venue.selectedVenue || this.props.venue.selectedVenue.brewery) {
       this.getBeersFromBrewery();
     } else {
       this.props.history.push('home');
     }
-  
+
   }
 
   getBeersFromBrewery() {
     let beersData;
     beersData = this.props.venue.selectedVenue.brewery || this.props.venue.selectedVenue;
     if (beersData) {
-      console.log('this.props.venue.selectedVenue.brewery \n', beersData)
       axios.get('/brewery/beers/' + beersData.id)
         .then((data) => {
-          console.log('1 data \n', data)
           this.setState({
             beersFromBrewery: data.data.data
           })
@@ -66,8 +63,8 @@ class Details extends React.Component {
   renderBrewInfo() {
     if (!this.props.venue.selectedVenue) { this.props.history.push('/home'); }
     else {
-      let brewInfo = this.props.venue.selectedVenue.brewery || this.props.venue.selectedVenue ;
-      let website = brewInfo.website; 
+      let brewInfo = this.props.venue.selectedVenue.brewery || this.props.venue.selectedVenue;
+      let website = brewInfo.website;
       return (
         <div>
           <div><h1>{brewInfo.brewery ? brewInfo.brewery.name : brewInfo.name}</h1></div>
@@ -79,26 +76,25 @@ class Details extends React.Component {
               {this.props.venue.selectedVenue ? <DetailsGoogleMaps venue={this.props.venue} style={style} /> : null}
             </h3></div>
             <div style={{ justifyContent: 'flex-end', order: '3' }}>
-            <RaisedButton
-              style={style.button}
-              onClick={this.sendDirections.bind(this)}
-              label='Directions'
-              fullWidth='true'
-            >
-            </RaisedButton></div>
+              <RaisedButton
+                style={style.button}
+                onClick={this.sendDirections.bind(this)}
+                label='Directions'
+                fullWidth='true'
+              >
+              </RaisedButton></div>
           </div>
           <div><h3>
             {!brewInfo.hoursOfOperation ? ' ' : brewInfo.hoursOfOperation}
           </h3></div>
           <div><h4>
-               <a href={website || ' '} target='_blank'>{website || ' '}</a>   
+            <a href={website || ' '} target='_blank'>{website || ' '}</a>
           </h4></div>
           <div><p>
             {(brewInfo.description ? brewInfo.description : null) || (brewInfo.brewery ? brewInfo.brewery.description : ' ')}
           </p></div>
         </div>
       )
-
     }
   }
 
@@ -124,12 +120,12 @@ class Details extends React.Component {
     return (
       <div>
         <MuiThemeProvider>
-          <div className='container' style={{minWidth: '500px', maxWidth: '1600px'}}>
+          <div className='container' style={{ minWidth: '500px', maxWidth: '1600px' }}>
             <Paper style={style} zDepth={0}>
               {this.renderBrewInfo()}
               <h3>Beers by this brewery: </h3>
             </Paper>
-            <br/>
+            <br />
             {this.state.pageOfItems.map((brewery, i) =>
               <div style={{ minWidth: '500px', maxWidth: '1600px' }}>
                 <DetailsBeerList
@@ -140,13 +136,13 @@ class Details extends React.Component {
                 />
               </div>
             )}
-            <div className='pagination-container' style={{display: 'flex'}}>
-              <div style={{justifyContent: 'flex-start', order: '1'}}><Pagination items={this.state.beersFromBrewery || []} onChangePage={this.onChangePage} /></div>
+            <div className='pagination-container' style={{ display: 'flex' }}>
+              <div style={{ justifyContent: 'flex-start', order: '1' }}><Pagination items={this.state.beersFromBrewery || []} onChangePage={this.onChangePage} /></div>
             </div>
             {this.state.userInfo ?
               <DrinkBuddy style={style} />
               : null}
-            <DialogMsg open={ this.state.open} handler={ this.handler } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody }/> 
+            <DialogMsg open={this.state.open} handler={this.handler} msgTitle={this.state.msgTitle} msgBody={this.state.msgBody} />
           </div>
         </MuiThemeProvider>
       </div>

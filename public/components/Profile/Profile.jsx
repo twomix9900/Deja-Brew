@@ -19,8 +19,7 @@ export default class Profile extends Component {
 
   componentWillMount() {
     let width = document.getElementById('app').offsetWidth;
-    console.log('width of profile', width)
-    if (width <= 575 ) {
+    if (width <= 575) {
       this.setState({ mobileSize: true })
     } else {
       this.setState({ mobileSize: false })
@@ -31,32 +30,32 @@ export default class Profile extends Component {
     let info = JSON.parse(localStorage.getItem('userInfo'));
     let auth0 = info.auth0Id;
     axios.get('/users/' + auth0)
-    .then((data) => {
-      this.setState({ userInfo: data.data[0] });
-    })
+      .then((data) => {
+        this.setState({ userInfo: data.data[0] });
+      })
   }
 
   render() {
     return (
       <div className='container'>
         <MuiThemeProvider>
-        <div className='profile-container'>
-          <UserImageDrop userId={ this.state.userInfo.id} image={ this.state.userInfo.image } />
-          <NickName 
-            userId={ this.state.userInfo.id } 
-            nickname={ this.state.userInfo.nickname } 
-            mobileSize={ this.state.mobileSize }/>
-          <Email 
-            userId={ this.state.userInfo.id } 
-            email={ this.state.userInfo.email } 
-            mobileSize={ this.state.mobileSize }/>
-          <Phone 
-            userId={ this.state.userInfo.id } 
-            phone={ this.state.userInfo.phone } 
-            mobileSize={ this.state.mobileSize }/>
-          <FriendList userId={ this.state.userInfo.id } 
-            mobileSize={ this.state.mobileSize }/>
-        </div>
+          <div className='profile-container'>
+            <UserImageDrop userId={this.state.userInfo.id} image={this.state.userInfo.image} />
+            <NickName
+              userId={this.state.userInfo.id}
+              nickname={this.state.userInfo.nickname}
+              mobileSize={this.state.mobileSize} />
+            <Email
+              userId={this.state.userInfo.id}
+              email={this.state.userInfo.email}
+              mobileSize={this.state.mobileSize} />
+            <Phone
+              userId={this.state.userInfo.id}
+              phone={this.state.userInfo.phone}
+              mobileSize={this.state.mobileSize} />
+            <FriendList userId={this.state.userInfo.id}
+              mobileSize={this.state.mobileSize} />
+          </div>
         </MuiThemeProvider>
       </div>
     )

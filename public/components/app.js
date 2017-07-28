@@ -46,10 +46,10 @@ class App extends Component {
     });
   }
 
-    render() {
-      return (
-        <div className="backgroundImage">
-          <div className="container">
+  render() {
+    return (
+      <div className="backgroundImage">
+        <div className="container">
           <h1 className="headerStyle">Welcome to Deja-Brew</h1>
           <MuiThemeProvider>
             <Search
@@ -57,12 +57,12 @@ class App extends Component {
               handleBreweriesByBreweryNameSearch={this.handleBreweriesByBreweryNameSearch.bind(this)}
               handleBreweriesByLocationSearch={this.handleBreweriesByLocationSearch.bind(this)}
             />
-            
+
           </MuiThemeProvider>
-          <AccessGoogle 
-              beersMarker={this.state.BreweriesByBeerNameArray}
-              breweriesMarker={this.state.BreweriesByBreweryNameArray}
-              breweryLocationsMarker={this.state.BreweriesByLocationArray}
+          <AccessGoogle
+            beersMarker={this.state.BreweriesByBeerNameArray}
+            breweriesMarker={this.state.BreweriesByBreweryNameArray}
+            breweryLocationsMarker={this.state.BreweriesByLocationArray}
           />
           <MuiThemeProvider>
             <DejaBrewTabs
@@ -72,10 +72,10 @@ class App extends Component {
               breweryLocations={this.state.BreweriesByLocationArray}
             />
           </MuiThemeProvider>
-          </div>
         </div>
-      );
-    }
+      </div>
+    );
+  }
 
 }
 
