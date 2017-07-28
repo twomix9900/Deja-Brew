@@ -29,7 +29,7 @@ class Search extends React.Component {
       value: 10,
       open: false,
       msgTitle: 'Both fields cannot be empty',
-      msgBody: 'Please fill in at least one field because the amount of data you get back will be too damn high.',
+      msgBody: 'Please fill in at least one field.',
       completed: 0,
       showProgressBar: false
     };
@@ -41,6 +41,10 @@ class Search extends React.Component {
   componentWillUnmount() {
     this.searchVenueByName(this.state.beerBreweryValue);
     this.searchVenueByLocation(this.state.locationValue);
+    this.setState({
+      locationValue: '',
+      beerBreweryValue: ''
+    })
     this.setState({ showDetails: false });
   }
 
@@ -53,7 +57,7 @@ class Search extends React.Component {
       this.setState({ beerBreweryValue: this.props.venue.searchedVenueByName });
     }
 
-    if (!!this.props.venue.searchedVenueByLocation || !!this.props.venue.searchedVenueByName) {
+    if (this.state.locationValue || this.state.beerBreweryValue) {
       this.searchDejaBrew();
     }
   }
@@ -88,10 +92,11 @@ class Search extends React.Component {
 
   searchDejaBrew() {
     this.setState({ showProgressBar: true })
+
     // var location = this.wordsToUpperCase(this.state.locationValue);
-    var location = this.wordsToUpperCase(this.state.locationValue || this.props.venue.searchedVenueByLocation);
+    var location = this.wordsToUpperCase(this.state.locationValue);
     // var beerBrewery = this.state.beerBreweryValue;
-    var beerBrewery = this.state.beerBreweryValue || this.props.venue.searchedVenueByName;
+    var beerBrewery = this.state.beerBreweryValue;
     var radius = parseInt(this.state.value);
     var vm = this;
 
@@ -296,6 +301,7 @@ class Search extends React.Component {
   }
 
   render() {
+      console.log('this.state = \n', this.state)
     return (
       <div className="search-bar">
         <input

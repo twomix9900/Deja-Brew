@@ -34,13 +34,20 @@ class Details extends React.Component {
 
   componentDidMount() {
     console.log('DETAILS THIS', this);
-    if (!this.props.venue.selectedVenue) { this.props.history.push('/home'); }
-    this.getBeersFromBrewery();
+    if (this.props.venue.selectedVenue || this.props.venue.selectedVenue.brewery) {
+      this.getBeersFromBrewery();
+    } else {
+      this.props.history.push('home');
+    }
+  
   }
 
   getBeersFromBrewery() {
-    if (this.props.venue.selectedVenue.brewery.id) {
-      axios.get('/brewery/beers/' + this.props.venue.selectedVenue.brewery.id)
+    let beersData;
+    beersData = this.props.venue.selectedVenue.brewery || this.props.venue.selectedVenue;
+    if (beersData) {
+      console.log('this.props.venue.selectedVenue.brewery \n', beersData)
+      axios.get('/brewery/beers/' + beersData.id)
         .then((data) => {
           console.log('1 data \n', data)
           this.setState({
@@ -48,18 +55,6 @@ class Details extends React.Component {
           })
         })
         .catch((err) => console.log('getBeersFromBrewery err = ', err))
-    } else {
-      if (this.props.venue.selectedVenue.id) {
-        axios.get('/brewery/beers/' + this.props.venue.selectedVenue.id)
-          .then((data) => {
-                      console.log('2 data \n', data)
-
-            this.setState({
-              beersFromBrewery: data.data.data
-            })
-          })
-          .catch((err) => console.log('getBeersFromBrewery err = ', err))
-      }
     }
   }
 
@@ -82,7 +77,7 @@ class Details extends React.Component {
             <RaisedButton
               style={style.button}
               onClick={this.sendDirections.bind(this)}
-              label='SMS Directions'
+              label='Directions'
               fullWidth='true'
             >
             </RaisedButton></div>
