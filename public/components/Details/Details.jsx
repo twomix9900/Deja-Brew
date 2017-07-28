@@ -11,6 +11,7 @@ import DrinkBuddy from '../DrinkBuddy/drinkBuddy.jsx';
 import DetailsBeerList from '../Brewery/detailsBeerList.jsx';
 import Pagination from '../Brewery/pagination.jsx';
 import DetailsGoogleMaps from '../GoogleMaps/detailsGoogleMaps.jsx';
+import DialogMsg from '../Dialog/DialogMsg.jsx'
 
 class Details extends React.Component {
   constructor(props) {
@@ -18,12 +19,16 @@ class Details extends React.Component {
     this.state = {
       userInfo: {},
       beersFromBrewery: [],
-      pageOfItems: []
+      pageOfItems: [],
+      open: false,
+      msgTitle: 'Incomplete Profile',
+      msgBody: 'Missing phone number.  Cannot send directions to nobody.  Please complete your profile and try again.'
     }
     this.sendDirections = this.sendDirections.bind(this);
     this.getBeersFromBrewery = this.getBeersFromBrewery.bind(this);
     this.renderBrewInfo = this.renderBrewInfo.bind(this);
     this.onChangePage = this.onChangePage.bind(this);
+    this.handler = this.handler.bind(this);
   }
 
   componentWillMount() {
@@ -103,13 +108,21 @@ class Details extends React.Component {
   }
 
   sendDirections() {
-    let queryName;
-    this.props.venue.selectedVenue.name !== 'Main Brewery' ? queryName = this.props.venue.selectedVenue.name.split(' ').join('+') : queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
-    axios.get('/directions/user/' + this.state.userInfo.phone.slice(3) + queryName)
+    if (this.state.userInfo.phone) {
+      let queryName;
+      this.props.venue.selectedVenue.name !== 'Main Brewery' ? queryName = this.props.venue.selectedVenue.name.split(' ').join('+') : queryName = this.props.selectedVenue.brewery.name.split(' ').join('+');
+      axios.get('/directions/user/' + this.state.userInfo.phone.slice(3) + queryName)
+    } else {
+      this.setState({ open: true })
+    }
   }
 
   onChangePage(pageOfItems) {
     this.setState({ pageOfItems: pageOfItems });
+  }
+
+  handler() {
+    this.setState({ open: false })
   }
 
   render() {
@@ -138,6 +151,7 @@ class Details extends React.Component {
             {this.state.userInfo ?
               <DrinkBuddy style={style} />
               : null}
+            <DialogMsg open={ this.state.open} handler={ this.handler } msgTitle={ this.state.msgTitle } msgBody={ this.state.msgBody }/> 
           </div>
         </MuiThemeProvider>
       </div>
