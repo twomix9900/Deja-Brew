@@ -76,13 +76,16 @@ class Details extends React.Component {
               {this.props.venue.selectedVenue ? <DetailsGoogleMaps venue={this.props.venue} style={style} /> : null}
             </h3></div>
             <div style={{ justifyContent: 'flex-end', order: '3' }}>
-              <RaisedButton
-                style={style.button}
-                onClick={this.sendDirections.bind(this)}
-                label='Directions'
-                fullWidth='true'
-              >
-              </RaisedButton></div>
+              {this.state.userInfo ?
+                <RaisedButton
+                  style={style.button}
+                  onClick={this.sendDirections.bind(this)}
+                  label='Directions'
+                  fullWidth='true'
+                >
+                </RaisedButton>
+                : null}
+            </div>
           </div>
           <div><h3>
             {!brewInfo.hoursOfOperation ? ' ' : brewInfo.hoursOfOperation}
