@@ -12,21 +12,21 @@ export default class Phone extends Component {
       handlePhoneClick: this.editPhone,
       phone: ''
     }
-    this.editPhone=this.handleEditPhone.bind(this);
-    this.submitPhone=this.handleSubmitPhone.bind(this);
+    this.editPhone = this.handleEditPhone.bind(this);
+    this.submitPhone = this.handleSubmitPhone.bind(this);
   };
 
   componentWillReceiveProps(nextProps) {
     this.setState({ PhoneNum: nextProps.phone })
-    this.setState({ 
-      displayPhone: true, 
-      handlePhoneClick: this.editPhone, 
+    this.setState({
+      displayPhone: true,
+      handlePhoneClick: this.editPhone,
       phone: nextProps.phone
     });
   }
 
   handleEditPhone() {
-    this.setState({ 
+    this.setState({
       displayPhone: false,
     });
   }
@@ -36,33 +36,33 @@ export default class Phone extends Component {
       phoneSubmission = '+1 ' + phoneSubmission;
       this.setState({ PhoneNum: phoneSubmission });
       axios.put('/users/' + this.props.userId, { phone: phoneSubmission })
-      .then(() => {
-        let info = JSON.parse(localStorage.getItem('userInfo'));
-        info.phone = phoneSubmission;
-        localStorage.setItem('userInfo', JSON.stringify(info));
-        this.setState({ 
-          displayPhone: true, 
-          handlePhoneClick:  this.editPhone,
-          phone: phoneSubmission 
-        });
-      })
+        .then(() => {
+          let info = JSON.parse(localStorage.getItem('userInfo'));
+          info.phone = phoneSubmission;
+          localStorage.setItem('userInfo', JSON.stringify(info));
+          this.setState({
+            displayPhone: true,
+            handlePhoneClick: this.editPhone,
+            phone: phoneSubmission
+          });
+        })
     } else {
-      this.setState({ 
+      this.setState({
         displayPhone: true,
         handlePhoneClick: this.editPhone,
-        phone: this.state.PhoneNum  
+        phone: this.state.PhoneNum
       });
     }
   }
-  
+
   render() {
     return (
       <div>{
-        ( this.state.displayPhone ) ? (
-          <DisplayPhone handlePhoneClick={ this.state.handlePhoneClick } phone={ this.state.phone } mobileSize={ this.props.mobileSize } />
+        (this.state.displayPhone) ? (
+          <DisplayPhone handlePhoneClick={this.state.handlePhoneClick} phone={this.state.phone} mobileSize={this.props.mobileSize} />
         ) : (
-          <QueryPhone handleSubmit={ this.submitPhone } mobileSize={ this.props.mobileSize } />
-        )
+            <QueryPhone handleSubmit={this.submitPhone} mobileSize={this.props.mobileSize} />
+          )
       }</div>
     )
   }

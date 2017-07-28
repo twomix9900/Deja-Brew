@@ -3,7 +3,7 @@ import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 
-const styles={
+const styles = {
   button: {
     marginTop: 8,
     height: 32,
@@ -23,28 +23,28 @@ const styles={
 const QueryEmail = ({ handleSubmit, mobileSize }) => {
   let text;
   let fontSize;
-  ( mobileSize ) ? ( fontSize='16px' ) : ( fontSize='28px');
+  (mobileSize) ? (fontSize = '16px') : (fontSize = '28px');
   return (
     <div>
-      <AppBar 
+      <AppBar
         style={styles.light_amber}
-        title={ <span>
-          <TextField 
-            floatingLabelText="email" floatingLabelFixed={true} 
-            id="email" onChange={(e) => text = e.target.value } />
-          </span> } 
+        title={<span>
+          <TextField
+            floatingLabelText="email" floatingLabelFixed={true}
+            id="email" onChange={(e) => text = e.target.value} />
+        </span>}
         titleStyle={{ fontSize: fontSize }}
-        showMenuIconButton={false} 
-        iconElementRight={ 
+        showMenuIconButton={false}
+        iconElementRight={
           <div>
             <FlatButton onClick={() => { handleSubmit(text) }}
               style={styles.button}
-              label="Submit" /> 
+              label="Submit" />
             <FlatButton onClick={() => { handleSubmit() }}
               style={styles.button}
-              label="Cancel" /> 
-          </div> 
-        } 
+              label="Cancel" />
+          </div>
+        }
       />
     </div>
   )

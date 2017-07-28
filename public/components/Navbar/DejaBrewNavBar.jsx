@@ -13,14 +13,6 @@ class DejaBrewNavBar extends React.Component {
     this.state = {open: false};
   }
 
-  // componentDidMount () {
-  //  $("body").on("mousemove", function (event) {
-  //     if (event.pageX < 250) {
-  //       console.log('this \n', this, '\n', event)
-  //     }
-  //   })
-  // }
-
   handleToggle () {
     this.setState({open: !this.state.open});
   }

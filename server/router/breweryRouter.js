@@ -5,7 +5,6 @@ const breweryController = require('../controller/breweryController.js');
 
 breweryRouter.get('/breweryLocations/:breweryLat/:breweryLng/:radius', breweryController.getBreweryLocations);
 breweryRouter.get('/dejaBrew/:dejaBrew/:currentPage', breweryController.getDejaBrew);
-// breweryRouter.get('/breweries/:beerId', breweryController.getBreweriesFromBeerId);
 breweryRouter.get('/breweriesLatLng/:breweryLocation', breweryController.getBreweriesLatLng);
 breweryRouter.get('/beers/:breweryId', breweryController.getBeersFromBrewery);
 breweryRouter.get('/beerStyles', breweryController.getBeerStyles);

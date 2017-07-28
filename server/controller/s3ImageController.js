@@ -14,7 +14,6 @@ const s3ImageController = {
   
     let filename = req.params.filename;
     let filetype = 'image/' + req.params.filetype;
-    console.log('*** req info ***', req.params);
 
     let params = {
       Bucket: process.env.BUCKET,
@@ -28,7 +27,6 @@ const s3ImageController = {
       if (err) {
         console.log('error updating aws', err);
       } else {
-        console.log('url being returned', url);
         res.status(200);
         res.send(url);
       }
@@ -36,7 +34,6 @@ const s3ImageController = {
   },
 
   deleteImage: (req, res) => {
-    console.log('req.params.key', req.params.keyName)
     let url = 'https://' + bucket + '.s3-us-west-2.amazonaws.com/' + req.params.keyName
     let params = { Bucket: bucket, Key: req.params.keyName }
     s3.deleteObject(params, (err, data) => {
@@ -44,7 +41,6 @@ const s3ImageController = {
         console.log(err);
         res.sendStatus(400);
       } else {
-        console.log('successful deleting image');
         User.update({
           image: ''
         }, { where: {

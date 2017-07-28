@@ -29,7 +29,6 @@ app.use(bodyParser.json())
   .use(morgan('dev'))
   .use(cors());
 
-// app.use(compass({ cwd: __dirname + './public' }));
 app.use(express.static(path.join(__dirname,'./public')));
 
 app.use('/users', userRouter);
@@ -51,9 +50,6 @@ db.authenticate()
   .then(() => BeerRating.sync()) 
   .then(() => Beer.sync()) 
   .then(() => Brewery.sync()) 
-  .then(() => {
-    console.log('successfully connected to database');
-  })
   .catch((err) => {
     console.log('error connecting to database', err);
   })

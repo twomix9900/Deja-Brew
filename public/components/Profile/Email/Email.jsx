@@ -7,12 +7,12 @@ export default class Email extends Component {
 
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       displayEmail: true,
       email: ''
     }
-    this.editEmail=this.handleEditEmail.bind(this);
-    this.submitEmail=this.handleSubmitEmail.bind(this);
+    this.editEmail = this.handleEditEmail.bind(this);
+    this.submitEmail = this.handleSubmitEmail.bind(this);
   }
 
   componentWillReceiveProps(NextProps) {
@@ -27,9 +27,9 @@ export default class Email extends Component {
     if (emailSubmission !== undefined && emailSubmission !== '') {
       this.setState({ email: emailSubmission });
       axios.put('/users/' + this.props.userId, { email: emailSubmission })
-      .then(() => {
-        this.setState({ displayEmail: true, email: emailSubmission });
-      })
+        .then(() => {
+          this.setState({ displayEmail: true, email: emailSubmission });
+        })
     } else {
       this.setState({ displayEmail: true, email: this.state.email });
     }
@@ -38,11 +38,11 @@ export default class Email extends Component {
   render() {
     return (
       <div>{
-        ( this.state.displayEmail ) ? (
-          <DisplayEmail handleEmailClick={ this.editEmail } email={ this.state.email } mobileSize={ this.props.mobileSize } />
+        (this.state.displayEmail) ? (
+          <DisplayEmail handleEmailClick={this.editEmail} email={this.state.email} mobileSize={this.props.mobileSize} />
         ) : (
-          <QueryEmail handleSubmit={ this.submitEmail } mobileSize={ this.props.mobileSize } />
-        ) 
+            <QueryEmail handleSubmit={this.submitEmail} mobileSize={this.props.mobileSize} />
+          )
       }</div>
     )
   }

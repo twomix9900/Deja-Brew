@@ -14,7 +14,7 @@ import FriendAdd from './FriendAdd.jsx';
 import QueryFriendInfo from './QueryFriendInfo.jsx';
 import EditFriendEntry from './EditFriendEntry.jsx';
 
-const styles={
+const styles = {
   light_amber: {
     backgroundColor: '#FFA000'
   },
@@ -27,42 +27,42 @@ const styles={
 }
 
 export default class FriendList extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
       friendList: [],
       newFriendQuery: true
     }
-    this.FriendAdd=this.handleAddFriend.bind(this);
-    this.FriendEdit=this.handleEditFriend.bind(this);
-    this.FriendDelete=this.handleDeleteFriend.bind(this);
-    this.handleSubmit=this.handleSubmitFriend.bind(this);
-    this.handleEditSubmit=this.handleEditSubmit.bind(this);
-    this.sortFriendList=this.sortFriendList.bind(this);
+    this.FriendAdd = this.handleAddFriend.bind(this);
+    this.FriendEdit = this.handleEditFriend.bind(this);
+    this.FriendDelete = this.handleDeleteFriend.bind(this);
+    this.handleSubmit = this.handleSubmitFriend.bind(this);
+    this.handleEditSubmit = this.handleEditSubmit.bind(this);
+    this.sortFriendList = this.sortFriendList.bind(this);
 
-    };
+  };
 
-    componentWillReceiveProps(NextProps) {
+  componentWillReceiveProps(NextProps) {
     axios.get('/friends/' + NextProps.userId)
-    .then((data) => {
-      return data.data;
-    })
-    .then((data) => {
-      this.setState({ friendList: data });
-      this.sortFriendList();
-    })  
+      .then((data) => {
+        return data.data;
+      })
+      .then((data) => {
+        this.setState({ friendList: data });
+        this.sortFriendList();
+      })
   };
 
   getFriendData() {
     axios.get('/friends/' + this.props.userId)
-    .then((data) => {
-      return data.data;
-    })
-    .then((data) => {
-      this.setState({ friendList: data });
-      this.sortFriendList();
-    })
+      .then((data) => {
+        return data.data;
+      })
+      .then((data) => {
+        this.setState({ friendList: data });
+        this.sortFriendList();
+      })
   }
 
   componentWillMount() {
@@ -70,7 +70,6 @@ export default class FriendList extends Component {
   }
 
   handleAddFriend() {
-    console.log('inside handle add friend');
     this.setState({ newFriendQuery: false })
   }
 
@@ -79,17 +78,14 @@ export default class FriendList extends Component {
     friends[idx].edit = 1;
     this.setState({ friendList: friends });
     this.sortFriendList();
-    console.log('friend',id,'to be changed', friends);
   }
 
   handleDeleteFriend(id, idx) {
-    console.log('friend',id,'has been selected for termination')
     axios.delete('/friends/' + this.props.userId + '/' + id)
       .then(() => {
         let friends = this.state.friendList.slice();
         friends.splice(idx, 1);
-        this.setState({ friendList: friends})
-        console.log('ex-friend has been successfully removed')
+        this.setState({ friendList: friends })
       })
       .catch((err) => {
         console.log('cannot get rid of your friend', err)
@@ -101,10 +97,10 @@ export default class FriendList extends Component {
       this.setState({ newFriendQuery: true })
     } else {
       axios.put('friends/' + this.props.userId, { name: friendName, phone: '+1 ' + phone })
-      .then(() => {
-        this.getFriendData()
-        this.setState({ newFriendQuery: true })
-      })
+        .then(() => {
+          this.getFriendData()
+          this.setState({ newFriendQuery: true })
+        })
     }
   }
 
@@ -116,12 +112,12 @@ export default class FriendList extends Component {
       this.sortFriendList();
     } else {
       axios.put('friends/' + this.props.userId + '?id=' + id, { name: friendName, phone: '+1 ' + phone })
-      .then(() => {
-      friends[idx].name = friendName;
-      friends[idx].phone = '+1 ' + phone;
-      this.setState({ friendList: friends });
-      this.sortFriendList();
-      })
+        .then(() => {
+          friends[idx].name = friendName;
+          friends[idx].phone = '+1 ' + phone;
+          this.setState({ friendList: friends });
+          this.sortFriendList();
+        })
     }
   }
 
@@ -132,16 +128,16 @@ export default class FriendList extends Component {
         if (a.name < b.name) return -1;
         if (a.name > b.name) return +1;
         return 0;
-        })
-    this.setState({ friendList: sortedFriendList})
+      })
+    this.setState({ friendList: sortedFriendList })
   }
 
   render() {
-  let fontSize;
-  ( this.props.mobileSize ) ? ( fontSize='16px' ) : ( fontSize='28px');    
+    let fontSize;
+    (this.props.mobileSize) ? (fontSize = '16px') : (fontSize = '28px');
     return (
       <div><AppBar
-        style={styles.dark_amber} 
+        style={styles.dark_amber}
         title="Friends List"
         titleStyle={{ fontSize: fontSize }}
         showMenuIconButton={false} />
@@ -155,33 +151,33 @@ export default class FriendList extends Component {
             </TableRow>
           </TableHeader>
           <TableBody stripedRows={true}>
-            { this.state.friendList.map((friend, i) => 
+            {this.state.friendList.map((friend, i) =>
               (friend.edit === 0 || friend.edit === undefined) ? (
-                <FriendListEntry 
-                handleEditFriendClick={ this.FriendEdit }
-                handleDeleteFriendClick={ this.FriendDelete }
-                friend={ friend }
-                key={ i } 
-                id={ friend.id } 
-                idx={ i }
-                editable={true}
-                mobileSize={ this.props.mobileSize }/>
+                <FriendListEntry
+                  handleEditFriendClick={this.FriendEdit}
+                  handleDeleteFriendClick={this.FriendDelete}
+                  friend={friend}
+                  key={i}
+                  id={friend.id}
+                  idx={i}
+                  editable={true}
+                  mobileSize={this.props.mobileSize} />
               ) : (
-                <EditFriendEntry 
-                handleEditSubmit={ this.handleEditSubmit }
-                key={ i }
-                id={ friend.id }
-                idx={ i }
-                mobileSize={ this.props.mobileSize }/>
-              )
+                  <EditFriendEntry
+                    handleEditSubmit={this.handleEditSubmit}
+                    key={i}
+                    id={friend.id}
+                    idx={i}
+                    mobileSize={this.props.mobileSize} />
+                )
             )}
           </TableBody>
         </Table>
-        { (this.state.newFriendQuery) ? (
-            <FriendAdd handleAddFriendClick={ this.FriendAdd } />
-          ) : (
-            <QueryFriendInfo handleSubmit={ this.handleSubmit } />
-          ) }
+        {(this.state.newFriendQuery) ? (
+          <FriendAdd handleAddFriendClick={this.FriendAdd} />
+        ) : (
+            <QueryFriendInfo handleSubmit={this.handleSubmit} />
+          )}
       </div>
     );
   }

@@ -3,217 +3,186 @@ const dotenv = require('dotenv').config();
 const baseUrl = 'https://api.brewerydb.com/v2/';
 const API_KEY = process.env.SEARCH_KEY;
 const GOOGLE_LATLNG_KEY = process.env.GOOGLE_PLACE_TO_LAT_LONG_KEY;
-
 const { Beer } = require('../db/dbModel.js');
 const { Brewery } = require('../db/dbModel.js');
-
 const breweryController = {
 
   getBreweryLocations: (req, res) => {
-    console.log('getBreweryLocations!! server: ', req.params.breweryLat)
-    // /search/geo/point?lat=35.772096&lng=-78.638614
-    axios.get(baseUrl + '/search/geo/point?lat=' + req.params.breweryLat + 
-    '&lng=' + req.params.breweryLng + '&radius=' + req.params.radius + '&key=' + API_KEY)
-    .then((req) => {
-      res.send(req.data)
-    })
-    .catch((err) => {
-      console.log('error getting getBreweryLocations ', err);
-      res.sendStatus(400);
-    })
+    axios.get(baseUrl + '/search/geo/point?lat=' + req.params.breweryLat +
+      '&lng=' + req.params.breweryLng + '&radius=' + req.params.radius + '&key=' + API_KEY)
+      .then((req) => {
+        res.send(req.data)
+      })
+      .catch((err) => {
+        console.log('error getting getBreweryLocations ', err);
+        res.sendStatus(400);
+      })
   },
 
   getDejaBrew: (req, res) => {
     var currentPage = parseInt(req.params.currentPage)
-    axios.get(baseUrl + 'search?q=' + req.params.dejaBrew + '&p=' + currentPage 
-    + '&withBreweries=Y&withLocations=Y&key=' + API_KEY)
-    .then((req) => {
-      res.send(req.data)
-    })
-    .catch((err) => {
-      console.log('error getting getDejaBrew ', err);
-      res.sendStatus(400);
-    })
+    axios.get(baseUrl + 'search?q=' + req.params.dejaBrew + '&p=' + currentPage
+      + '&withBreweries=Y&withLocations=Y&key=' + API_KEY)
+      .then((req) => {
+        res.send(req.data)
+      })
+      .catch((err) => {
+        console.log('error getting getDejaBrew ', err);
+        res.sendStatus(400);
+      })
   },
 
-  // getBreweriesFromBeerId: (req, res) => {
-  //   console.log('getBreweriesFromBeerId server: ', req.params.beerId)
-  //   console.log('get url: ' , baseUrl + 'beer/' + req.params.beerId + '/breweries?key=' + API_KEY)
-  //   axios.get(baseUrl + 'beer/' + req.params.beerId + '/breweries?key=' + API_KEY)
-  //   .then((req) => {
-  //     console.log(req.data)
-  //     res.send(req.data)
-  //   })
-  //   .catch((err) => {
-  //     console.log('error getting brew ', err);
-  //     res.sendStatus(400);
-  //   })
-  // },
-
   getBreweriesLatLng: (req, res) => {
-    console.log('getBreweriesLatLng server: ', req.params.breweryLocation)
-    axios.get('https://maps.googleapis.com/maps/api/geocode/json?address=' 
-    + req.params.breweryLocation + '&key=' + GOOGLE_LATLNG_KEY)
-    .then((req) => {
-      res.send(req.data)
-    })
-    .catch((err) => {
-      console.log('error getting getBreweriesLatLng ', err);
-      res.sendStatus(400);
-    })
+    axios.get('https://maps.googleapis.com/maps/api/geocode/json?address='
+      + req.params.breweryLocation + '&key=' + GOOGLE_LATLNG_KEY)
+      .then((req) => {
+        res.send(req.data)
+      })
+      .catch((err) => {
+        console.log('error getting getBreweriesLatLng ', err);
+        res.sendStatus(400);
+      })
   },
 
   getBeersFromBrewery: (req, res) => {
-    console.log('getBeersFromBrewery server: ', req.params.brewery)
-    //https://api.brewerydb.com/v2/brewery/zLQrte/beers?key=a5ef36e4bb9729811c6360a67f1c227e
     axios.get(baseUrl + 'brewery/' + req.params.breweryId + '/beers?key=' + API_KEY)
-    .then((req) => {
-      res.send(req.data)
-    })
-    .catch((err) => {
-      console.log('error getting getBeersFromBrewery ', err);
-      res.sendStatus(400);
-    })
+      .then((req) => {
+        res.send(req.data)
+      })
+      .catch((err) => {
+        console.log('error getting getBeersFromBrewery ', err);
+        res.sendStatus(400);
+      })
   },
 
   getBeerStyles: (req, res) => {
-    console.log('getBeerStyles server')
     axios.get(baseUrl + 'styles?key=' + API_KEY)
-    .then((req) => {
-      res.send(req.data)
-    })
-    .catch((err) => {
-      console.log('error getting getBeerStyles ', err);
-      res.sendStatus(400);
-    })
+      .then((req) => {
+        res.send(req.data)
+      })
+      .catch((err) => {
+        console.log('error getting getBeerStyles ', err);
+        res.sendStatus(400);
+      })
   },
 
   postBeer: (req, res) => {
-    //ex: https://api.brewerydb.com/v2/beers?name=test&styleId=40&description=hello%20there%20this%20is%20a%20beer
-    //&abv=6.2&ibu=4.4&key=e9e7adf2a5252e434f812ce8dec22583
-    console.log('postBeer server req body: ', req.body)
     let restOfParams = '';
-    if(req.body.beerDescription) {
+    if (req.body.beerDescription) {
       restOfParams += '&description=' + req.body.beerDescription;
     }
-    if(req.body.beerABV) {
+    if (req.body.beerABV) {
       restOfParams += '&abv=' + req.body.beerABV;
     }
-    if(req.body.beerIBU) {
+    if (req.body.beerIBU) {
       restOfParams += '&ibu=' + req.body.beerIBU;
     }
-    if(req.body.breweryAssociated) {
+    if (req.body.breweryAssociated) {
       restOfParams += '&brewery=' + req.body.breweryAssociated;
     }
 
     axios.post(baseUrl + 'beers?name=' + req.body.beerName + '&styleId=' +
-    req.body.beerStyleId + restOfParams + '&key=' + API_KEY)
-    .then((req) => {
-      res.send(req.data)
-    })
-    .catch((err) => {
-      console.log('error getting postBeer ', err);
-      res.sendStatus(400);
-    })
+      req.body.beerStyleId + restOfParams + '&key=' + API_KEY)
+      .then((req) => {
+        res.send(req.data)
+      })
+      .catch((err) => {
+        console.log('error getting postBeer ', err);
+        res.sendStatus(400);
+      })
   },
 
   postBeerDatabase: (req, res) => {
-    console.log('postBeerDatabase server req.body:' , req.body)
     Beer.create({
       uniqId: req.body.beerId,
       userId: req.body.userId
     })
-    .then(() => {
-      console.log('Beer successfully created');
-      res.sendStatus(201);
-    })
-    .catch((err) => {
-      console.log('error creating friend', err);
-      res.sendStatus(400);
-    })
+      .then(() => {
+        console.log('Beer successfully created');
+        res.sendStatus(201);
+      })
+      .catch((err) => {
+        console.log('error creating friend', err);
+        res.sendStatus(400);
+      })
   },
 
   postBrewery: (req, res) => {
-    //ex: https://api.brewerydb.com/v2/beers?name=test&styleId=40&description=hello%20there%20this%20is%20a%20beer
-    //&abv=6.2&ibu=4.4&key=e9e7adf2a5252e434f812ce8dec22583
-    console.log('postBrewery server req body: ', req.body)
     let restOfParams = '';
-    if(req.body.breweryDescription) {
+    if (req.body.breweryDescription) {
       restOfParams += '&description=' + req.body.breweryDescription;
     }
-    if(req.body.breweryWebsite) {
+    if (req.body.breweryWebsite) {
       restOfParams += '&brewery=' + req.body.breweryWebsite;
     }
     axios.post(baseUrl + 'breweries?name=' + req.body.breweryName + restOfParams + '&key=' + API_KEY)
-    .then((req) => {
-      res.send(req.data)
-    })
-    .catch((err) => {
-      console.log('error getting postBeer ', err);
-      res.sendStatus(400);
-    })
+      .then((req) => {
+        res.send(req.data)
+      })
+      .catch((err) => {
+        console.log('error getting postBeer ', err);
+        res.sendStatus(400);
+      })
   },
 
   postBreweryDatabase: (req, res) => {
-    console.log('postBeerDatabase server req.body:' , req.body)
     Brewery.create({
       uniqId: req.body.breweryId,
       userId: req.body.userId
     })
-    .then(() => {
-      console.log('Beer successfully created');
-      res.sendStatus(201);
-    })
-    .catch((err) => {
-      console.log('error creating friend', err);
-      res.sendStatus(400);
-    })
+      .then(() => {
+        res.sendStatus(201);
+      })
+      .catch((err) => {
+        console.log('error creating friend', err);
+        res.sendStatus(400);
+      })
   },
 
   getBeerStatus: (req, res) => {
-    console.log('getBeerStatus server req.params:' , req.params.userId)
-    Beer.findAll({ where: {
-      userId: req.params.userId
-    }})
-    .then((data) => {
-      res.status(200);
-      res.json(data);
+    Beer.findAll({
+      where: {
+        userId: req.params.userId
+      }
     })
+      .then((data) => {
+        res.status(200);
+        res.json(data);
+      })
   },
 
   getBreweryStatus: (req, res) => {
-    console.log('getBreweryStatus server req.params:' , req.params.userId)
-    Brewery.findAll({ where: {
-      userId: req.params.userId
-    }})
-    .then((data) => {
-      res.status(200);
-      res.json(data);
+    Brewery.findAll({
+      where: {
+        userId: req.params.userId
+      }
     })
+      .then((data) => {
+        res.status(200);
+        res.json(data);
+      })
   },
 
-    getBeerStatusAPI: (req, res) => {
-    console.log('getBeerStatusAPI server req.params:' , req.params.beerId)
-   axios.get(baseUrl + 'beer/' + req.params.beerId + '?key=' + API_KEY)
-    .then((req) => {
-      res.send(req.data)
-    })
-    .catch((err) => {
-      console.log('error getting getBeerStyles ', err);
-      res.sendStatus(400);
-    })
+  getBeerStatusAPI: (req, res) => {
+    axios.get(baseUrl + 'beer/' + req.params.beerId + '?key=' + API_KEY)
+      .then((req) => {
+        res.send(req.data)
+      })
+      .catch((err) => {
+        console.log('error getting getBeerStyles ', err);
+        res.sendStatus(400);
+      })
   },
 
-    getBreweryStatusAPI: (req, res) => {
-    console.log('getBreweryStatusAPI server req.params:' , req.params.breweryId)
+  getBreweryStatusAPI: (req, res) => {
     axios.get(baseUrl + 'brewery/' + req.params.breweryId + '?key=' + API_KEY)
-    .then((req) => {
-      res.send(req.data)
-    })
-    .catch((err) => {
-      console.log('error getting getBeerStyles ', err);
-      res.sendStatus(400);
-    })
+      .then((req) => {
+        res.send(req.data)
+      })
+      .catch((err) => {
+        console.log('error getting getBeerStyles ', err);
+        res.sendStatus(400);
+      })
   }
 
 
