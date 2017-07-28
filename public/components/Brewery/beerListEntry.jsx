@@ -50,7 +50,7 @@ class BeerListEntry extends React.Component {
     this.props.history.push('/details');
   }
 
-  componentWillReceiveProps() {
+  componentWillMount() {
     this.tallyLikes();
   }
 
