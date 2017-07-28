@@ -24,8 +24,6 @@ const styles={
 const DisplayNickname = ({ handleNameClick, nickname, mobileSize }) => {
   let fontSize;
   ( mobileSize ) ? ( fontSize='16px' ) : ( fontSize='32px' );
-  console.log('what is fontsize', fontSize);
-  console.log('inside Display NickName', mobileSize)
   return (
     <div>
       <AppBar className="profileText"
