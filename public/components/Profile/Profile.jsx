@@ -20,7 +20,7 @@ export default class Profile extends Component {
   componentWillMount() {
     let width = document.getElementById('app').offsetWidth;
     console.log('width of profile', width)
-    if (width <= 420 ) {
+    if (width <= 575 ) {
       this.setState({ mobileSize: true })
     } else {
       this.setState({ mobileSize: false })

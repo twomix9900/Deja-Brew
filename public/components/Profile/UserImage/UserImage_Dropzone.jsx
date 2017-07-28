@@ -22,6 +22,7 @@ export default class UserImageDrop extends Component {
 
   onDropAccepted (files) {
     let imageFile = files[0];
+    console.log('what is this garbage', imageFile)
     let imageType = imageFile.type.substring(6);
     let keyName = 'image-' + uuid.v4() + "." + imageType
     Object.defineProperty(imageFile, 'name', { value: keyName });
