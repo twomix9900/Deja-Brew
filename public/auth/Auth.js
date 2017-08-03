@@ -1,6 +1,6 @@
 import history from './history';
 import auth0 from 'auth0-js';
-import { AUTH_CONFIG } from './auth0-variables';
+// import { AUTH_CONFIG } from './auth0-variables';
 
 import axios from 'axios';
 
