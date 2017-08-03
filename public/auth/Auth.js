@@ -8,10 +8,10 @@ export default class Auth {
 
   constructor() {
     this.service = new auth0.WebAuth({
-      domain: AUTH_CONFIG.domain,
-      clientID: AUTH_CONFIG.clientId,
-      redirectUri: AUTH_CONFIG.callbackUrl,
-      audience: `https://${AUTH_CONFIG.domain}/userinfo`,
+      domain: process.env.AUTH_CONFIG.domain,
+      clientID: process.env.AUTH_CONFIG.clientId,
+      redirectUri: process.env.AUTH_CONFIG.callbackUrl,
+      audience: `https://${process.env.AUTH_CONFIG.domain}/userinfo`,
       responseType: 'token id_token',
       scope: 'openid profile email'
     });
