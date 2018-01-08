@@ -9,6 +9,7 @@ const {
   BeerRating
 } = require ('../server/db/dbModel.js');
 
+
 db.authenticate()
   .then(() => User.sync({ force: true }))
   .then(() => Friend.sync({ force: true }))
