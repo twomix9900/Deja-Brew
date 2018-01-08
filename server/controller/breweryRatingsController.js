@@ -54,7 +54,6 @@ const breweryRatingsController = {
         }
       })
   }
-
 }
 
 module.exports = breweryRatingsController;
